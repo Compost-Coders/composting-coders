@@ -29,9 +29,9 @@ To keep our codebase consistent, we use the following standards:
     ```
 * **Naming**: Use `snake_case` for variables/functions and `PascalCase` for classes.
 
-## 4. Clean Notebooks
+## 5. Clean Notebooks
 * **Clear Outputs**: Before committing a Jupyter Notebook, go to `Kernel -> Restart & Clear All Outputs`.
 * **No Scratchpad Code**: Delete temporary "test" cells or print statements that aren't part of the final analysis before pushing.
 
-## 5. Dependencies
+## 6. Dependencies
 * If you install a new library (e.g., `pip install numpy`), immediately update the `requirements.txt` file.
