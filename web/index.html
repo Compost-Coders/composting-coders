@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compost Lab — Research Expo 2026</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="root">
+    <nav class="nav">
+      <div class="nav-logo">// Compost Lab &nbsp;·&nbsp; Expo 2026</div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('home', this)">Analytics</button>
+        <button class="nav-tab" onclick="showTab('team', this)">Team</button>
+      </div>
+    </nav>
+
+    <!-- ANALYTICS -->
+    <div class="section active" id="sec-home">
+      <div class="home-header">
+        <div class="home-eyebrow">Research Dashboard</div>
+        <div class="home-title">Closing the loop on<br><strong>organic waste.</strong></div>
+        <p class="home-sub">Tracking decomposition rates, carbon sequestration, and soil health outcomes across our field trial sites.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Waste Diverted</div>
+          <div class="stat-value">4.8</div>
+          <div class="stat-unit">tonnes this season</div>
+          <div class="stat-delta">↑ 23% vs last season</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg. Decomp. Rate</div>
+          <div class="stat-value">38</div>
+          <div class="stat-unit">days to mature compost</div>
+          <div class="stat-delta">↓ 6 days improvement</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">CO₂ Sequestered</div>
+          <div class="stat-value">2.1</div>
+          <div class="stat-unit">tonnes CO₂-eq</div>
+          <div class="stat-delta">↑ 11% vs target</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Soil Organic Matter</div>
+          <div class="stat-value">6.4</div>
+          <div class="stat-unit">% avg. across sites</div>
+          <div class="stat-delta neg">↓ 0.2% site 3 anomaly</div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Decomposition Rate — Field Trials (days)</h3>
+          <div class="legend">
+            <span><span class="legend-dot" style="background:#7abf3a"></span>Site A</span>
+            <span><span class="legend-dot" style="background:#4a9e6a"></span>Site B</span>
+            <span><span class="legend-dot" style="background:#c47a3a"></span>Site C</span>
+          </div>
+          <div class="canvas-wrap" style="height:200px;">
+            <canvas id="lineChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Feedstock Composition</h3>
+          <div class="canvas-wrap" style="height:200px;">
+            <canvas id="donutChart"></canvas>
+          </div>
+          <div class="legend" style="margin-top:12px;justify-content:center;">
+            <span><span class="legend-dot" style="background:#7abf3a"></span>Food 48%</span>
+            <span><span class="legend-dot" style="background:#4a9e6a"></span>Garden 31%</span>
+            <span><span class="legend-dot" style="background:#2d6e4a"></span>Paper 13%</span>
+            <span><span class="legend-dot" style="background:#1a3d2a"></span>Other 8%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-grid-2">
+        <div class="chart-card">
+          <h3>Monthly Waste Input (kg)</h3>
+          <div class="canvas-wrap" style="height:160px;">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Soil Health Indicators</h3>
+          <div class="progress-item">
+            <div class="progress-label"><span>Nitrogen (N)</span><span>82%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:82%;background:#7abf3a;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Phosphorus (P)</span><span>67%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:67%;background:#4a9e6a;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Potassium (K)</span><span>74%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:74%;background:#7abf3a;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Moisture</span><span>55%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:55%;background:#c47a3a;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Microbial Activity</span><span>91%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:91%;background:#7abf3a;"></div></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Temperature Cycle — Active Bin</h3>
+          <div class="canvas-wrap" style="height:160px;">
+            <canvas id="tempChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="section" id="sec-team">
+      <div class="section-title">Research Team</div>
+      <div class="team-grid">
+
+        <div class="member-card">
+          <div class="member-avatar">AJ</div>
+          <div class="member-name">Dr. Alex Johnson</div>
+          <div class="member-role">Principal Investigator</div>
+          <p class="member-bio">Soil ecologist with 12 years studying organic matter decomposition and circular nutrient systems in northern climates.</p>
+          <div class="member-skills">
+            <span class="skill-tag">Soil Science</span>
+            <span class="skill-tag">Ecology</span>
+            <span class="skill-tag">R</span>
+            <span class="skill-tag">Field Trials</span>
+          </div>
+          <div class="member-contact">
+            <span>PhD · Soil Ecology, Wageningen</span>
+            <span>a.johnson@university.edu</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">MS</div>
+          <div class="member-name">Maria Santos</div>
+          <div class="member-role">Microbiology Lead</div>
+          <p class="member-bio">Studies microbial community dynamics in compost piles, with a focus on thermophilic bacteria and fungal succession.</p>
+          <div class="member-skills">
+            <span class="skill-tag">Microbiology</span>
+            <span class="skill-tag">16S rRNA</span>
+            <span class="skill-tag">QIIME2</span>
+            <span class="skill-tag">Lab Culture</span>
+          </div>
+          <div class="member-contact">
+            <span>PhD · Microbial Ecology, Helsinki</span>
+            <span>m.santos@university.edu</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">KL</div>
+          <div class="member-name">Kevin Lee</div>
+          <div class="member-role">Data & Sensors</div>
+          <p class="member-bio">Designs and deploys IoT sensor arrays across compost sites to capture temperature, moisture, and gas emissions in real time.</p>
+          <div class="member-skills">
+            <span class="skill-tag">IoT</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Time-Series</span>
+            <span class="skill-tag">LoRaWAN</span>
+          </div>
+          <div class="member-contact">
+            <span>MSc · Environmental Engineering</span>
+            <span>k.lee@university.edu</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">PN</div>
+          <div class="member-name">Priya Nair</div>
+          <div class="member-role">Carbon Analyst</div>
+          <p class="member-bio">Quantifies greenhouse gas fluxes and carbon sequestration potential using chamber measurements and life cycle analysis.</p>
+          <div class="member-skills">
+            <span class="skill-tag">GHG Analysis</span>
+            <span class="skill-tag">LCA</span>
+            <span class="skill-tag">MATLAB</span>
+            <span class="skill-tag">GIS</span>
+          </div>
+          <div class="member-contact">
+            <span>PhD candidate · Aalto University</span>
+            <span>p.nair@university.edu</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">TW</div>
+          <div class="member-name">Tom Wilder</div>
+          <div class="member-role">Field Researcher</div>
+          <p class="member-bio">Manages day-to-day site operations, feedstock logging, sample collection, and compost quality assessments.</p>
+          <div class="member-skills">
+            <span class="skill-tag">Field Work</span>
+            <span class="skill-tag">Soil Sampling</span>
+            <span class="skill-tag">Quality Testing</span>
+          </div>
+          <div class="member-contact">
+            <span>BSc · Environmental Science</span>
+            <span>t.wilder@university.edu</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">YC</div>
+          <div class="member-name">Yuki Chen</div>
+          <div class="member-role">Research Analyst</div>
+          <p class="member-bio">Synthesises field data, maintains the project database, and produces statistical reports for publication and funding bodies.</p>
+          <div class="member-skills">
+            <span class="skill-tag">Statistics</span>
+            <span class="skill-tag">ggplot2</span>
+            <span class="skill-tag">LaTeX</span>
+            <span class="skill-tag">SPSS</span>
+          </div>
+          <div class="member-contact">
+            <span>MSc · Biometrics, Oulu</span>
+            <span>y.chen@university.edu</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
