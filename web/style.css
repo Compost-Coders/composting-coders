@@ -322,6 +322,14 @@ body {
   margin-bottom: 16px;
 }
 
+.member.work {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: #8cbe50;
+  margin-bottom: 5px;
+}
+
 .member-skills {
   display: flex;
   flex-wrap: wrap;
@@ -350,6 +358,20 @@ body {
   gap: 4px;
 }
 
+/* ── Composting grid ───────────────────────────────────────────── */
+
+.composting-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
@@ -366,3 +388,5 @@ body {
   .stat-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
 }
+
+
