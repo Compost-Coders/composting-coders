@@ -90,9 +90,37 @@ compost_nb = notebook(
             import pandas as pd
             import seaborn as sns
             import matplotlib.pyplot as plt
+            from cycler import cycler
 
-            sns.set_theme(style="whitegrid", context="talk")
-            plt.rcParams["figure.figsize"] = (12, 6)
+            BG = "#07111f"
+            PANEL = "#0d1b2a"
+            GRID = "#24415f"
+            FG = "#f3f7ff"
+            ACCENT = ["#00e5ff", "#ff4ecd", "#9bff66", "#ffcf40", "#7aa2ff", "#ff7b72"]
+
+            sns.set_theme(style="dark", context="talk")
+            sns.set_palette(ACCENT)
+            plt.rcParams.update(
+                {
+                    "figure.figsize": (12, 6),
+                    "figure.facecolor": BG,
+                    "axes.facecolor": PANEL,
+                    "axes.edgecolor": FG,
+                    "axes.labelcolor": FG,
+                    "axes.titlecolor": FG,
+                    "axes.prop_cycle": cycler(color=ACCENT),
+                    "xtick.color": FG,
+                    "ytick.color": FG,
+                    "text.color": FG,
+                    "grid.color": GRID,
+                    "grid.alpha": 0.35,
+                    "legend.facecolor": PANEL,
+                    "legend.edgecolor": GRID,
+                    "legend.framealpha": 0.85,
+                    "savefig.facecolor": BG,
+                    "savefig.edgecolor": BG,
+                }
+            )
             """
         ),
         code_cell(
@@ -530,7 +558,9 @@ sensor_nb = notebook(
             - rolling active-sensor tracking,
             - sensor timelines,
             - correlation analysis using active readings only, and
-            - a weekly moisture heatmap to spot persistent gaps.
+            - a weekly moisture heatmap to spot persistent gaps,
+            - a sensor uptime matrix for outage and recovery phases, and
+            - a sensor health quadrant for fast prioritization.
             """
         ),
         code_cell(
@@ -539,9 +569,37 @@ sensor_nb = notebook(
             import pandas as pd
             import seaborn as sns
             import matplotlib.pyplot as plt
+            from cycler import cycler
 
-            sns.set_theme(style="whitegrid", context="talk")
-            plt.rcParams["figure.figsize"] = (12, 6)
+            BG = "#07111f"
+            PANEL = "#0d1b2a"
+            GRID = "#24415f"
+            FG = "#f3f7ff"
+            ACCENT = ["#00e5ff", "#ff4ecd", "#9bff66", "#ffcf40", "#7aa2ff", "#ff7b72"]
+
+            sns.set_theme(style="dark", context="talk")
+            sns.set_palette(ACCENT)
+            plt.rcParams.update(
+                {
+                    "figure.figsize": (12, 6),
+                    "figure.facecolor": BG,
+                    "axes.facecolor": PANEL,
+                    "axes.edgecolor": FG,
+                    "axes.labelcolor": FG,
+                    "axes.titlecolor": FG,
+                    "axes.prop_cycle": cycler(color=ACCENT),
+                    "xtick.color": FG,
+                    "ytick.color": FG,
+                    "text.color": FG,
+                    "grid.color": GRID,
+                    "grid.alpha": 0.35,
+                    "legend.facecolor": PANEL,
+                    "legend.edgecolor": GRID,
+                    "legend.framealpha": 0.85,
+                    "savefig.facecolor": BG,
+                    "savefig.edgecolor": BG,
+                }
+            )
             """
         ),
         code_cell(
@@ -636,7 +694,7 @@ sensor_nb = notebook(
                 x="index",
                 y="zero_share",
                 hue="index",
-                palette="crest",
+                palette=sns.color_palette("husl", len(sensor_summary)),
                 legend=False,
             )
             plt.xticks(rotation=45, ha="right")
@@ -660,8 +718,8 @@ sensor_nb = notebook(
             sensor_pd["active_sensor_count_7d"] = sensor_pd["active_sensor_count"].rolling(7, min_periods=1).mean()
 
             fig, ax = plt.subplots(figsize=(14, 6))
-            ax.plot(sensor_pd["day"], sensor_pd["active_sensor_count"], color="tab:gray", alpha=0.35, label="Daily active count")
-            ax.plot(sensor_pd["day"], sensor_pd["active_sensor_count_7d"], color="tab:green", linewidth=2.5, label="7d rolling active count")
+            ax.plot(sensor_pd["day"], sensor_pd["active_sensor_count"], color="#8aa4c8", alpha=0.35, label="Daily active count")
+            ax.plot(sensor_pd["day"], sensor_pd["active_sensor_count_7d"], color="#00e5ff", linewidth=2.5, label="7d rolling active count")
             ax.set_title("Number of growing sensors reporting above zero")
             ax.set_xlabel("Day")
             ax.set_ylabel("Active sensors")
@@ -706,7 +764,7 @@ sensor_nb = notebook(
             active_only_corr = sensor_pd[sensor_cols].replace(0, np.nan).corr()
 
             plt.figure(figsize=(12, 10))
-            sns.heatmap(active_only_corr, annot=True, cmap="magma", center=0, fmt=".2f")
+            sns.heatmap(active_only_corr, annot=True, cmap="mako", center=0, fmt=".2f", linewidths=0.3, linecolor=GRID)
             plt.title("Sensor correlation using active readings only")
             plt.tight_layout()
             plt.show()
@@ -726,10 +784,103 @@ sensor_nb = notebook(
             )
 
             plt.figure(figsize=(16, 6))
-            sns.heatmap(weekly_heatmap, cmap="YlGnBu", linewidths=0.2, linecolor="white")
+            sns.heatmap(weekly_heatmap, cmap="crest", linewidths=0.2, linecolor=GRID)
             plt.title("Weekly median moisture by sensor")
             plt.xlabel("Week")
             plt.ylabel("Sensor")
+            plt.tight_layout()
+            plt.show()
+            """
+        ),
+        markdown_cell(
+            """
+            ## Sensor Uptime Matrix
+
+            This is the fastest way to spot shared outages, staggered recoveries, and permanently silent sensors. It turns the raw time series into a visual operations log for the full array.
+            """
+        ),
+        code_cell(
+            """
+            activity_matrix = (sensor_pd[sensor_cols] > 0).astype(int)
+            activity_for_plot = activity_matrix.T
+
+            fig = plt.figure(figsize=(16, 8), constrained_layout=True)
+            gs = fig.add_gridspec(2, 1, height_ratios=[4, 1], hspace=0.15)
+            ax1 = fig.add_subplot(gs[0])
+            ax2 = fig.add_subplot(gs[1], sharex=ax1)
+
+            sns.heatmap(
+                activity_for_plot,
+                cmap=sns.color_palette(["#101826", "#00e5ff"], as_cmap=True),
+                cbar=False,
+                linewidths=0.15,
+                linecolor=GRID,
+                ax=ax1,
+            )
+            ax1.set_title("Sensor uptime matrix: bright bands indicate active reporting")
+            ax1.set_ylabel("Sensor")
+            ax1.set_xlabel("")
+            ax1.set_yticklabels(activity_for_plot.index, rotation=0)
+
+            ax2.fill_between(
+                sensor_pd["day"],
+                sensor_pd["active_sensor_count_7d"],
+                color="#ff4ecd",
+                alpha=0.35,
+                label="7d rolling active count",
+            )
+            ax2.plot(sensor_pd["day"], sensor_pd["active_sensor_count"], color="#ffcf40", linewidth=1.8, alpha=0.85, label="Daily active count")
+            ax2.set_ylabel("Active")
+            ax2.set_xlabel("Day")
+            ax2.legend(loc="upper right")
+
+            plt.show()
+            """
+        ),
+        markdown_cell(
+            """
+            ## Sensor Health Quadrant
+
+            This plot turns sensor reliability into a prioritization map. Sensors further right fail more often, sensors higher up are more volatile when active, and larger markers mean longer continuous outages.
+            """
+        ),
+        code_cell(
+            """
+            sensor_health = sensor_summary.copy()
+            sensor_health["sensor"] = sensor_health.index
+            sensor_health["active_std"] = sensor_pd[sensor_cols].replace(0, np.nan).std().reindex(sensor_health["sensor"]).values
+            sensor_health["mean_when_active"] = sensor_health["mean_when_active"].fillna(0)
+
+            fig, ax = plt.subplots(figsize=(12, 8))
+            scatter = ax.scatter(
+                sensor_health["zero_share"],
+                sensor_health["active_std"],
+                s=sensor_health["longest_zero_streak_days"] * 9 + 80,
+                c=sensor_health["mean_when_active"],
+                cmap="plasma",
+                alpha=0.9,
+                edgecolor="#d7e3ff",
+                linewidth=0.8,
+            )
+
+            for _, row in sensor_health.iterrows():
+                ax.text(
+                    row["zero_share"] + 0.006,
+                    row["active_std"] + 0.08,
+                    row["sensor"],
+                    fontsize=10,
+                    color=FG,
+                )
+
+            ax.axvline(sensor_health["zero_share"].median(), linestyle="--", color="#00e5ff", linewidth=1.3)
+            ax.axhline(sensor_health["active_std"].median(), linestyle="--", color="#9bff66", linewidth=1.3)
+            ax.set_title("Sensor health quadrant: reliability vs. instability")
+            ax.set_xlabel("Share of zero readings")
+            ax.set_ylabel("Moisture variability when active")
+
+            cbar = plt.colorbar(scatter, ax=ax)
+            cbar.set_label("Mean moisture when active")
+
             plt.tight_layout()
             plt.show()
             """
@@ -742,6 +893,8 @@ sensor_nb = notebook(
             - Zero-rate ranking and longest-streak summaries make hardware issues easier to prioritize.
             - Active-sensor counts expose shared downtime windows that are hard to see from one sensor at a time.
             - The weekly heatmap gives a compact view of where recovery happens and which sensors remain persistently silent.
+            - The uptime matrix makes shared failures and recovery phases immediately visible.
+            - The health quadrant is a fast way to identify which sensors are both unreliable and unstable enough to deserve manual inspection first.
             """
         ),
     ]
