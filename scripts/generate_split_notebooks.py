@@ -79,7 +79,9 @@ compost_nb = notebook(
             - monthly heating demand versus retained heat,
             - depth-based layer analysis,
             - correlation mapping, and
-            - shock detection based on rolling temperature residuals.
+            - shock detection based on rolling temperature residuals,
+            - a thermal resilience envelope, and
+            - lag analysis between outside cold, compost temperature, and heater response.
             """
         ),
         code_cell(
@@ -365,12 +367,151 @@ compost_nb = notebook(
         ),
         markdown_cell(
             """
+            ## Thermal Resilience Envelope
+
+            This view compresses the experiment into a single operating map: outside temperature on one axis, Compost 2 core temperature on the other, heating power as color, and retained heat as point size. It is a strong presentation plot because it shows at a glance whether the pile stays biologically warm, heater-supported, or close to ambient.
+            """
+        ),
+        code_cell(
+            """
+            resilience_view = compost_2_pd[
+                ["day", "outside_temp", "middle_temp", "heating_w", "temp_delta"]
+            ].dropna().copy()
+            resilience_view["positive_delta"] = resilience_view["temp_delta"].clip(lower=0)
+
+            lower_bound = min(resilience_view["outside_temp"].min(), resilience_view["middle_temp"].min()) - 2
+            upper_bound = max(resilience_view["outside_temp"].max(), resilience_view["middle_temp"].max()) + 2
+
+            fig, ax = plt.subplots(figsize=(12, 8))
+            scatter = ax.scatter(
+                resilience_view["outside_temp"],
+                resilience_view["middle_temp"],
+                c=resilience_view["heating_w"],
+                s=resilience_view["positive_delta"] * 7 + 35,
+                cmap="inferno",
+                alpha=0.8,
+                edgecolor="none",
+            )
+
+            ax.plot(
+                [lower_bound, upper_bound],
+                [lower_bound, upper_bound],
+                linestyle="--",
+                color="steelblue",
+                linewidth=1.5,
+                label="Parity line",
+            )
+            ax.axhline(45, linestyle=":", color="darkgreen", linewidth=1.5, label="Thermophilic threshold")
+            ax.axvline(0, linestyle=":", color="gray", linewidth=1.2)
+
+            cbar = plt.colorbar(scatter, ax=ax)
+            cbar.set_label("Heating power (W)")
+
+            ax.set_xlim(lower_bound, upper_bound)
+            ax.set_ylim(lower_bound, upper_bound)
+            ax.set_xlabel("Outside temperature")
+            ax.set_ylabel("Middle compost temperature")
+            ax.set_title("Thermal resilience envelope of Compost 2")
+            ax.legend(loc="upper left")
+            plt.tight_layout()
+            plt.show()
+
+            resilience_summary = pd.DataFrame(
+                {
+                    "metric": [
+                        "Days above ambient",
+                        "Cold days below 0 outside",
+                        "Cold days kept at or above 20 inside",
+                        "Thermophilic days at or above 45",
+                    ],
+                    "days": [
+                        int((resilience_view["temp_delta"] > 0).sum()),
+                        int((resilience_view["outside_temp"] < 0).sum()),
+                        int(((resilience_view["outside_temp"] < 0) & (resilience_view["middle_temp"] >= 20)).sum()),
+                        int((resilience_view["middle_temp"] >= 45).sum()),
+                    ],
+                }
+            )
+
+            resilience_summary
+            """
+        ),
+        markdown_cell(
+            """
+            ## Response Lag Between Weather, Compost, and Heating
+
+            Positive lag values below mean that outside temperature leads the compost system by that many days. This analysis is useful for quantifying thermal inertia and for showing whether the heater reacts immediately or with a delay.
+            """
+        ),
+        code_cell(
+            """
+            lag_rows = []
+            lag_values = range(-21, 22)
+
+            for lag in lag_values:
+                shifted_outside = compost_2_pd["outside_temp"].shift(lag)
+                lag_rows.append(
+                    {
+                        "lag_days": lag,
+                        "middle_temp_corr": shifted_outside.corr(compost_2_pd["middle_temp"]),
+                        "heating_w_corr": shifted_outside.corr(compost_2_pd["heating_w"]),
+                        "temp_delta_corr": shifted_outside.corr(compost_2_pd["temp_delta"]),
+                    }
+                )
+
+            lag_df = pd.DataFrame(lag_rows)
+
+            best_middle = lag_df.iloc[lag_df["middle_temp_corr"].abs().idxmax()]
+            best_heating = lag_df.iloc[lag_df["heating_w_corr"].abs().idxmax()]
+            best_delta = lag_df.iloc[lag_df["temp_delta_corr"].abs().idxmax()]
+
+            fig, ax = plt.subplots(figsize=(13, 6))
+            ax.plot(lag_df["lag_days"], lag_df["middle_temp_corr"], linewidth=2.5, label="Outside temp vs middle temp")
+            ax.plot(lag_df["lag_days"], lag_df["heating_w_corr"], linewidth=2.5, label="Outside temp vs heating power")
+            ax.plot(lag_df["lag_days"], lag_df["temp_delta_corr"], linewidth=2.5, label="Outside temp vs thermal delta")
+            ax.axhline(0, color="black", linewidth=1, linestyle="--")
+            ax.axvline(0, color="black", linewidth=1, linestyle=":")
+
+            ax.scatter(best_middle["lag_days"], best_middle["middle_temp_corr"], s=70, color="tab:blue")
+            ax.scatter(best_heating["lag_days"], best_heating["heating_w_corr"], s=70, color="tab:orange")
+            ax.scatter(best_delta["lag_days"], best_delta["temp_delta_corr"], s=70, color="tab:green")
+
+            ax.set_title("Lagged response of Compost 2 to outside temperature")
+            ax.set_xlabel("Lag in days (positive = outside temperature leads)")
+            ax.set_ylabel("Correlation")
+            ax.legend(loc="best")
+            plt.tight_layout()
+            plt.show()
+
+            lag_summary = pd.DataFrame(
+                {
+                    "signal": ["Middle temperature", "Heating power", "Thermal delta"],
+                    "strongest_lag_days": [
+                        int(best_middle["lag_days"]),
+                        int(best_heating["lag_days"]),
+                        int(best_delta["lag_days"]),
+                    ],
+                    "correlation_at_strongest_lag": [
+                        round(best_middle["middle_temp_corr"], 3),
+                        round(best_heating["heating_w_corr"], 3),
+                        round(best_delta["temp_delta_corr"], 3),
+                    ],
+                }
+            )
+
+            lag_summary
+            """
+        ),
+        markdown_cell(
+            """
             ## Takeaways
 
             - Compost 2 can be reviewed independently now, without mixing sensor behaviour into the same narrative.
             - The thermal delta and monthly demand views make it easier to judge when heating support is carrying the pile and when the pile is retaining heat on its own.
             - Layer plots show whether instability is localized to one part of the pile or shared across the full compost profile.
             - Rolling residuals highlight abrupt events that deserve a manual check in the raw logs or hardware notes.
+            - The thermal resilience envelope is a presentation-friendly plot for showing how Compost 2 behaved under warm, cold, and heater-supported conditions.
+            - The lag analysis turns the system into something measurable: it shows how quickly outside weather propagates into compost temperature and heater response.
             """
         ),
     ]
