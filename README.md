@@ -1,8 +1,42 @@
-# Data Analytics Project
+# Data Analytics Project 2026
 
-## Getting Started
+# Compost Coders - Closing the loop on organic waste 
 
-To ensure everyone has the same setup and our code remains clean, follow these steps:
+## About the project
+
+Sources: 
+- https://kuituhamppu.frostbit.fi/composting/measurements
+
+The dataset provided offers insights into the feasibility of using hemp as a raw material for energy pellets, building insulation, and growing media, while also considering the economic viability of production. Our goal was to support this project by making the data accessible and easy to understand for both experts in the field and those less familiar with the topic. In addition, we aim to compare hemp with other composting materials to evaluate its performance and potential advantages.
+
+## Quick overview of the data
+
+The dataset includes measurements from hemp and other composting materials, capturing parameters such as temperature, energy content, thermal conductivity, and sensor readings. 
+
+- **Columns / Features:** temperature, moisture content, energy content, thermal conductivity, sensor ID, timestamp
+- **Data format:** CSV
+- **Notes:** Some sensors show high zero-reading rates; Sensor 02 has high variability and may need review.
+
+### Composts
+##### Compost 1 Temperature over time insight
+![alt text](img/composts/Compost_one_temp_over_time.png)
+##### Compost 2 Moisture and Temperature over time
+![alt text](img/composts/compost_two_timeline.png)
+
+### Sensors
+
+##### Zero-rate analysis for moisture sensors
+![alt text](img/sensors/zero_rate_sensors.png)
+##### Reliability vs Instability analysis of moisture sensors
+![alt text](img/sensors/reliability_sensors.png)
+## Key Takeaways
+
+- **Thermophilic activity:** Peak temperatures of 55–60 °C were observed early in the composting cycles, consistent with the active thermophilic decomposition phase.
+- **Sensor reliability:** Several sensors recorded high zero-reading rates (>56%), indicating potential measurement issues.
+- **Sensor variability:** Sensor 02 showed unusually high variability and should be reviewed before final deployment.
+- **Comparison potential:** The dataset allows for comparison of hemp with other composting materials regarding thermal performance, energy content, and other key parameters.
+
+## Installation and setup
 
 ### 1. Clone the Repository
 ```bash
@@ -21,7 +55,15 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Repository Structure (Not final - just suggestion)
+## Technologies
+- python >= 3.10
+- pandas
+- numpy
+- matplotlib
+- seaborn
+
+
+## Repository Structure
 
 ├── data/                    # datasets <br>
 ├── notebooks/               # Jupyter Notebooks for EDA and prototyping <br>
@@ -37,7 +79,5 @@ pip install -r requirements.txt
 - Natalia Suopanki
 - Laura Ryönänkoski
 - Savindu Kariyawasam
-- Fabian Frank - Git Management
-
-Note: Only strictly formal stuff in here now, should be appended the further we are into analysis and visualisation 😀.
+- Fabian Frank
 
