@@ -16,6 +16,9 @@ function showTab(id, el) {
   if (id === 'home') {
     initCharts();
   }
+  if (id === 'quizz') {
+    renderQuiz();
+  }
 }
 
 /* ── Chart initialisation ───────────────────────────────── */
@@ -382,8 +385,95 @@ function initCharts() {
   });
 }
 
-/* ── Boot ───────────────────────────────────────────────── */
+/*Quiz functionality*/
+
+var quizQuestions = [
+  {
+    q: "Question 01",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 1,
+    why: "Explanation of the correct answer"
+  },
+  {
+    q: "Question 02",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer "
+  },
+  {
+    q: "Question 03",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer"
+  },
+  {
+    q: "Question 04",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer"
+  },
+  {
+    q: "Question 05",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer"
+  }
+];
+
+var quizCurrent = 0;
+var quizScore = 0;
+var quizAnswered = false;
+
+function renderQuiz() {
+  var app = document.getElementById('quiz-app');
+  document.getElementById('quiz-prog').style.width = Math.round((quizCurrent / quizQuestions.length) * 100) + '%';
+
+  if (quizCurrent >= quizQuestions.length) {
+    var msg = quizScore <= 2 ? "Keep learning — every expert starts somewhere!" :
+              quizScore === 3 ? "Good work! You know your composting basics." :
+              quizScore === 4 ? "Great job! Almost a compost pro." :
+              "Perfect score! You're a Compost Champion!";
+    app.innerHTML = '<div class="score"><div class="num">' + quizScore + ' / ' + quizQuestions.length + '</div><div class="msg">' + msg + '</div><button class="restart" onclick="restartQuiz()">Try again</button></div>';
+    document.getElementById('quiz-prog').style.width = '100%';
+    return;
+  }
+
+  var q = quizQuestions[quizCurrent];
+  var optsHtml = '';
+  for (var i = 0; i < q.opts.length; i++) {
+    optsHtml += '<button class="opt" id="qo' + i + '" onclick="pickQuiz(' + i + ')">' + q.opts[i] + '</button>';
+  }
+
+  app.innerHTML = '<h2>Question ' + (quizCurrent + 1) + ' of ' + quizQuestions.length + '</h2><h3>' + q.q + '</h3>' + optsHtml + '<div id="qfb"></div><div id="qnav"></div>';
+  quizAnswered = false;
+}
+
+function pickQuiz(i) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  var q = quizQuestions[quizCurrent];
+  for (var j = 0; j < q.opts.length; j++) {
+    document.getElementById('qo' + j).disabled = true;
+  }
+  document.getElementById('qo' + q.ans).className = 'opt correct';
+  var fb = document.getElementById('qfb');
+  if (i === q.ans) {
+    quizScore++;
+    fb.innerHTML = '<div class="feedback correct"><strong>Correct!</strong> ' + q.why + '</div>';
+  } else {
+    document.getElementById('qo' + i).className = 'opt wrong';
+    fb.innerHTML = '<div class="feedback wrong"><strong>Not quite.</strong> ' + q.why + '</div>';
+  }
+  var label = quizCurrent < quizQuestions.length - 1 ? 'Next question →' : 'See my score →';
+  document.getElementById('qnav').innerHTML = '<button class="next" onclick="nextQuiz()">' + label + '</button>';
+}
+
+function nextQuiz() { quizCurrent++; renderQuiz(); }
+function restartQuiz() { quizCurrent = 0; quizScore = 0; renderQuiz(); }
+
+/*Boot*/
 
 document.addEventListener('DOMContentLoaded', function () {
   initCharts();
+  renderQuiz();
 });
