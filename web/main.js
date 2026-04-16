@@ -6,19 +6,19 @@ var chartsInited = false;
 var chartDataPromise = null;
 
 function showTab(id, el) {
-  document.querySelectorAll(".section").forEach(function (section) {
-    section.classList.remove("active");
+  document.querySelectorAll('.section').forEach(function (s) {
+    s.classList.remove('active');
   });
-
-  document.querySelectorAll(".nav-tab").forEach(function (tab) {
-    tab.classList.remove("active");
+  document.querySelectorAll('.nav-tab').forEach(function (t) {
+    t.classList.remove('active');
   });
-
-  document.getElementById("sec-" + id).classList.add("active");
-  el.classList.add("active");
-
-  if (id === "home") {
+  document.getElementById('sec-' + id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'home') {
     initCharts();
+  }
+  if (id === 'quiz') {
+    renderQuiz();
   }
 }
 
@@ -65,14 +65,14 @@ function avgValue(rows, key) {
 }
 
 function updateSummary(rows) {
-  var peakC1 = maxValue(rows, "Compost 1-Middle-Temperature");
-  var peakC2 = maxValue(rows, "Compost 2-Middle-Temperature");
-  var outsideMin = minValue(rows, "Outside-Outside-Temperature");
-  var outsideMax = maxValue(rows, "Outside-Outside-Temperature");
-  var lowerMoistureC1 = maxValue(rows, "Compost 1-Lower-Moisture");
-  var lowerMoistureC2 = maxValue(rows, "Compost 2-Lower-Moisture");
-  var avgHeatC1 = avgValue(rows, "Compost 1-Inside-Heating - w");
-  var avgHeatC2 = avgValue(rows, "Compost 2-Inside-Heating - w");
+  var peakC1 = maxValue(rows, "C1_Mid_T");
+  var peakC2 = maxValue(rows, "C2_Mid_T");
+  var outsideMin = minValue(rows, "Out_T");
+  var outsideMax = maxValue(rows, "Out_T");
+  var lowerMoistureC1 = maxValue(rows, "C1_Low_M");
+  var lowerMoistureC2 = maxValue(rows, "C2_Low_M");
+  var avgHeatC1 = avgValue(rows, "C1_Inside_Heating");
+  var avgHeatC2 = avgValue(rows, "C2_Inside_Heating");
 
   document.getElementById("stat-days").textContent = String(rows.length);
   document.getElementById("stat-range").textContent = formatMonthRange(rows[0].Day, rows[rows.length - 1].Day);
@@ -148,7 +148,7 @@ function initCharts() {
         [
           {
             label: "Upper layer",
-            data: rows.map(function (row) { return row["Compost 1-Upper-Temperature"]; }),
+            data: rows.map(function (row) { return row["C1_Upper_T"]; }),
             borderColor: "#a8d05a",
             backgroundColor: "rgba(168, 208, 90, 0.08)",
             tension: 0.35,
@@ -158,7 +158,7 @@ function initCharts() {
           },
           {
             label: "Middle layer",
-            data: rows.map(function (row) { return row["Compost 1-Middle-Temperature"]; }),
+            data: rows.map(function (row) { return row["C1_Mid_T"]; }),
             borderColor: "#7abf3a",
             backgroundColor: "rgba(122, 191, 58, 0.10)",
             tension: 0.35,
@@ -168,7 +168,7 @@ function initCharts() {
           },
           {
             label: "Lower layer",
-            data: rows.map(function (row) { return row["Compost 1-Lower-Temperature"]; }),
+            data: rows.map(function (row) { return row["C1_Low_T"]; }),
             borderColor: "#4a9e6a",
             backgroundColor: "rgba(74, 158, 106, 0.08)",
             tension: 0.35,
@@ -178,7 +178,7 @@ function initCharts() {
           },
           {
             label: "Outside air",
-            data: rows.map(function (row) { return row["Outside-Outside-Temperature"]; }),
+            data: rows.map(function (row) { return row["Out_T"]; }),
             borderColor: "#c47a3a",
             backgroundColor: "rgba(196, 122, 58, 0.08)",
             tension: 0.35,
@@ -199,7 +199,7 @@ function initCharts() {
         [
           {
             label: "C1 middle",
-            data: rows.map(function (row) { return row["Compost 1-Middle-Temperature"]; }),
+            data: rows.map(function (row) { return row["C1_Mid_T"]; }),
             borderColor: "#7abf3a",
             backgroundColor: "rgba(122, 191, 58, 0.10)",
             tension: 0.35,
@@ -209,7 +209,7 @@ function initCharts() {
           },
           {
             label: "C2 middle",
-            data: rows.map(function (row) { return row["Compost 2-Middle-Temperature"]; }),
+            data: rows.map(function (row) { return row["C2_Mid_T"]; }),
             borderColor: "#d8e86e",
             backgroundColor: "rgba(216, 232, 110, 0.08)",
             tension: 0.35,
@@ -230,7 +230,7 @@ function initCharts() {
           datasets: [
             {
               label: "C1 lower moisture",
-              data: rows.map(function (row) { return row["Compost 1-Lower-Moisture"]; }),
+              data: rows.map(function (row) { return row["C1_Low_M"]; }),
               borderColor: "#7abf3a",
               backgroundColor: "rgba(122, 191, 58, 0.08)",
               tension: 0.35,
@@ -240,7 +240,7 @@ function initCharts() {
             },
             {
               label: "C2 lower moisture",
-              data: rows.map(function (row) { return row["Compost 2-Lower-Moisture"]; }),
+              data: rows.map(function (row) { return row["C2_Low_M"]; }),
               borderColor: "#4a9e6a",
               backgroundColor: "rgba(74, 158, 106, 0.08)",
               tension: 0.35,
@@ -279,7 +279,7 @@ function initCharts() {
         [
           {
             label: "C1 heating",
-            data: rows.map(function (row) { return row["Compost 1-Inside-Heating - w"]; }),
+            data: rows.map(function (row) { return row["C1_Inside_heat_w"]; }),
             borderColor: "#c47a3a",
             backgroundColor: "rgba(196, 122, 58, 0.08)",
             tension: 0.35,
@@ -289,7 +289,7 @@ function initCharts() {
           },
           {
             label: "C2 heating",
-            data: rows.map(function (row) { return row["Compost 2-Inside-Heating - w"]; }),
+            data: rows.map(function (row) { return row["C2_Inside_heat_w"]; }),
             borderColor: "#7abf3a",
             backgroundColor: "rgba(122, 191, 58, 0.10)",
             tension: 0.35,
@@ -308,6 +308,96 @@ function initCharts() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+/*Quiz functionality*/
+
+var quizQuestions = [
+  {
+    q: "Question 01",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 1,
+    why: "Explanation of the correct answer"
+  },
+  {
+    q: "Question 02",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer "
+  },
+  {
+    q: "Question 03",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer"
+  },
+  {
+    q: "Question 04",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer"
+  },
+  {
+    q: "Question 05",
+    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    ans: 2,
+    why: "Explanation of the correct answer"
+  }
+];
+
+var quizCurrent = 0;
+var quizScore = 0;
+var quizAnswered = false;
+
+function renderQuiz() {
+  var app = document.getElementById('quiz-app');
+  document.getElementById('quiz-prog').style.width = Math.round((quizCurrent / quizQuestions.length) * 100) + '%';
+
+  if (quizCurrent >= quizQuestions.length) {
+    var msg = quizScore <= 2 ? "Keep learning — every expert starts somewhere!" :
+              quizScore === 3 ? "Good work! You know your composting basics." :
+              quizScore === 4 ? "Great job! Almost a compost pro." :
+              "Perfect score! You're a Compost Champion!";
+    app.innerHTML = '<div class="score"><div class="num">' + quizScore + ' / ' + quizQuestions.length + '</div><div class="msg">' + msg + '</div><button class="restart" onclick="restartQuiz()">Try again</button></div>';
+    document.getElementById('quiz-prog').style.width = '100%';
+    return;
+  }
+
+  var q = quizQuestions[quizCurrent];
+  var optsHtml = '';
+  for (var i = 0; i < q.opts.length; i++) {
+    optsHtml += '<button class="opt" id="qo' + i + '" onclick="pickQuiz(' + i + ')">' + q.opts[i] + '</button>';
+  }
+
+  app.innerHTML = '<h2>Question ' + (quizCurrent + 1) + ' of ' + quizQuestions.length + '</h2><h3>' + q.q + '</h3>' + optsHtml + '<div id="qfb"></div><div id="qnav"></div>';
+  quizAnswered = false;
+}
+
+function pickQuiz(i) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  var q = quizQuestions[quizCurrent];
+  for (var j = 0; j < q.opts.length; j++) {
+    document.getElementById('qo' + j).disabled = true;
+  }
+  document.getElementById('qo' + q.ans).className = 'opt correct';
+  var fb = document.getElementById('qfb');
+  if (i === q.ans) {
+    quizScore++;
+    fb.innerHTML = '<div class="feedback correct"><strong>Correct!</strong> ' + q.why + '</div>';
+  } else {
+    document.getElementById('qo' + i).className = 'opt wrong';
+    fb.innerHTML = '<div class="feedback wrong"><strong>Not quite.</strong> ' + q.why + '</div>';
+  }
+  var label = quizCurrent < quizQuestions.length - 1 ? 'Next question →' : 'See my score →';
+  document.getElementById('qnav').innerHTML = '<button class="next" onclick="nextQuiz()">' + label + '</button>';
+}
+
+function nextQuiz() { quizCurrent++; renderQuiz(); }
+function restartQuiz() { quizCurrent = 0; quizScore = 0; renderQuiz(); }
+
+/*Boot*/
+
+document.addEventListener('DOMContentLoaded', function () {
   initCharts();
+  renderQuiz();
 });
+

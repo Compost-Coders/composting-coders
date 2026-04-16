@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compost Lab - Research Expo 2026</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="root">
@@ -22,13 +20,10 @@
 
     <div class="section active" id="sec-home">
       <div class="home-header">
-        <div class="home-eyebrow">Dataset1_analysis dashboard</div>
-        <div class="home-title">Compost bin analysis across the <strong>filtered notebook slice</strong></div>
+        <div class="home-eyebrow">Composting dataset dashboard</div>
+        <div class="home-title">Compost analysis of <strong>dataset</strong></div>
         <p class="home-sub">
-          This page is now aligned to <code>Dataset1_analysis</code> and the underlying
-          <code>combined_compost_measurements.csv</code> dataset: two composters, three vertical sensor layers each,
-          and a focused comparison of moisture, temperature, heating wattage, and outside conditions in Lapland, Finland.
-          The charts below are loaded from the notebook's exported JSON rows.
+          Enter some text here about the dataset, or the analysis process, or key insights... or anything you figure i guess
         </p>
       </div>
 
@@ -42,7 +37,7 @@
         <div class="stat-card">
           <div class="stat-label">Composters</div>
           <div class="stat-value">2</div>
-          <div class="stat-unit">C1 and C2 tracked daily</div>
+          <div class="stat-unit">Composter 1 and Composter 2 tracked daily</div>
           <div class="stat-delta">Six internal sensor positions total</div>
         </div>
         <div class="stat-card">
@@ -54,8 +49,8 @@
         <div class="stat-card">
           <div class="stat-label">Peak Temperature</div>
           <div class="stat-value" id="stat-peak">60.4 C</div>
-          <div class="stat-unit" id="stat-peak-unit">C2 middle maximum</div>
-          <div class="stat-delta" id="stat-peak-detail">C1 middle also reached 59.9 C</div>
+          <div class="stat-unit" id="stat-peak-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
         </div>
       </div>
 
@@ -74,7 +69,7 @@
         </div>
 
         <div class="chart-card">
-          <h3>Dataset1_analysis Focus</h3>
+          <h3>Dataset 1 analysis Focus</h3>
           <div class="insight-stack">
             <div class="insight-item">
               <div class="insight-kicker">Temperature</div>
@@ -98,23 +93,16 @@
 
       <div class="chart-grid-2">
         <div class="chart-card">
-          <h3>Middle Layer Temperature - C1 vs C2</h3>
+          <h3>Middle Layer Temperature - Composter 1 vs Composter 2</h3>
           <div class="canvas-wrap" style="height:180px;">
             <canvas id="comparisonChart"></canvas>
           </div>
         </div>
 
         <div class="chart-card">
-          <h3>Lower Layer Moisture - C1 vs C2</h3>
+          <h3>Lower Layer Moisture - Composter 1 vs Composter 2</h3>
           <div class="canvas-wrap" style="height:180px;">
             <canvas id="moistureChart"></canvas>
-          </div>
-        </div>
-
-        <div class="chart-card">
-          <h3>Heating Wattage - C1 vs C2</h3>
-          <div class="canvas-wrap" style="height:180px;">
-            <canvas id="outsideChart"></canvas>
           </div>
         </div>
       </div>
@@ -128,6 +116,13 @@
           <div class="member-name">Jan Raivio</div>
           <div class="member-role">Team Leader</div>
           <p class="member-bio">Coordinates the project direction and keeps the analysis, repository workflow, and presentation moving together.</p>
+          <div class="member-skills">
+            <span class="skill-tag">Finnish</span>
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Estonian</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">HTML</span>
+          </div>
         </div>
 
         <div class="member-card">
@@ -135,11 +130,14 @@
           <div class="member-name">Natalia Suopanki</div>
           <div class="member-role">Research Contributor</div>
           <p class="member-bio">Supports the compost analysis work and helps translate raw project material into presentation-ready outputs.</p>
+          <div class="member-skills">
+            <span class="skill-tag">English</span>
+          </div>
         </div>
 
         <div class="member-card">
           <div class="member-avatar">LR</div>
-          <div class="member-name">Laura Ry&ouml;n&auml;nkoski</div>
+          <div class="member-name">Laura Ryönänkoski</div>
           <div class="member-role">Web Developer</div>
           <p class="member-bio">Built and shaped the frontend presentation layer for the project website.</p>
           <div class="member-skills">
@@ -155,6 +153,10 @@
           <div class="member-name">Savindu Kariyawasam</div>
           <div class="member-role">Analysis Contributor</div>
           <p class="member-bio">Worked on the compost analysis notebooks and helped structure the observations around sensor behavior.</p>
+          <div class="member-skills">
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Python</span>
+          </div>
         </div>
 
         <div class="member-card">
@@ -162,6 +164,10 @@
           <div class="member-name">Fabian Frank</div>
           <div class="member-role">Git Management</div>
           <p class="member-bio">Maintains branch workflow, repository organization, and collaboration practices across the team.</p>
+          <div class="member-skills">
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Git</span>
+          </div>
         </div>
       </div>
     </div>
@@ -196,17 +202,14 @@
     </div>
 
     <div class="section" id="sec-quiz">
-      <div class="section-title">Quiz</div>
-      <div class="quiz-card">
-        <h3>Interactive quiz coming next</h3>
-        <p>
-          The page now reflects the notebook structure first. This tab is ready for a small compost-data quiz next,
-          for example on peak temperature, wettest bin layer, or why the middle layer is important.
-        </p>
+      <div class="section-title">Test Your Composting Knowledge</div>
+      <div class="quiz-container">
+        <div class="progress-bar" style="height:5px;background:rgba(140,190,80,0.1);border-radius:3px;margin-bottom:24px;"><div id="quiz-prog" style="width:0%;height:5px;background:#7abf3a;border-radius:3px;transition:width 0.3s;"></div></div>
+        <div id="quiz-app"></div>
       </div>
     </div>
-  </div>
 
+  </div><!-- end .root -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script src="main.js"></script>
 </body>
