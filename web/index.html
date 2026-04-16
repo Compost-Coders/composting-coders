@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compost Lab — Research Expo 2026</title>
+  <title>Compost Lab - Research Expo 2026</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -11,276 +11,201 @@
 <body>
   <div class="root">
     <nav class="nav">
-      <div class="nav-logo">// Compost Lab &nbsp;·&nbsp; Expo 2026</div>
+      <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('home', this)">Analytics</button>
+        <button class="nav-tab active" onclick="showTab('home', this)">Overview</button>
         <button class="nav-tab" onclick="showTab('team', this)">Team</button>
-        <button class="nav-tab" onclick="showTab('composting', this)">Composting</button>
-        <button class="nav-tab" onclick="showTab('quizz', this)">Quizz</button>
-
+        <button class="nav-tab" onclick="showTab('findings', this)">Findings</button>
+        <button class="nav-tab" onclick="showTab('quiz', this)">Quiz</button>
       </div>
     </nav>
 
-    <!-- ANALYTICS -->
     <div class="section active" id="sec-home">
       <div class="home-header">
-        <div class="home-eyebrow">Research Dashboard</div>
-        <div class="home-title">Closing the loop on<br><strong>organic waste.</strong></div>
-        <p class="home-sub">Tracking decomposition rates, carbon sequestration, and soil health outcomes across our field trial sites.</p>
+        <div class="home-eyebrow">Dataset1_analysis dashboard</div>
+        <div class="home-title">Compost bin analysis across the <strong>filtered notebook slice</strong></div>
+        <p class="home-sub">
+          This page is now aligned to <code>Dataset1_analysis</code> and the underlying
+          <code>combined_compost_measurements.csv</code> dataset: two composters, three vertical sensor layers each,
+          and a focused comparison of moisture, temperature, heating wattage, and outside conditions in Lapland, Finland.
+          The charts below are loaded from the notebook's exported JSON rows.
+        </p>
       </div>
 
       <div class="stat-grid">
         <div class="stat-card">
-          <div class="stat-label">Waste Diverted</div>
-          <div class="stat-value">4.8</div>
-          <div class="stat-unit">tonnes this season</div>
-          <div class="stat-delta">↑ 23% vs last season</div>
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="stat-days">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="stat-range">May 2025 to July 2025</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Avg. Decomp. Rate</div>
-          <div class="stat-value">38</div>
-          <div class="stat-unit">days to mature compost</div>
-          <div class="stat-delta">↓ 6 days improvement</div>
+          <div class="stat-label">Composters</div>
+          <div class="stat-value">2</div>
+          <div class="stat-unit">C1 and C2 tracked daily</div>
+          <div class="stat-delta">Six internal sensor positions total</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">CO₂ Sequestered</div>
-          <div class="stat-value">2.1</div>
-          <div class="stat-unit">tonnes CO₂-eq</div>
-          <div class="stat-delta">↑ 11% vs target</div>
+          <div class="stat-label">Sensor Layers</div>
+          <div class="stat-value">3</div>
+          <div class="stat-unit">upper, middle, lower</div>
+          <div class="stat-delta">Temperature and moisture at each layer</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Soil Organic Matter</div>
-          <div class="stat-value">6.4</div>
-          <div class="stat-unit">% avg. across sites</div>
-          <div class="stat-delta neg">↓ 0.2% site 3 anomaly</div>
+          <div class="stat-label">Peak Temperature</div>
+          <div class="stat-value" id="stat-peak">60.4 C</div>
+          <div class="stat-unit" id="stat-peak-unit">C2 middle maximum</div>
+          <div class="stat-delta" id="stat-peak-detail">C1 middle also reached 59.9 C</div>
         </div>
       </div>
 
       <div class="chart-grid">
         <div class="chart-card">
-          <h3>Decomposition Rate — Field Trials (days)</h3>
+          <h3>Composter 1 Temperature vs Outside</h3>
           <div class="legend">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Site A</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Site B</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Site C</span>
+            <span><span class="legend-dot" style="background:#a8d05a"></span>Upper layer</span>
+            <span><span class="legend-dot" style="background:#7abf3a"></span>Middle layer</span>
+            <span><span class="legend-dot" style="background:#4a9e6a"></span>Lower layer</span>
+            <span><span class="legend-dot" style="background:#c47a3a"></span>Outside air</span>
           </div>
-          <div class="canvas-wrap" style="height:200px;">
+          <div class="canvas-wrap" style="height:220px;">
             <canvas id="lineChart"></canvas>
           </div>
         </div>
+
         <div class="chart-card">
-          <h3>Feedstock Composition</h3>
-          <div class="canvas-wrap" style="height:200px;">
-            <canvas id="donutChart"></canvas>
-          </div>
-          <div class="legend" style="margin-top:12px;justify-content:center;">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Food 48%</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Garden 31%</span>
-            <span><span class="legend-dot" style="background:#2d6e4a"></span>Paper 13%</span>
-            <span><span class="legend-dot" style="background:#1a3d2a"></span>Other 8%</span>
+          <h3>Dataset1_analysis Focus</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Temperature</div>
+              <p>The notebook plots each composter against outside air and annotates turning, waste additions, and removal events.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Moisture</div>
+              <p>The summary emphasizes strong vertical stratification: dry upper layers and wetter lower layers, especially in Composter 2.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Heating</div>
+              <p>Heating wattage is analyzed as its own time series, with winter values rising while outside temperatures drop far below zero.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Summary</div>
+              <p>The notebook concludes that dry hemp helps aeration, while moisture accumulates downward and should be redistributed by turning.</p>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="chart-grid-2">
         <div class="chart-card">
-          <h3>Monthly Waste Input (kg)</h3>
-          <div class="canvas-wrap" style="height:160px;">
-            <canvas id="barChart"></canvas>
+          <h3>Middle Layer Temperature - C1 vs C2</h3>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="comparisonChart"></canvas>
           </div>
         </div>
+
         <div class="chart-card">
-          <h3>Soil Health Indicators</h3>
-          <div class="progress-item">
-            <div class="progress-label"><span>Nitrogen (N)</span><span>82%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:82%;background:#7abf3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Phosphorus (P)</span><span>67%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:67%;background:#4a9e6a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Potassium (K)</span><span>74%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:74%;background:#7abf3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Moisture</span><span>55%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:55%;background:#c47a3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Microbial Activity</span><span>91%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:91%;background:#7abf3a;"></div></div>
+          <h3>Lower Layer Moisture - C1 vs C2</h3>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="moistureChart"></canvas>
           </div>
         </div>
+
         <div class="chart-card">
-          <h3>Temperature Cycle — Active Bin</h3>
-          <div class="canvas-wrap" style="height:160px;">
-            <canvas id="tempChart"></canvas>
+          <h3>Heating Wattage - C1 vs C2</h3>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="outsideChart"></canvas>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TEAM -->
     <div class="section" id="sec-team">
-      <div class="section-title">Research Team</div>
+      <div class="section-title">Project Team</div>
       <div class="team-grid">
-
         <div class="member-card">
-          <div class="member-avatar">AJ</div>
-          <div class="member-name">Dr. Alex Johnson</div>
-          <div class="member-role">Principal Investigator</div>
-          <p class="member-bio">Soil ecologist with 12 years studying organic matter decomposition and circular nutrient systems in northern climates.</p>
-          <div class="member-skills">
-            <span class="skill-tag">Soil Science</span>
-            <span class="skill-tag">Ecology</span>
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">Field Trials</span>
-          </div>
-          <div class="member-contact">
-            <span>PhD · Soil Ecology, Wageningen</span>
-            <span>a.johnson@university.edu</span>
-          </div>
+          <div class="member-avatar">JR</div>
+          <div class="member-name">Jan Raivio</div>
+          <div class="member-role">Team Leader</div>
+          <p class="member-bio">Coordinates the project direction and keeps the analysis, repository workflow, and presentation moving together.</p>
         </div>
 
         <div class="member-card">
-          <div class="member-avatar">MS</div>
-          <div class="member-name">Maria Santos</div>
-          <div class="member-role">Microbiology Lead</div>
-          <p class="member-bio">Studies microbial community dynamics in compost piles, with a focus on thermophilic bacteria and fungal succession.</p>
-          <div class="member-skills">
-            <span class="skill-tag">Microbiology</span>
-            <span class="skill-tag">16S rRNA</span>
-            <span class="skill-tag">QIIME2</span>
-            <span class="skill-tag">Lab Culture</span>
-          </div>
-          <div class="member-contact">
-            <span>PhD · Microbial Ecology, Helsinki</span>
-            <span>m.santos@university.edu</span>
-          </div>
-        </div>
-
-        <div class="member-card">
-          <div class="member-avatar">KL</div>
-          <div class="member-name">Kevin Lee</div>
-          <div class="member-role">Data & Sensors</div>
-          <p class="member-bio">Designs and deploys IoT sensor arrays across compost sites to capture temperature, moisture, and gas emissions in real time.</p>
-          <div class="member-skills">
-            <span class="skill-tag">IoT</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Time-Series</span>
-            <span class="skill-tag">LoRaWAN</span>
-          </div>
-          <div class="member-contact">
-            <span>MSc · Environmental Engineering</span>
-            <span>k.lee@university.edu</span>
-          </div>
+          <div class="member-avatar">NS</div>
+          <div class="member-name">Natalia Suopanki</div>
+          <div class="member-role">Research Contributor</div>
+          <p class="member-bio">Supports the compost analysis work and helps translate raw project material into presentation-ready outputs.</p>
         </div>
 
         <div class="member-card">
           <div class="member-avatar">LR</div>
-          <div class="member-name">Laura Ryönänkoski</div>
+          <div class="member-name">Laura Ry&ouml;n&auml;nkoski</div>
           <div class="member-role">Web Developer</div>
-          <p class="member-work">Work Experience:
-          <li class="member-work">Senior Sanctions Expert, Nordea Bank, Helsinki Finland since 2016</li>
-          <li class="member-work">Customer Service Representative, Nets Oy, Helsinki Finland 2014-2016 </li>
-          <li class="member-work">Customer Service Representative, Konika Minolta Business Solutions, Espoo Finland 2013-2014</li>
-          </p>
-          <p class="member-work">Language Skills:</p>
+          <p class="member-bio">Built and shaped the frontend presentation layer for the project website.</p>
           <div class="member-skills">
             <span class="skill-tag">Finnish</span>
             <span class="skill-tag">English</span>
             <span class="skill-tag">Swedish</span>
-            <span class="skill-tag">HTML coding</span>
-          </div>
-          <div class="member-contact">
-            <span>PhD candidate · Aalto University</span>
-            <span>p.nair@university.edu</span>
+            <span class="skill-tag">HTML</span>
           </div>
         </div>
 
         <div class="member-card">
-          <div class="member-avatar">TW</div>
-          <div class="member-name">Tom Wilder</div>
-          <div class="member-role">Field Researcher</div>
-          <p class="member-bio">Manages day-to-day site operations, feedstock logging, sample collection, and compost quality assessments.</p>
-          <div class="member-skills">
-            <span class="skill-tag">Field Work</span>
-            <span class="skill-tag">Soil Sampling</span>
-            <span class="skill-tag">Quality Testing</span>
-          </div>
-          <div class="member-contact">
-            <span>BSc · Environmental Science</span>
-            <span>t.wilder@university.edu</span>
-          </div>
+          <div class="member-avatar">SK</div>
+          <div class="member-name">Savindu Kariyawasam</div>
+          <div class="member-role">Analysis Contributor</div>
+          <p class="member-bio">Worked on the compost analysis notebooks and helped structure the observations around sensor behavior.</p>
         </div>
 
         <div class="member-card">
-          <div class="member-avatar">YC</div>
-          <div class="member-name">Yuki Chen</div>
-          <div class="member-role">Research Analyst</div>
-          <p class="member-bio">Synthesises field data, maintains the project database, and produces statistical reports for publication and funding bodies.</p>
-          <div class="member-skills">
-            <span class="skill-tag">Statistics</span>
-            <span class="skill-tag">ggplot2</span>
-            <span class="skill-tag">LaTeX</span>
-            <span class="skill-tag">SPSS</span>
-          </div>
-          <div class="member-contact">
-            <span>MSc · Biometrics, Oulu</span>
-            <span>y.chen@university.edu</span>
-          </div>
+          <div class="member-avatar">FF</div>
+          <div class="member-name">Fabian Frank</div>
+          <div class="member-role">Git Management</div>
+          <p class="member-bio">Maintains branch workflow, repository organization, and collaboration practices across the team.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-findings">
+      <div class="section-title">Key Findings</div>
+      <div class="findings-grid">
+        <div class="finding-card">
+          <div class="finding-label">Temperature</div>
+          <h3>Both composters reached thermophilic temperatures</h3>
+          <p id="finding-temp">In the actual dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
         </div>
 
+        <div class="finding-card">
+          <div class="finding-label">Moisture</div>
+          <h3>Lower layers retained the most water</h3>
+          <p id="finding-moisture">The lower layer reached 100% moisture in both composters at some point, while upper layers were often extremely dry.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Heating</div>
+          <h3>Heating became most important during winter</h3>
+          <p id="finding-heating">In this notebook's filtered May to July slice, heating wattage stayed at 0 W throughout the exported rows.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Outside Conditions</div>
+          <h3>Outdoor temperatures dropped far below compost temperatures</h3>
+          <p id="finding-outside">Within the exported notebook slice, outside temperatures ranged from 2.8 C to 26.7 C while compost temperatures climbed much higher.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-quiz">
+      <div class="section-title">Quiz</div>
+      <div class="quiz-card">
+        <h3>Interactive quiz coming next</h3>
+        <p>
+          The page now reflects the notebook structure first. This tab is ready for a small compost-data quiz next,
+          for example on peak temperature, wettest bin layer, or why the middle layer is important.
+        </p>
       </div>
     </div>
   </div>
-
-  <!-- COMPOSTING -->
-    <div class="section" id="sec-composting">
-      <div class="section-title">FUN COMPOSTING FACTS</div>
-      <div class="composting-grid">
-
-       <div><p>some text here
-        Composting is importand and fun
-        Today product of composting is considered black gold due to multiple functions it can have.
-        It can be used for example as fertilizer and part of gas productions. 
-       </p></div>
-
-        <div><p>some text here
-        Composting is importand and fun
-        Today product of composting is considered black gold due to multiple functions it can have.
-        It can be used for example as fertilizer and part of gas productions. 
-        </p></div>
-
-    <div class="fact">
-    <div><p>🍌 About 30% of household waste can be composted instead of thrown away.</p>
-    </div>
-
-
-      </div>
-    </div>
-
-  
-  
-    <!-- QUIZZ -->
-
-      
-      <div class="section" id="sec-quizz">
-      <div class="section-title">TRY OUR QUIZZ HERE</div>
-      <div class="quizz-grid">
-
-        <p>add game here</p>
-
-
-        <div class="fact">
-          <div><p>🍌 About 30% of household waste can be composted instead of thrown away.</p></div>
-        </div>
-
-
-      </div>
-    </div>
-
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script src="main.js"></script>

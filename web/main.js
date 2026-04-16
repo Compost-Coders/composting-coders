@@ -1,133 +1,112 @@
 /* ============================================================
-   Compost Lab — Expo 2026 · main.js
+   Compost Lab - Expo 2026 - main.js
    ============================================================ */
 
-/* ── Tab navigation ─────────────────────────────────────── */
+var chartsInited = false;
+var chartDataPromise = null;
 
 function showTab(id, el) {
-  document.querySelectorAll('.section').forEach(function (s) {
-    s.classList.remove('active');
+  document.querySelectorAll(".section").forEach(function (section) {
+    section.classList.remove("active");
   });
-  document.querySelectorAll('.nav-tab').forEach(function (t) {
-    t.classList.remove('active');
+
+  document.querySelectorAll(".nav-tab").forEach(function (tab) {
+    tab.classList.remove("active");
   });
-  document.getElementById('sec-' + id).classList.add('active');
-  el.classList.add('active');
-  if (id === 'home') {
+
+  document.getElementById("sec-" + id).classList.add("active");
+  el.classList.add("active");
+
+  if (id === "home") {
     initCharts();
   }
 }
 
-/* ── Chart initialisation ───────────────────────────────── */
-
-var chartsInited = false;
-
-function initCharts() {
-  if (chartsInited) return;
-  chartsInited = true;
-
-  /* Shared grid line colour */
-  var gridColor = 'rgba(140, 190, 80, 0.05)';
-  var tickColor = '#4a6630';
-  var tickFont  = { size: 11 };
-
-  /* ── Line chart: Decomposition rate ── */
-  new Chart(document.getElementById('lineChart'), {
-    type: 'line',
-    data: {
-      labels: ['Wk 1','Wk 2','Wk 3','Wk 4','Wk 5','Wk 6','Wk 7','Wk 8'],
-      datasets: [
-        {
-          label: 'Site A',
-          data: [52, 47, 43, 39, 36, 34, 33, 32],
-          borderColor: '#7abf3a',
-          backgroundColor: 'rgba(122, 191, 58, 0.07)',
-          fill: true,
-          tension: 0.4,
-          pointRadius: 3,
-          pointBackgroundColor: '#7abf3a',
-          borderWidth: 2
-        },
-        {
-          label: 'Site B',
-          data: [55, 50, 46, 43, 40, 37, 35, 34],
-          borderColor: '#4a9e6a',
-          backgroundColor: 'rgba(74, 158, 106, 0.05)',
-          fill: true,
-          tension: 0.4,
-          pointRadius: 3,
-          pointBackgroundColor: '#4a9e6a',
-          borderWidth: 2
-        },
-        {
-          label: 'Site C',
-          data: [58, 55, 51, 48, 46, 44, 42, 41],
-          borderColor: '#c47a3a',
-          backgroundColor: 'rgba(196, 122, 58, 0.05)',
-          fill: true,
-          tension: 0.4,
-          pointRadius: 3,
-          pointBackgroundColor: '#c47a3a',
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: {
-          grid: { color: gridColor },
-          ticks: { color: tickColor, font: tickFont }
-        },
-        y: {
-          min: 25,
-          max: 65,
-          grid: { color: gridColor },
-          ticks: {
-            color: tickColor,
-            font: tickFont,
-            callback: function (v) { return v + 'd'; }
-          }
-        }
+function loadChartRows() {
+  if (!chartDataPromise) {
+    chartDataPromise = fetch("data/dataset1_chart_data.json").then(function (response) {
+      if (!response.ok) {
+        throw new Error("Could not load dataset1_chart_data.json");
       }
-    }
-  });
+      return response.json();
+    });
+  }
 
-  /* ── Donut chart: Feedstock composition ── */
-  new Chart(document.getElementById('donutChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Food waste', 'Garden', 'Paper', 'Other'],
-      datasets: [{
-        data: [48, 31, 13, 8],
-        backgroundColor: ['#7abf3a', '#4a9e6a', '#2d6e4a', '#1a3d2a'],
-        borderWidth: 0,
-        hoverOffset: 5
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '65%',
-      plugins: { legend: { display: false } }
-    }
-  });
+  return chartDataPromise;
+}
 
-  /* ── Bar chart: Monthly waste input ── */
-  new Chart(document.getElementById('barChart'), {
-    type: 'bar',
+function formatDateLabel(dateString) {
+  var date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
+}
+
+function formatMonthRange(startDate, endDate) {
+  var start = new Date(startDate).toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+  var end = new Date(endDate).toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+  return start === end ? start : start + " to " + end;
+}
+
+function maxValue(rows, key) {
+  return Math.max.apply(null, rows.map(function (row) { return row[key] ?? Number.NEGATIVE_INFINITY; }));
+}
+
+function minValue(rows, key) {
+  return Math.min.apply(null, rows.map(function (row) { return row[key] ?? Number.POSITIVE_INFINITY; }));
+}
+
+function avgValue(rows, key) {
+  var values = rows
+    .map(function (row) { return row[key]; })
+    .filter(function (value) { return typeof value === "number"; });
+
+  if (!values.length) return 0;
+
+  return values.reduce(function (sum, value) { return sum + value; }, 0) / values.length;
+}
+
+function updateSummary(rows) {
+  var peakC1 = maxValue(rows, "Compost 1-Middle-Temperature");
+  var peakC2 = maxValue(rows, "Compost 2-Middle-Temperature");
+  var outsideMin = minValue(rows, "Outside-Outside-Temperature");
+  var outsideMax = maxValue(rows, "Outside-Outside-Temperature");
+  var lowerMoistureC1 = maxValue(rows, "Compost 1-Lower-Moisture");
+  var lowerMoistureC2 = maxValue(rows, "Compost 2-Lower-Moisture");
+  var avgHeatC1 = avgValue(rows, "Compost 1-Inside-Heating - w");
+  var avgHeatC2 = avgValue(rows, "Compost 2-Inside-Heating - w");
+
+  document.getElementById("stat-days").textContent = String(rows.length);
+  document.getElementById("stat-range").textContent = formatMonthRange(rows[0].Day, rows[rows.length - 1].Day);
+  document.getElementById("stat-peak").textContent = peakC2.toFixed(1) + " C";
+  document.getElementById("stat-peak-unit").textContent = "C2 middle maximum";
+  document.getElementById("stat-peak-detail").textContent = "C1 middle also reached " + peakC1.toFixed(1) + " C";
+
+  document.getElementById("finding-temp").textContent =
+    "In the exported notebook rows, the middle layer peaked at " + peakC1.toFixed(1) +
+    " C in Composter 1 and " + peakC2.toFixed(1) + " C in Composter 2.";
+
+  document.getElementById("finding-moisture").textContent =
+    "The lower layer reached " + lowerMoistureC1.toFixed(0) + "% in Composter 1 and " +
+    lowerMoistureC2.toFixed(0) + "% in Composter 2, while upper layers stayed much drier.";
+
+  document.getElementById("finding-heating").textContent =
+    "In this filtered May to July window, average heating stayed at " +
+    avgHeatC1.toFixed(1) + " W for C1 and " + avgHeatC2.toFixed(1) + " W for C2.";
+
+  document.getElementById("finding-outside").textContent =
+    "Within the exported notebook slice, outside temperatures ranged from " +
+    outsideMin.toFixed(1) + " C to " + outsideMax.toFixed(1) +
+    " C while compost temperatures climbed much higher.";
+}
+
+function createLineChart(canvasId, labels, datasets, yMin, yMax, suffix) {
+  var gridColor = "rgba(140, 190, 80, 0.08)";
+  var tickColor = "#5e7a3f";
+
+  return new Chart(document.getElementById(canvasId), {
+    type: "line",
     data: {
-      labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-      datasets: [{
-        label: 'kg input',
-        data: [310, 280, 420, 510, 600, 740, 820, 790, 680, 520, 390, 280],
-        backgroundColor: 'rgba(122, 191, 58, 0.5)',
-        borderColor: '#7abf3a',
-        borderWidth: 1,
-        borderRadius: 3
-      }]
+      labels: labels,
+      datasets: datasets
     },
     options: {
       responsive: true,
@@ -136,59 +115,16 @@ function initCharts() {
       scales: {
         x: {
           grid: { display: false },
-          ticks: {
-            color: tickColor,
-            font: { size: 10 },
-            autoSkip: false,
-            maxRotation: 0
-          }
+          ticks: { color: tickColor, font: { size: 10 }, maxTicksLimit: 8 }
         },
         y: {
+          min: yMin,
+          max: yMax,
           grid: { color: gridColor },
           ticks: {
             color: tickColor,
             font: { size: 10 },
-            callback: function (v) { return v + 'kg'; }
-          }
-        }
-      }
-    }
-  });
-
-  /* ── Line chart: Bin temperature cycle ── */
-  new Chart(document.getElementById('tempChart'), {
-    type: 'line',
-    data: {
-      labels: ['D1','D3','D5','D7','D9','D11','D13','D15','D17','D19','D21'],
-      datasets: [{
-        label: '°C',
-        data: [22, 38, 55, 62, 65, 63, 58, 50, 42, 35, 28],
-        borderColor: '#c47a3a',
-        backgroundColor: 'rgba(196, 122, 58, 0.08)',
-        fill: true,
-        tension: 0.4,
-        pointRadius: 2,
-        pointBackgroundColor: '#c47a3a',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: {
-          grid: { display: false },
-          ticks: { color: tickColor, font: { size: 10 } }
-        },
-        y: {
-          min: 10,
-          max: 75,
-          grid: { color: gridColor },
-          ticks: {
-            color: tickColor,
-            font: { size: 10 },
-            callback: function (v) { return v + '°'; }
+            callback: function (value) { return value + suffix; }
           }
         }
       }
@@ -196,8 +132,182 @@ function initCharts() {
   });
 }
 
-/* ── Boot ───────────────────────────────────────────────── */
+function initCharts() {
+  if (chartsInited) return;
 
-document.addEventListener('DOMContentLoaded', function () {
+  loadChartRows()
+    .then(function (rows) {
+      chartsInited = true;
+      updateSummary(rows);
+
+      var labels = rows.map(function (row) { return formatDateLabel(row.Day); });
+
+      createLineChart(
+        "lineChart",
+        labels,
+        [
+          {
+            label: "Upper layer",
+            data: rows.map(function (row) { return row["Compost 1-Upper-Temperature"]; }),
+            borderColor: "#a8d05a",
+            backgroundColor: "rgba(168, 208, 90, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "Middle layer",
+            data: rows.map(function (row) { return row["Compost 1-Middle-Temperature"]; }),
+            borderColor: "#7abf3a",
+            backgroundColor: "rgba(122, 191, 58, 0.10)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "Lower layer",
+            data: rows.map(function (row) { return row["Compost 1-Lower-Temperature"]; }),
+            borderColor: "#4a9e6a",
+            backgroundColor: "rgba(74, 158, 106, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "Outside air",
+            data: rows.map(function (row) { return row["Outside-Outside-Temperature"]; }),
+            borderColor: "#c47a3a",
+            backgroundColor: "rgba(196, 122, 58, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2,
+            borderDash: [5, 5]
+          }
+        ],
+        0,
+        65,
+        " C"
+      );
+
+      createLineChart(
+        "comparisonChart",
+        labels,
+        [
+          {
+            label: "C1 middle",
+            data: rows.map(function (row) { return row["Compost 1-Middle-Temperature"]; }),
+            borderColor: "#7abf3a",
+            backgroundColor: "rgba(122, 191, 58, 0.10)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "C2 middle",
+            data: rows.map(function (row) { return row["Compost 2-Middle-Temperature"]; }),
+            borderColor: "#d8e86e",
+            backgroundColor: "rgba(216, 232, 110, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          }
+        ],
+        0,
+        65,
+        " C"
+      );
+
+      new Chart(document.getElementById("moistureChart"), {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "C1 lower moisture",
+              data: rows.map(function (row) { return row["Compost 1-Lower-Moisture"]; }),
+              borderColor: "#7abf3a",
+              backgroundColor: "rgba(122, 191, 58, 0.08)",
+              tension: 0.35,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 2
+            },
+            {
+              label: "C2 lower moisture",
+              data: rows.map(function (row) { return row["Compost 2-Lower-Moisture"]; }),
+              borderColor: "#4a9e6a",
+              backgroundColor: "rgba(74, 158, 106, 0.08)",
+              tension: 0.35,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: "#5e7a3f", font: { size: 10 }, maxTicksLimit: 8 }
+            },
+            y: {
+              min: 0,
+              max: 100,
+              grid: { color: "rgba(140, 190, 80, 0.08)" },
+              ticks: {
+                color: "#5e7a3f",
+                font: { size: 10 },
+                callback: function (value) { return value + "%"; }
+              }
+            }
+          }
+        }
+      });
+
+      createLineChart(
+        "outsideChart",
+        labels,
+        [
+          {
+            label: "C1 heating",
+            data: rows.map(function (row) { return row["Compost 1-Inside-Heating - w"]; }),
+            borderColor: "#c47a3a",
+            backgroundColor: "rgba(196, 122, 58, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "C2 heating",
+            data: rows.map(function (row) { return row["Compost 2-Inside-Heating - w"]; }),
+            borderColor: "#7abf3a",
+            backgroundColor: "rgba(122, 191, 58, 0.10)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          }
+        ],
+        0,
+        5,
+        " W"
+      );
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
   initCharts();
 });

@@ -1,5 +1,5 @@
 /* ============================================================
-   Compost Lab — Expo 2026 · style.css
+   Compost Lab - Expo 2026 - style.css
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
@@ -12,20 +12,22 @@
 
 body {
   font-family: 'Fraunces', serif;
-  background: #0d1208;
+  background:
+    radial-gradient(circle at top, rgba(122, 191, 58, 0.10), transparent 32%),
+    linear-gradient(180deg, #11180b 0%, #0d1208 100%);
   color: #d4e4b8;
   min-height: 100vh;
 }
-
-/* ── Navigation ─────────────────────────────────────────── */
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 18px;
   padding: 16px 40px;
   border-bottom: 0.5px solid rgba(140, 190, 80, 0.15);
-  background: rgba(13, 18, 8, 0.97);
+  background: rgba(13, 18, 8, 0.94);
+  backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -41,7 +43,8 @@ body {
 
 .nav-tabs {
   display: flex;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .nav-tab {
@@ -67,8 +70,6 @@ body {
   background: rgba(140, 190, 80, 0.08);
 }
 
-/* ── Sections ────────────────────────────────────────────── */
-
 .section {
   display: none;
   padding: 40px;
@@ -86,8 +87,6 @@ body {
   color: #4a6630;
   margin-bottom: 28px;
 }
-
-/* ── Home / Analytics header ─────────────────────────────── */
 
 .home-header {
   margin-bottom: 36px;
@@ -107,7 +106,8 @@ body {
   font-weight: 300;
   color: #e8f5d0;
   line-height: 1.15;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  max-width: 760px;
 }
 
 .home-title strong {
@@ -118,12 +118,10 @@ body {
 .home-sub {
   font-size: 15px;
   font-weight: 300;
-  color: #6b8c45;
-  max-width: 560px;
-  line-height: 1.7;
+  color: #90aa6e;
+  max-width: 760px;
+  line-height: 1.75;
 }
-
-/* ── Stat cards ──────────────────────────────────────────── */
 
 .stat-grid {
   display: grid;
@@ -132,19 +130,32 @@ body {
   margin-bottom: 28px;
 }
 
-.stat-card {
-  background: #131a0c;
+.stat-card,
+.chart-card,
+.member-card,
+.finding-card,
+.quiz-card {
+  background: rgba(19, 26, 12, 0.88);
   border: 0.5px solid rgba(140, 190, 80, 0.12);
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
+}
+
+.stat-card {
   padding: 20px 22px;
 }
 
-.stat-label {
+.stat-label,
+.chart-card h3,
+.finding-label {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #4a6630;
+}
+
+.stat-label {
   margin-bottom: 10px;
 }
 
@@ -165,14 +176,8 @@ body {
   font-size: 11px;
   color: #7abf3a;
   font-family: 'IBM Plex Mono', monospace;
-  margin-top: 4px;
+  margin-top: 6px;
 }
-
-.stat-delta.neg {
-  color: #c47a3a;
-}
-
-/* ── Chart layout grids ──────────────────────────────────── */
 
 .chart-grid {
   display: grid;
@@ -183,25 +188,15 @@ body {
 
 .chart-grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
-/* ── Chart cards ─────────────────────────────────────────── */
-
 .chart-card {
-  background: #131a0c;
-  border: 0.5px solid rgba(140, 190, 80, 0.12);
-  border-radius: 12px;
   padding: 24px;
 }
 
 .chart-card h3 {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #4a6630;
   margin-bottom: 18px;
 }
 
@@ -209,8 +204,6 @@ body {
   position: relative;
   width: 100%;
 }
-
-/* ── Legend ──────────────────────────────────────────────── */
 
 .legend {
   display: flex;
@@ -235,51 +228,48 @@ body {
   flex-shrink: 0;
 }
 
-/* ── Progress bars ───────────────────────────────────────── */
-
-.progress-item {
-  margin-bottom: 13px;
+.insight-stack {
+  display: grid;
+  gap: 14px;
 }
 
-.progress-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #6b8c45;
-  margin-bottom: 5px;
+.insight-item {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(26, 42, 14, 0.72);
+  border: 0.5px solid rgba(140, 190, 80, 0.10);
+}
+
+.insight-kicker {
   font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8cbe50;
+  margin-bottom: 8px;
 }
 
-.progress-bar {
-  height: 5px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 3px;
-  overflow: hidden;
+.insight-item p,
+.member-bio,
+.finding-card p,
+.quiz-card p {
+  font-size: 13px;
+  font-weight: 300;
+  color: #90aa6e;
+  line-height: 1.75;
 }
 
-.progress-fill {
-  height: 100%;
-  border-radius: 3px;
-}
-
-/* ── Team grid ───────────────────────────────────────────── */
-
-.team-grid {
+.team-grid,
+.findings-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
-.member-card {
-  background: #131a0c;
-  border: 0.5px solid rgba(140, 190, 80, 0.12);
-  border-radius: 12px;
-  padding: 26px;
-  transition: border-color 0.2s ease;
-}
-
-.member-card:hover {
-  border-color: rgba(140, 190, 80, 0.3);
+.member-card,
+.finding-card,
+.quiz-card {
+  padding: 24px;
 }
 
 .member-avatar {
@@ -298,11 +288,13 @@ body {
   margin-bottom: 16px;
 }
 
-.member-name {
+.member-name,
+.finding-card h3,
+.quiz-card h3 {
   font-size: 16px;
   font-weight: 600;
   color: #e8f5d0;
-  margin-bottom: 3px;
+  margin-bottom: 8px;
 }
 
 .member-role {
@@ -314,27 +306,11 @@ body {
   margin-bottom: 14px;
 }
 
-.member-bio {
-  font-size: 13px;
-  font-weight: 300;
-  color: #4a6630;
-  line-height: 1.75;
-  margin-bottom: 16px;
-}
-
-.member.work {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.08em;
-  color: #8cbe50;
-  margin-bottom: 5px;
-}
-
 .member-skills {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 .skill-tag {
@@ -347,46 +323,47 @@ body {
   font-family: 'IBM Plex Mono', monospace;
 }
 
-.member-contact {
-  font-size: 11px;
-  font-family: 'IBM Plex Mono', monospace;
-  color: #4a6630;
-  border-top: 0.5px solid rgba(140, 190, 80, 0.08);
-  padding-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.findings-grid {
+  grid-template-columns: repeat(2, 1fr);
 }
 
-/* ── Composting grid ───────────────────────────────────────────── */
-
-.composting-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+.finding-label {
+  margin-bottom: 12px;
 }
 
-.fact {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+.quiz-card {
+  max-width: 720px;
 }
-
-/* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
-  .stat-grid { grid-template-columns: repeat(2, 1fr); }
-  .chart-grid { grid-template-columns: 1fr; }
-  .chart-grid-2 { grid-template-columns: 1fr; }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-grid,
+  .chart-grid-2,
+  .team-grid,
+  .findings-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
-  .nav { padding: 14px 20px; }
-  .section { padding: 24px 20px; }
-  .home-title { font-size: 28px; }
-  .stat-grid { grid-template-columns: 1fr; }
-  .team-grid { grid-template-columns: 1fr; }
+  .nav {
+    padding: 14px 20px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .section {
+    padding: 24px 20px;
+  }
+
+  .home-title {
+    font-size: 28px;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
 }
-
-
