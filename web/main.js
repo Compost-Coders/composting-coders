@@ -312,34 +312,34 @@ function initCharts() {
 
 var quizQuestions = [
   {
-    q: "Question 01",
-    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
+    q: "Q1: How moist should compost ideally be?",
+    opts: ["A1: Completely dry", "A2: Waterlogged", "A3: Like a wrung‑out sponge", "A4: Covered in standing water"],
+    ans: 2, // the index starts from 0, so if the answer A2 is correct, we have to pick ans: 1
+    why: "Compost should be moist enough to support microorganisms, which need water to break down organic material—but not so wet that air is pushed out. A wrung‑out sponge has just the right balance: damp to the touch, but not dripping."
+  },
+  {
+    q: "Q2: Which material is most important for preventing smells in compost?",
+    opts: ["A1: Brown, carbon rich materials (e.g., leaves, paper, fiber hemp)", "A2: Food scraps", "A3: Grass clippings", "A4: Water"],
+    ans: 0,
+    why: "Most compost problems come from lack of browns, not too many food scraps."
+  },
+  {
+    q: "Q3: Why does turning compost speed up the composting process in the first place?",
+    opts: ["A1:  It scares away pests", "A2: It adds oxygen for aerobic microbes", "A3: It mixes food scraps evenly", "A4: It redistributes moisture"],
     ans: 1,
-    why: "Explanation of the correct answer"
+    why: "All of them help somehow, but home composting is essentially an aerobic microbial activity, so it needs oxygen for the process."
   },
   {
-    q: "Question 02",
-    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
-    ans: 2,
-    why: "Explanation of the correct answer "
+    q: "Q4: What is the strictest country in the world for household composting?",
+    opts: ["A1: India", "A2: Japan", "A3: Finland", "A4: USA"],
+    ans: 1,
+    why: "In Japan home composting of food waste is not permitted unless you use a registered bin. Open compost heaps are generally prohibited. Animal products, cooked food, and mixed waste are forbidden. Compost outputs may not be used freely as fertilizer without compliance with fertilizer laws. Using compost incorrectly (odors, pests, mis-sorting) can lead to fines or confiscation"
   },
   {
-    q: "Question 03",
-    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
-    ans: 2,
-    why: "Explanation of the correct answer"
-  },
-  {
-    q: "Question 04",
-    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
-    ans: 2,
-    why: "Explanation of the correct answer"
-  },
-  {
-    q: "Question 05",
-    opts: ["Answer 01", "Answer 02", "Answer 03", "Answer 04"],
-    ans: 2,
-    why: "Explanation of the correct answer"
+    q: "Q5: Which EU country allows home composting of meat & fish waste?",
+    opts: ["A1: Sweden", "A2: Italy", "A3: Germany", "A4: Finland"],
+    ans: 3,
+    why: "Finland is the only EU country where composting meat and fish at home is explicitly legal and nationally supported. But one must use a closed, pest‑proof composter, an insulated composter is required in winter."
   }
 ];
 
