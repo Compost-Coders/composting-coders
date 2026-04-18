@@ -320,12 +320,96 @@
   </div>
   
     <div class="section" id="sec-findings">
-      <div class="section-title">Key Findings</div>
+      <div class="home-header findings-header">
+        <div class="home-eyebrow">Notebook-backed results</div>
+        <div class="home-title">Findings from the <strong>May-July 2025</strong> study window</div>
+        <p class="home-sub" id="findings-sub">
+          This tab summarizes only the 87 filtered notebook rows already used across the page, so every finding below stays inside the May 2025 to July 2025 window.
+        </p>
+      </div>
+
+      <div class="stat-grid findings-stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="findings-stat-rows">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="findings-stat-range">06 May 2025 to 31 Jul 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Peak Middle Temp</div>
+          <div class="stat-value" id="findings-stat-peak">60.4 C</div>
+          <div class="stat-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="findings-stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Largest Temp Gap</div>
+          <div class="stat-value" id="findings-stat-gap">53.1 C</div>
+          <div class="stat-unit">largest compost vs outside gap</div>
+          <div class="stat-delta" id="findings-stat-gap-detail">56.7 C inside vs 3.6 C outside on 21 May 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Heating Use</div>
+          <div class="stat-value" id="findings-stat-heat">0 W</div>
+          <div class="stat-unit">heater output in exported rows</div>
+          <div class="stat-delta" id="findings-stat-heat-detail">C1 and C2 heating stayed at zero in this slice</div>
+        </div>
+      </div>
+
+      <div class="chart-grid findings-panels">
+        <div class="chart-card">
+          <h3>What Stands Out</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Peak Timing</div>
+              <p id="finding-timing-note">All of the highest internal temperatures landed in mid-May, early in the filtered export.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Layering</div>
+              <p id="finding-layering-note">Moisture concentrated in the lower layers while upper layers stayed far drier, especially in Composter 1.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Scope</div>
+              <p id="finding-window-note">These notes summarize only the filtered May to July 2025 notebook slice shown throughout this page.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Reference Link</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Measurements Dashboard</div>
+              <p>
+                The live measurements page is linked here for reference only. The findings on this tab are limited to the May-July 2025 notebook export above.
+              </p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Why It Is Separate</div>
+              <p>
+                Keeping the evidence inside one study window makes the findings consistent with the charts and statistics already shown on this webpage.
+              </p>
+            </div>
+          </div>
+          <a class="findings-link" href="https://kuituhamppu.frostbit.fi/composting/measurements" target="_blank" rel="noopener noreferrer">
+            Open Measurements Dashboard
+          </a>
+        </div>
+      </div>
+
       <div class="findings-grid">
         <div class="finding-card">
           <div class="finding-label">Temperature</div>
           <h3>Both composters reached thermophilic temperatures</h3>
-          <p id="finding-temp">In the actual dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
+          <p id="finding-temp">In the filtered dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Timing</div>
+          <h3>The hottest phase arrived early in the study window</h3>
+          <p id="finding-timing">All six internal temperature peaks clustered in the middle of May, showing the strongest heat build-up early in the export.</p>
         </div>
 
         <div class="finding-card">
@@ -335,15 +419,21 @@
         </div>
 
         <div class="finding-card">
-          <div class="finding-label">Heating</div>
-          <h3>Heating became most important during winter</h3>
-          <p id="finding-heating">In this notebook's filtered May to July slice, heating wattage stayed at 0 W throughout the exported rows.</p>
+          <div class="finding-label">Comparison</div>
+          <h3>Composter 2 ran slightly warmer and wetter overall</h3>
+          <p id="finding-comparison">Composter 2 kept the warmest middle layer and carried noticeably more moisture higher up the pile than Composter 1.</p>
         </div>
 
         <div class="finding-card">
           <div class="finding-label">Outside Conditions</div>
-          <h3>Outdoor temperatures dropped far below compost temperatures</h3>
+          <h3>Compost temperatures climbed far above outside air</h3>
           <p id="finding-outside">Within the exported notebook slice, outside temperatures ranged from 2.8 C to 26.7 C while compost temperatures climbed much higher.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Heating</div>
+          <h3>Heating stayed off throughout the exported slice</h3>
+          <p id="finding-heating">In this notebook's filtered May to July slice, heating wattage stayed at 0 W throughout the exported rows.</p>
         </div>
       </div>
     </div>
