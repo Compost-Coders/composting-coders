@@ -2,9 +2,19 @@
    Compost Lab - Expo 2026 - main.js
    ============================================================ */
 
+/* ============================================================
+   Runtime State
+   These globals prevent repeated work while the user moves
+   between tabs in the single-page dashboard interface.
+   ============================================================ */
 var chartsInited = false;
 var chartDataPromise = null;
 
+/* ============================================================
+   Tab Navigation
+   The app uses hidden/shown sections instead of separate pages.
+   This function swaps the active section and loads extras lazily.
+   ============================================================ */
 function showTab(id, el) {
   document.querySelectorAll('.section').forEach(function (s) {
     s.classList.remove('active');
@@ -22,8 +32,14 @@ function showTab(id, el) {
   }
 }
 
+/* ============================================================
+   Data Loading
+   The study-window dataset is fetched once and then reused for
+   charts, stat cards, and findings copy across the whole page.
+   ============================================================ */
 function loadChartRows() {
   if (!chartDataPromise) {
+    // Cache the promise itself so every later caller shares it.
     chartDataPromise = fetch("data/dataset1_chart_data.json").then(function (response) {
       if (!response.ok) {
         throw new Error("Could not load dataset1_chart_data.json");
@@ -35,6 +51,11 @@ function loadChartRows() {
   return chartDataPromise;
 }
 
+/* ============================================================
+   Formatting Helpers
+   Small helper functions keep date labels and text formatting
+   consistent across cards, charts, and findings text.
+   ============================================================ */
 function formatDateLabel(dateString) {
   var date = new Date(dateString);
   return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
@@ -61,6 +82,11 @@ function setText(id, value) {
   }
 }
 
+/* ============================================================
+   Numeric Helpers
+   Summary generation repeatedly asks for maxima, minima, means,
+   and threshold counts, so those operations live in one place.
+   ============================================================ */
 function maxValue(rows, key) {
   return Math.max.apply(null, rows.map(function (row) { return row[key] ?? Number.NEGATIVE_INFINITY; }));
 }
@@ -94,6 +120,11 @@ function countAtOrAbove(rows, key, threshold) {
   }).length;
 }
 
+/* ============================================================
+   Temperature Gap Search
+   Findings need one "largest compost vs outside" statement, so
+   this helper checks every internal temperature series for it.
+   ============================================================ */
 function maxTemperatureGap(rows) {
   var candidates = [
     { key: "C1_Up_T", label: "C1 upper" },
@@ -115,6 +146,8 @@ function maxTemperatureGap(rows) {
 
       var delta = compostTemp - outsideTemp;
       if (!best || delta > best.delta) {
+        // Keep the full context so the findings text can mention
+        // the date, location, and exact values in one sentence.
         best = {
           delta: delta,
           label: candidate.label,
@@ -129,6 +162,11 @@ function maxTemperatureGap(rows) {
   }, null);
 }
 
+/* ============================================================
+   Summary Population
+   This is the main "text output" function for the dashboard.
+   It turns raw May-July rows into readable cards and findings.
+   ============================================================ */
 function updateSummary(rows) {
   var peakC1 = maxValue(rows, "C1_Mid_T");
   var peakC2 = maxValue(rows, "C2_Mid_T");
@@ -149,6 +187,8 @@ function updateSummary(rows) {
     maxRow(rows, "C2_Mid_T").Day,
     maxRow(rows, "C2_Low_T").Day
   ];
+  // Several series can peak on the same day, so remove duplicates
+  // before writing one clean "peak period" summary sentence.
   var uniquePeakDates = Array.from(new Set(peakDates)).sort();
   var maxGap = maxTemperatureGap(rows);
   var c1Mid55 = countAtOrAbove(rows, "C1_Mid_T", 55);
@@ -161,12 +201,14 @@ function updateSummary(rows) {
   var avgC2MidT = avgValue(rows, "C2_Mid_T");
   var avgC1MidT = avgValue(rows, "C1_Mid_T");
 
+  // Overview tab summary cards.
   setText("stat-days", String(rows.length));
   setText("stat-range", formatMonthRange(rows[0].Day, rows[rows.length - 1].Day));
   setText("stat-peak", peakC2.toFixed(1) + " C");
   setText("stat-peak-unit", "C2 middle maximum");
   setText("stat-peak-detail", "C1 middle also reached " + peakC1.toFixed(1) + " C");
 
+  // Findings tab intro and its headline statistics.
   setText("findings-sub",
     "This tab summarizes only the " + rows.length +
     " filtered notebook rows already used across the page, so every finding below stays inside the " +
@@ -182,6 +224,7 @@ function updateSummary(rows) {
   setText("findings-stat-heat", maxHeat.toFixed(0) + " W");
   setText("findings-stat-heat-detail", "C1 and C2 heating stayed at 0 W across this slice");
 
+  // Main findings cards describing the strongest patterns.
   setText("finding-temp",
     "In the exported notebook rows, the middle layer peaked at " + peakC1.toFixed(1) +
     " C in Composter 1 on " + formatFullDate(peakC1Row.Day) + " and " + peakC2.toFixed(1) +
@@ -203,6 +246,7 @@ function updateSummary(rows) {
     avgC1MidT.toFixed(1) + " C in C1, and its upper layer averaged " + avgC2UpM.toFixed(1) +
     "% moisture versus " + avgC1UpM.toFixed(1) + "% in C1.");
 
+  // Supporting context cards around heating and outside conditions.
   setText("finding-heating",
     "Both heating columns stayed at " + avgHeatC1.toFixed(1) + " W for C1 and " +
     avgHeatC2.toFixed(1) + " W for C2 across the exported May to July rows.");
@@ -214,6 +258,7 @@ function updateSummary(rows) {
     " C and outside air was " + maxGap.outsideTemp.toFixed(1) + " C on " +
     formatFullDate(maxGap.row.Day) + ".");
 
+  // Short side-panel notes that reinforce the big takeaways.
   setText("finding-timing-note",
     "Peak heat was concentrated early: every internal temperature maximum appeared between " +
     formatFullDate(uniquePeakDates[0]) + " and " +
@@ -231,11 +276,17 @@ function updateSummary(rows) {
     " rows in C1 and " + c2Mid40 + " rows in C2.");
 }
 
+/* ============================================================
+   Shared Chart Builder
+   Most line charts use the same visual system, so this helper
+   centralizes axis styling and protects against missing canvases.
+   ============================================================ */
 function createLineChart(canvasId, labels, datasets, yMin, yMax, suffix) {
   var gridColor = "rgba(140, 190, 80, 0.08)";
   var tickColor = "#5e7a3f";
   var canvas = document.getElementById(canvasId);
 
+  // Some canvases are optional, so fail softly if one is absent.
   if (!canvas) {
     return null;
   }
@@ -270,6 +321,11 @@ function createLineChart(canvasId, labels, datasets, yMin, yMax, suffix) {
   });
 }
 
+/* ============================================================
+   Chart Initialization
+   The dashboard first updates all text summaries and then draws
+   the visual charts in the same order they appear in the layout.
+   ============================================================ */
 function initCharts() {
   if (chartsInited) return;
 
@@ -278,8 +334,10 @@ function initCharts() {
       chartsInited = true;
       updateSummary(rows);
 
+      // Reuse one readable date axis format across all charts.
       var labels = rows.map(function (row) { return formatDateLabel(row.Day); });
 
+      // Main overview chart: one composter compared with outside air.
       createLineChart(
         "lineChart",
         labels,
@@ -331,6 +389,7 @@ function initCharts() {
         " C"
       );
 
+      // Direct comparison between the two middle-layer temperature series.
       createLineChart(
         "comparisonChart",
         labels,
@@ -361,6 +420,10 @@ function initCharts() {
         " C"
       );
 
+      /* ------------------------------------------------------------
+         Moisture uses its own config because the y-axis is a
+         percentage scale rather than the temperature range above.
+         ------------------------------------------------------------ */
       new Chart(document.getElementById("moistureChart"), {
         type: "line",
         data: {
@@ -411,6 +474,8 @@ function initCharts() {
         }
       });
 
+      // Safe to call even without a canvas because createLineChart
+      // returns early when the requested element is missing.
       createLineChart(
         "outsideChart",
         labels,
@@ -446,7 +511,11 @@ function initCharts() {
     });
 }
 
-/*Quiz functionality*/
+/* ============================================================
+   Quiz Question Bank
+   The full quiz content lives here so future edits mostly mean
+   changing data rather than rewriting rendering logic below.
+   ============================================================ */
 
 var quizQuestions = [
   {
@@ -481,10 +550,20 @@ var quizQuestions = [
   }
 ];
 
+/* ============================================================
+   Quiz State
+   These values track progress, total score, and whether the
+   current question has already been answered in this round.
+   ============================================================ */
 var quizCurrent = 0;
 var quizScore = 0;
 var quizAnswered = false;
 
+/* ============================================================
+   Quiz Rendering
+   The quiz UI is rebuilt on every step so the HTML stays small
+   and the interaction rules remain centralized in JavaScript.
+   ============================================================ */
 function renderQuiz() {
   var app = document.getElementById('quiz-app');
   document.getElementById('quiz-prog').style.width = Math.round((quizCurrent / quizQuestions.length) * 100) + '%';
@@ -509,6 +588,11 @@ function renderQuiz() {
   quizAnswered = false;
 }
 
+/* ============================================================
+   Quiz Answer Handling
+   After a click we lock the question, show feedback, highlight
+   the correct answer, and reveal the next navigation button.
+   ============================================================ */
 function pickQuiz(i) {
   if (quizAnswered) return;
   quizAnswered = true;
@@ -529,10 +613,19 @@ function pickQuiz(i) {
   document.getElementById('qnav').innerHTML = '<button class="next" onclick="nextQuiz()">' + label + '</button>';
 }
 
+/* ============================================================
+   Small Quiz Controls
+   These wrappers stay intentionally tiny: update the state and
+   immediately re-render the quiz interface from that state.
+   ============================================================ */
 function nextQuiz() { quizCurrent++; renderQuiz(); }
 function restartQuiz() { quizCurrent = 0; quizScore = 0; renderQuiz(); }
 
-/*Boot*/
+/* ============================================================
+   Boot Sequence
+   Once the DOM is ready we initialize charts and quiz content
+   so the page becomes interactive without inline HTML scripts.
+   ============================================================ */
 
 document.addEventListener('DOMContentLoaded', function () {
   initCharts();
