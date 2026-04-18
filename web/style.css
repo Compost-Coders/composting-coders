@@ -33,7 +33,7 @@ body {
 
 .nav-logo {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
+  font-size: 15px;
   color: #8cbe50;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -45,8 +45,8 @@ body {
 }
 
 .nav-tab {
-  padding: 7px 18px;
-  font-size: 13px;
+  padding: 9px 22px;
+  font-size: 16px;
   font-family: 'Fraunces', serif;
   background: transparent;
   border: 0.5px solid transparent;
@@ -80,7 +80,7 @@ body {
 
 .section-title {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #4a6630;
@@ -95,7 +95,7 @@ body {
 
 .home-eyebrow {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #6b8c45;
@@ -103,7 +103,7 @@ body {
 }
 
 .home-title {
-  font-size: 42px;
+  font-size: 52px;
   font-weight: 300;
   color: #e8f5d0;
   line-height: 1.15;
@@ -116,7 +116,7 @@ body {
 }
 
 .home-sub {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 300;
   color: #6b8c45;
   max-width: 560px;
@@ -141,7 +141,7 @@ body {
 
 .stat-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #4a6630;
@@ -149,7 +149,7 @@ body {
 }
 
 .stat-value {
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 600;
   color: #e8f5d0;
   line-height: 1;
@@ -157,12 +157,12 @@ body {
 }
 
 .stat-unit {
-  font-size: 12px;
+  font-size: 15px;
   color: #6b8c45;
 }
 
 .stat-delta {
-  font-size: 11px;
+  font-size: 13px;
   color: #7abf3a;
   font-family: 'IBM Plex Mono', monospace;
   margin-top: 4px;
@@ -202,7 +202,7 @@ body {
 
 .chart-card h3 {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #4a6630;
@@ -216,7 +216,7 @@ body {
 }
 
 .chart-card .insight-item p {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.6;
   color: #6b8c45;
 }
@@ -234,7 +234,7 @@ body {
   gap: 14px;
   margin-bottom: 12px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 13px;
   color: #4a6630;
 }
 
@@ -299,8 +299,8 @@ body {
 }
 
 .member-avatar {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: #1a2a0e;
   border: 0.5px solid rgba(140, 190, 80, 0.2);
@@ -308,14 +308,14 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   color: #8cbe50;
   margin-bottom: 16px;
 }
 
 .member-name {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   color: #e8f5d0;
   margin-bottom: 3px;
@@ -323,7 +323,7 @@ body {
 
 .member-role {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #8cbe50;
@@ -331,7 +331,7 @@ body {
 }
 
 .member-bio {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
   color: #4a6630;
   line-height: 1.75;
@@ -340,7 +340,7 @@ body {
 
 .member.work {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   color: #8cbe50;
   margin-bottom: 5px;
@@ -354,8 +354,8 @@ body {
 }
 
 .skill-tag {
-  font-size: 10px;
-  padding: 3px 8px;
+  font-size: 12px;
+  padding: 4px 10px;
   border-radius: 3px;
   background: rgba(26, 42, 14, 0.8);
   border: 0.5px solid rgba(140, 190, 80, 0.15);
@@ -397,7 +397,7 @@ body {
 
 .quiz-container h2 {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #4a6630;
@@ -406,7 +406,7 @@ body {
 }
 
 .quiz-container h3 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 400;
   color: #e8f5d0;
   margin-top: 0;
@@ -418,9 +418,9 @@ body {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 12px 16px;
+  padding: 14px 18px;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 17px;
   background: rgba(26, 42, 14, 0.8);
   border: 0.5px solid rgba(140, 190, 80, 0.2);
   border-radius: 8px;
@@ -455,7 +455,7 @@ body {
   padding: 16px;
   border-radius: 8px;
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.6;
   border: 0.5px solid;
 }
@@ -474,8 +474,8 @@ body {
 
 .quiz-container button.next {
   margin-top: 16px;
-  padding: 10px 24px;
-  font-size: 14px;
+  padding: 12px 28px;
+  font-size: 16px;
   background: #8cbe50;
   color: #0d1208;
   border: none;
@@ -504,15 +504,15 @@ body {
 }
 
 .quiz-container .score .msg {
-  font-size: 18px;
+  font-size: 22px;
   color: #d4e4b8;
   margin: 10px 0 24px;
   line-height: 1.5;
 }
 
 .quiz-container button.restart {
-  padding: 12px 28px;
-  font-size: 14px;
+  padding: 14px 32px;
+  font-size: 16px;
   background: #8cbe50;
   color: #0d1208;
   border: none;
@@ -531,6 +531,63 @@ body {
   margin-bottom: 24px;
 }
 
+/*Reference list*/
+
+.stat-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+
+
+.ref-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ref-item {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 0.5px solid rgba(140, 190, 80, 0.07);
+}
+
+.ref-item:last-child {
+  border-bottom: none;
+}
+
+.ref-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: #7abf3a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 180px;
+  flex-shrink: 0;
+}
+
+.ref-text {
+  font-size: 15px;
+  color: #4a6630;
+  line-height: 1.6;
+}
+
+.ref-link {
+  color: #8cbe50;
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+}
+
+.ref-link:hover {
+  color: #a8d05a;
+  text-decoration: underline;
+}
+
 /*Responsive*/
 
 @media (max-width: 1024px) {
@@ -543,7 +600,7 @@ body {
 @media (max-width: 640px) {
   .nav { padding: 14px 20px; }
   .section { padding: 24px 20px; }
-  .home-title { font-size: 28px; }
+  .home-title { font-size: 36px; }
   .stat-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
 }
