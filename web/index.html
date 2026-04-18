@@ -7,7 +7,17 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <!-- =========================================================
+       App Shell
+       The root wrapper contains the navigation and all tabbed
+       sections that JavaScript shows or hides during use.
+       ========================================================= -->
   <div class="root">
+    <!-- =======================================================
+         Navigation
+         Each button maps directly to a section id further below.
+         The active state is handled in main.js by showTab().
+         ======================================================= -->
     <nav class="nav">
       <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
@@ -19,7 +29,11 @@
       </div>
     </nav>
 
-    <!-- Main heading-->
+    <!-- =======================================================
+         Overview Tab
+         This is the landing dashboard with study stats, charts,
+         and short insight cards for the filtered dataset.
+         ======================================================= -->
     <div class="section active" id="sec-home">
       <div class="home-header">
         <div class="home-eyebrow">Composting dataset dashboard</div>
@@ -29,7 +43,11 @@
         </p>
       </div>
 
-    <!-- Statistics section-->
+      <!-- =====================================================
+           Overview Statistics
+           These cards summarize the study window, composters,
+           sensor layout, and headline temperature result.
+           ===================================================== -->
       <div class="stat-grid">
         <div class="stat-card">
           <div class="stat-label">Study Window</div>
@@ -57,7 +75,11 @@
         </div>
       </div>
 
-    <!-- Chart (Composter 1 Temperature vs Outside)-->
+      <!-- =====================================================
+           Overview Charts
+           The canvases below are filled by Chart.js in main.js.
+           Each card focuses on one comparison in the study data.
+           ===================================================== -->
       <div class="chart-grid">
         <div class="chart-card">
           <h3>Composter 1 Temperature vs Outside</h3>
@@ -72,7 +94,6 @@
           </div>
         </div>
 
-    <!-- Chart (Dataset 1 analysis Focus)-->
         <div class="chart-card">
           <h3>Dataset 1 analysis Focus</h3>
           <div class="insight-stack">
@@ -96,7 +117,11 @@
         </div>
       </div>
 
-      <!-- Chart (Middle Layer Temperature - Composter 1 vs Composter 2)-->
+      <!-- =====================================================
+           Comparison Charts
+           These charts place the two composters side by side so
+           temperature and moisture differences are easy to see.
+           ===================================================== -->
       <div class="chart-grid-2">
         <div class="chart-card">
           <h3>Middle Layer Temperature - Composter 1 vs Composter 2</h3>
@@ -114,7 +139,11 @@
       </div>
     </div>
 
-    <!-- TEAM -->
+    <!-- =======================================================
+         Team Tab
+         This section is mostly static content and documents who
+         worked on the project and what their roles were.
+         ======================================================= -->
     <div class="section" id="sec-team">
       <div class="section-title">Research Team</div>
       <div class="team-grid">
@@ -319,6 +348,11 @@
     </div>
   </div>
   
+    <!-- =======================================================
+         Findings Tab
+         This tab converts the filtered study export into short,
+         readable conclusions and supporting summary panels.
+         ======================================================= -->
     <div class="section" id="sec-findings">
       <div class="home-header findings-header">
         <div class="home-eyebrow">Notebook-backed results</div>
@@ -328,6 +362,11 @@
         </p>
       </div>
 
+      <!-- =====================================================
+           Findings Statistics
+           These cards surface the strongest numbers at a glance:
+           window size, peak heat, temperature gap, and heating.
+           ===================================================== -->
       <div class="stat-grid findings-stat-grid">
         <div class="stat-card">
           <div class="stat-label">Study Window</div>
@@ -358,6 +397,11 @@
         </div>
       </div>
 
+      <!-- =====================================================
+           Findings Panels
+           The first panel frames the key patterns while the
+           second keeps the live measurements link separate.
+           ===================================================== -->
       <div class="chart-grid findings-panels">
         <div class="chart-card">
           <h3>What Stands Out</h3>
@@ -399,6 +443,11 @@
         </div>
       </div>
 
+      <!-- =====================================================
+           Findings Cards
+           Each card captures one evidence-backed takeaway from
+           the same May-July dataset used elsewhere on the page.
+           ===================================================== -->
       <div class="findings-grid">
         <div class="finding-card">
           <div class="finding-label">Temperature</div>
@@ -438,7 +487,11 @@
       </div>
     </div>
 
-    <!-- COMPOSTING -->
+    <!-- =======================================================
+         Composting Tab
+         This is the background-information section that explains
+         the composting process, phases, and key control factors.
+         ======================================================= -->
     <div class="section" id="sec-composting">
       <div class="section-title">Composting Facts</div>
       <div class="composting-grid">
@@ -526,6 +579,11 @@
       </div>
     </div>
 
+    <!-- =======================================================
+         Quiz Tab
+         The markup here is intentionally small because the quiz
+         interface itself is rendered dynamically in main.js.
+         ======================================================= -->
     <div class="section" id="sec-quiz">
       <div class="section-title">Test Your Composting Knowledge</div>
       <div class="quiz-container">
@@ -535,6 +593,11 @@
     </div>
 
   </div><!-- end .root -->
+  <!-- =========================================================
+       External Scripts
+       Chart.js powers the visualizations and main.js handles
+       tab switching, findings text, chart setup, and the quiz.
+       ========================================================= -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script src="main.js"></script>
 </body>
