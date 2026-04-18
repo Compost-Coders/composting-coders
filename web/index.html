@@ -7,7 +7,17 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <!-- =========================================================
+       App Shell
+       The root wrapper contains the navigation and all tabbed
+       sections that JavaScript shows or hides during use.
+       ========================================================= -->
   <div class="root">
+    <!-- =======================================================
+         Navigation
+         Each button maps directly to a section id further below.
+         The active state is handled in main.js by showTab().
+         ======================================================= -->
     <nav class="nav">
       <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
@@ -19,7 +29,11 @@
       </div>
     </nav>
 
-    <!-- Main heading-->
+    <!-- =======================================================
+         Overview Tab
+         This is the landing dashboard with study stats, charts,
+         and short insight cards for the filtered dataset.
+         ======================================================= -->
     <div class="section active" id="sec-home">
       <div class="home-header">
         <div class="home-eyebrow">Composting dataset dashboard</div>
@@ -29,7 +43,11 @@
         </p>
       </div>
 
-    <!-- Statistics section-->
+      <!-- =====================================================
+           Overview Statistics
+           These cards summarize the study window, composters,
+           sensor layout, and headline temperature result.
+           ===================================================== -->
       <div class="stat-grid">
         <div class="stat-card">
           <div class="stat-label">Study Window</div>
@@ -57,7 +75,11 @@
         </div>
       </div>
 
-    <!-- Chart (Composter 1 Temperature vs Outside)-->
+      <!-- =====================================================
+           Overview Charts
+           The canvases below are filled by Chart.js in main.js.
+           Each card focuses on one comparison in the study data.
+           ===================================================== -->
       <div class="chart-grid">
         <div class="chart-card">
           <h3>Composter 1 Temperature vs Outside</h3>
@@ -72,7 +94,6 @@
           </div>
         </div>
 
-    <!-- Chart (Dataset 1 analysis Focus)-->
         <div class="chart-card">
           <h3>Dataset 1 analysis Focus</h3>
           <div class="insight-stack">
@@ -96,7 +117,11 @@
         </div>
       </div>
 
-      <!-- Chart (Middle Layer Temperature - Composter 1 vs Composter 2)-->
+      <!-- =====================================================
+           Comparison Charts
+           These charts place the two composters side by side so
+           temperature and moisture differences are easy to see.
+           ===================================================== -->
       <div class="chart-grid-2">
         <div class="chart-card">
           <h3>Middle Layer Temperature - Composter 1 vs Composter 2</h3>
@@ -114,7 +139,11 @@
       </div>
     </div>
 
-    <!-- TEAM -->
+    <!-- =======================================================
+         Team Tab
+         This section is mostly static content and documents who
+         worked on the project and what their roles were.
+         ======================================================= -->
     <div class="section" id="sec-team">
       <div class="section-title">Research Team</div>
       <div class="team-grid">
@@ -319,13 +348,117 @@
     </div>
   </div>
   
+    <!-- =======================================================
+         Findings Tab
+         This tab converts the filtered study export into short,
+         readable conclusions and supporting summary panels.
+         ======================================================= -->
     <div class="section" id="sec-findings">
-      <div class="section-title">Key Findings</div>
+      <div class="home-header findings-header">
+        <div class="home-eyebrow">Notebook-backed results</div>
+        <div class="home-title">Findings from the <strong>May-July 2025</strong> study window</div>
+        <p class="home-sub" id="findings-sub">
+          This tab summarizes only the 87 filtered notebook rows already used across the page, so every finding below stays inside the May 2025 to July 2025 window.
+        </p>
+      </div>
+
+      <!-- =====================================================
+           Findings Statistics
+           These cards surface the strongest numbers at a glance:
+           window size, peak heat, temperature gap, and heating.
+           ===================================================== -->
+      <div class="stat-grid findings-stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="findings-stat-rows">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="findings-stat-range">06 May 2025 to 31 Jul 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Peak Middle Temp</div>
+          <div class="stat-value" id="findings-stat-peak">60.4 C</div>
+          <div class="stat-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="findings-stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Largest Temp Gap</div>
+          <div class="stat-value" id="findings-stat-gap">53.1 C</div>
+          <div class="stat-unit">largest compost vs outside gap</div>
+          <div class="stat-delta" id="findings-stat-gap-detail">56.7 C inside vs 3.6 C outside on 21 May 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Heating Use</div>
+          <div class="stat-value" id="findings-stat-heat">0 W</div>
+          <div class="stat-unit">heater output in exported rows</div>
+          <div class="stat-delta" id="findings-stat-heat-detail">C1 and C2 heating stayed at zero in this slice</div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           Findings Panels
+           The first panel frames the key patterns while the
+           second keeps the live measurements link separate.
+           ===================================================== -->
+      <div class="chart-grid findings-panels">
+        <div class="chart-card">
+          <h3>What Stands Out</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Peak Timing</div>
+              <p id="finding-timing-note">All of the highest internal temperatures landed in mid-May, early in the filtered export.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Layering</div>
+              <p id="finding-layering-note">Moisture concentrated in the lower layers while upper layers stayed far drier, especially in Composter 1.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Scope</div>
+              <p id="finding-window-note">These notes summarize only the filtered May to July 2025 notebook slice shown throughout this page.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Reference Link</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Measurements Dashboard</div>
+              <p>
+                The live measurements page is linked here for reference only. The findings on this tab are limited to the May-July 2025 notebook export above.
+              </p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Why It Is Separate</div>
+              <p>
+                Keeping the evidence inside one study window makes the findings consistent with the charts and statistics already shown on this webpage.
+              </p>
+            </div>
+          </div>
+          <a class="findings-link" href="https://kuituhamppu.frostbit.fi/composting/measurements" target="_blank" rel="noopener noreferrer">
+            Open Measurements Dashboard
+          </a>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           Findings Cards
+           Each card captures one evidence-backed takeaway from
+           the same May-July dataset used elsewhere on the page.
+           ===================================================== -->
       <div class="findings-grid">
         <div class="finding-card">
           <div class="finding-label">Temperature</div>
           <h3>Both composters reached thermophilic temperatures</h3>
-          <p id="finding-temp">In the actual dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
+          <p id="finding-temp">In the filtered dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Timing</div>
+          <h3>The hottest phase arrived early in the study window</h3>
+          <p id="finding-timing">All six internal temperature peaks clustered in the middle of May, showing the strongest heat build-up early in the export.</p>
         </div>
 
         <div class="finding-card">
@@ -335,20 +468,30 @@
         </div>
 
         <div class="finding-card">
-          <div class="finding-label">Heating</div>
-          <h3>Heating became most important during winter</h3>
-          <p id="finding-heating">In this notebook's filtered May to July slice, heating wattage stayed at 0 W throughout the exported rows.</p>
+          <div class="finding-label">Comparison</div>
+          <h3>Composter 2 ran slightly warmer and wetter overall</h3>
+          <p id="finding-comparison">Composter 2 kept the warmest middle layer and carried noticeably more moisture higher up the pile than Composter 1.</p>
         </div>
 
         <div class="finding-card">
           <div class="finding-label">Outside Conditions</div>
-          <h3>Outdoor temperatures dropped far below compost temperatures</h3>
+          <h3>Compost temperatures climbed far above outside air</h3>
           <p id="finding-outside">Within the exported notebook slice, outside temperatures ranged from 2.8 C to 26.7 C while compost temperatures climbed much higher.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Heating</div>
+          <h3>Heating stayed off throughout the exported slice</h3>
+          <p id="finding-heating">In this notebook's filtered May to July slice, heating wattage stayed at 0 W throughout the exported rows.</p>
         </div>
       </div>
     </div>
 
-    <!-- COMPOSTING -->
+    <!-- =======================================================
+         Composting Tab
+         This is the background-information section that explains
+         the composting process, phases, and key control factors.
+         ======================================================= -->
     <div class="section" id="sec-composting">
       <div class="section-title">Composting Facts</div>
       <div class="composting-grid">
@@ -436,6 +579,11 @@
       </div>
     </div>
 
+    <!-- =======================================================
+         Quiz Tab
+         The markup here is intentionally small because the quiz
+         interface itself is rendered dynamically in main.js.
+         ======================================================= -->
     <div class="section" id="sec-quiz">
       <div class="section-title">Test Your Composting Knowledge</div>
       <div class="quiz-container">
@@ -445,6 +593,11 @@
     </div>
 
   </div><!-- end .root -->
+  <!-- =========================================================
+       External Scripts
+       Chart.js powers the visualizations and main.js handles
+       tab switching, findings text, chart setup, and the quiz.
+       ========================================================= -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script src="main.js"></script>
 </body>
