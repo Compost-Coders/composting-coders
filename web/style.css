@@ -541,6 +541,123 @@ body {
   margin-bottom: 24px;
 }
 
+/*Composting facts section*/
+
+.composting-facts {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.composting-section {
+  background: #131a0c;
+  border: 0.5px solid rgba(140, 190, 80, 0.12);
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.composting-section h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a8d05a;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.composting-section p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d4e4b8;
+  margin-bottom: 12px;
+}
+
+.composting-section ul {
+  list-style: disc;
+  margin-left: 24px;
+  margin-bottom: 16px;
+}
+
+.composting-section li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d4e4b8;
+  margin-bottom: 8px;
+}
+
+.composting-section img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+/*Composting page*/
+
+.composting-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+
+.composting-grid > div {
+  background: #131a0c;
+  border: 0.5px solid rgba(140, 190, 80, 0.12);
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.composting-grid h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a8d05a;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.composting-grid p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d4e4b8;
+  margin-bottom: 12px;
+}
+
+.composting-grid ul {
+  list-style: disc;
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.composting-grid li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d4e4b8;
+  margin-bottom: 8px;
+}
+
+.composting-grid img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.composting-grid a {
+  color: #a8d05a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(168, 208, 90, 0.3);
+  transition: color 0.2s ease;
+}
+
+.composting-grid a:hover {
+  color: #d4e4b8;
+  border-bottom-color: rgba(212, 228, 184, 0.5);
+}
+
 /*Responsive*/
 
 @media (max-width: 1024px) {
