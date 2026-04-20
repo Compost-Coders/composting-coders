@@ -17,7 +17,7 @@ body {
   min-height: 100vh;
 }
 
-/*Navigation*/
+/* ── Navigation ─────────────────────────────────────────── */
 
 .nav {
   display: flex;
@@ -67,7 +67,7 @@ body {
   background: rgba(140, 190, 80, 0.08);
 }
 
-/*Sections*/
+/* ── Sections ────────────────────────────────────────────── */
 
 .section {
   display: none;
@@ -87,7 +87,7 @@ body {
   margin-bottom: 28px;
 }
 
-/*Home / Analytics header*/
+/* ── Home / Analytics header ─────────────────────────────── */
 
 .home-header {
   margin-bottom: 36px;
@@ -123,7 +123,7 @@ body {
   line-height: 1.7;
 }
 
-/*Stat cards*/
+/* ── Stat cards ──────────────────────────────────────────── */
 
 .stat-grid {
   display: grid;
@@ -226,7 +226,7 @@ body {
   width: 100%;
 }
 
-/*Legend*/
+/* ── Legend ──────────────────────────────────────────────── */
 
 .legend {
   display: flex;
@@ -251,7 +251,7 @@ body {
   flex-shrink: 0;
 }
 
-/*Progress bars*/
+/* ── Progress bars ───────────────────────────────────────── */
 
 .progress-item {
   margin-bottom: 13px;
@@ -462,7 +462,7 @@ body {
   gap: 4px;
 }
 
-/*Composting grid*/
+/* ── Composting grid ───────────────────────────────────────────── */
 
 .composting-grid {
   display: grid;
