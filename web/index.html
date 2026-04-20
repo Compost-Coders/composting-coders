@@ -3,126 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compost Lab — Research Expo 2026</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>Compost Lab - Research Expo 2026</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <!-- =========================================================
+       App Shell
+       The root wrapper contains the navigation and all tabbed
+       sections that JavaScript shows or hides during use.
+       ========================================================= -->
   <div class="root">
+    <!-- =======================================================
+         Navigation
+         Each button maps directly to a section id further below.
+         The active state is handled in main.js by showTab().
+         ======================================================= -->
     <nav class="nav">
-      <div class="nav-logo">// Compost Lab &nbsp;·&nbsp; Expo 2026</div>
+      <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('home', this)">Analytics</button>
+        <button class="nav-tab active" onclick="showTab('home', this)">Overview</button>
         <button class="nav-tab" onclick="showTab('team', this)">Team</button>
+        <button class="nav-tab" onclick="showTab('findings', this)">Findings</button>
         <button class="nav-tab" onclick="showTab('composting', this)">Composting</button>
-        <button class="nav-tab" onclick="showTab('project', this)">Project</button>
         <button class="nav-tab" onclick="showTab('quiz', this)">Quiz</button>
-
       </div>
     </nav>
 
-    <!-- ANALYTICS -->
+    <!-- =======================================================
+         Overview Tab
+         This is the landing dashboard with study stats, charts,
+         and short insight cards for the filtered dataset.
+         ======================================================= -->
     <div class="section active" id="sec-home">
       <div class="home-header">
-        <div class="home-eyebrow">Research Dashboard</div>
-        <div class="home-title">Closing the loop on<br><strong>organic waste.</strong></div>
-        <p class="home-sub">Tracking decomposition rates, carbon sequestration, and soil health outcomes across our field trial sites.</p>
+        <div class="home-eyebrow">Composting dataset dashboard</div>
+        <div class="home-title">Compost analysis of <strong>dataset</strong></div>
+        <p class="home-sub">
+          Enter some text here about the dataset, or the analysis process, or key insights... or anything you figure i guess
+        </p>
       </div>
 
+      <!-- =====================================================
+           Overview Statistics
+           These cards summarize the study window, composters,
+           sensor layout, and headline temperature result.
+           ===================================================== -->
       <div class="stat-grid">
         <div class="stat-card">
-          <div class="stat-label">Waste Diverted</div>
-          <div class="stat-value">4.8</div>
-          <div class="stat-unit">tonnes this season</div>
-          <div class="stat-delta">↑ 23% vs last season</div>
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="stat-days">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="stat-range">May 2025 to July 2025</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Avg. Decomp. Rate</div>
-          <div class="stat-value">38</div>
-          <div class="stat-unit">days to mature compost</div>
-          <div class="stat-delta">↓ 6 days improvement</div>
+          <div class="stat-label">Composters</div>
+          <div class="stat-value">2</div>
+          <div class="stat-unit">Composter 1 and Composter 2 tracked daily</div>
+          <div class="stat-delta">Six internal sensor positions total</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">CO₂ Sequestered</div>
-          <div class="stat-value">2.1</div>
-          <div class="stat-unit">tonnes CO₂-eq</div>
-          <div class="stat-delta">↑ 11% vs target</div>
+          <div class="stat-label">Sensor Layers</div>
+          <div class="stat-value">3</div>
+          <div class="stat-unit">upper, middle, lower</div>
+          <div class="stat-delta">Temperature and moisture at each layer</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Soil Organic Matter</div>
-          <div class="stat-value">6.4</div>
-          <div class="stat-unit">% avg. across sites</div>
-          <div class="stat-delta neg">↓ 0.2% site 3 anomaly</div>
+          <div class="stat-label">Peak Temperature</div>
+          <div class="stat-value" id="stat-peak">60.4 C</div>
+          <div class="stat-unit" id="stat-peak-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
         </div>
       </div>
 
+      <!-- =====================================================
+           Overview Charts
+           The canvases below are filled by Chart.js in main.js.
+           Each card focuses on one comparison in the study data.
+           ===================================================== -->
       <div class="chart-grid">
         <div class="chart-card">
-          <h3>Decomposition Rate — Field Trials (days)</h3>
+          <h3>Composter 1 Temperature vs Outside</h3>
           <div class="legend">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Site A</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Site B</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Site C</span>
+            <span><span class="legend-dot" style="background:#a8d05a"></span>Upper layer</span>
+            <span><span class="legend-dot" style="background:#7abf3a"></span>Middle layer</span>
+            <span><span class="legend-dot" style="background:#4a9e6a"></span>Lower layer</span>
+            <span><span class="legend-dot" style="background:#c47a3a"></span>Outside air</span>
           </div>
-          <div class="canvas-wrap" style="height:200px;">
+          <div class="canvas-wrap" style="height:220px;">
             <canvas id="lineChart"></canvas>
           </div>
         </div>
+
         <div class="chart-card">
-          <h3>Feedstock Composition</h3>
-          <div class="canvas-wrap" style="height:200px;">
-            <canvas id="donutChart"></canvas>
-          </div>
-          <div class="legend" style="margin-top:12px;justify-content:center;">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Food 48%</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Garden 31%</span>
-            <span><span class="legend-dot" style="background:#2d6e4a"></span>Paper 13%</span>
-            <span><span class="legend-dot" style="background:#1a3d2a"></span>Other 8%</span>
+          <h3>Dataset 1 analysis Focus</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Temperature</div>
+              <p>The notebook plots each composter against outside air and annotates turning, waste additions, and removal events.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Moisture</div>
+              <p>The summary emphasizes strong vertical stratification: dry upper layers and wetter lower layers, especially in Composter 2.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Heating</div>
+              <p>Heating wattage is analyzed as its own time series, with winter values rising while outside temperatures drop far below zero.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Summary</div>
+              <p>The notebook concludes that dry hemp helps aeration, while moisture accumulates downward and should be redistributed by turning.</p>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- =====================================================
+           Comparison Charts
+           These charts place the two composters side by side so
+           temperature and moisture differences are easy to see.
+           ===================================================== -->
       <div class="chart-grid-2">
         <div class="chart-card">
-          <h3>Monthly Waste Input (kg)</h3>
-          <div class="canvas-wrap" style="height:160px;">
-            <canvas id="barChart"></canvas>
+          <h3>Middle Layer Temperature - Composter 1 vs Composter 2</h3>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="comparisonChart"></canvas>
           </div>
         </div>
+
         <div class="chart-card">
-          <h3>Soil Health Indicators</h3>
-          <div class="progress-item">
-            <div class="progress-label"><span>Nitrogen (N)</span><span>82%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:82%;background:#7abf3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Phosphorus (P)</span><span>67%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:67%;background:#4a9e6a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Potassium (K)</span><span>74%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:74%;background:#7abf3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Moisture</span><span>55%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:55%;background:#c47a3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Microbial Activity</span><span>91%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:91%;background:#7abf3a;"></div></div>
-          </div>
-        </div>
-        <div class="chart-card">
-          <h3>Temperature Cycle — Active Bin</h3>
-          <div class="canvas-wrap" style="height:160px;">
-            <canvas id="tempChart"></canvas>
+          <h3>Lower Layer Moisture - Composter 1 vs Composter 2</h3>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="moistureChart"></canvas>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TEAM -->
+    <!-- =======================================================
+         Team Tab
+         This section is mostly static content and documents who
+         worked on the project and what their roles were.
+         ======================================================= -->
     <div class="section" id="sec-team">
       <div class="section-title">Research Team</div>
       <div class="team-grid">
@@ -326,114 +347,257 @@
       </div>
     </div>
   </div>
-
-  <!-- COMPOSTING -->
-    <div class="section" id="sec-composting">
-      <div class="section-title">FUN COMPOSTING FACTS</div>
-      <div class="composting-grid">
-
-       <div><p>some text here
-        Composting is important and fun
-        Today product of composting is considered black gold due to multiple functions it can have.
-        It can be used for example as fertilizer and part of gas productions. 
-       </p></div>
-
-        <div><p>some text here
-        Composting is important and fun
-        Today product of composting is considered black gold due to multiple functions it can have.
-        It can be used for example as fertilizer and part of gas productions. 
-        </p></div>
-
-    <div class="fact">
-      <div><p>🍌 About 30% of household waste can be composted instead of thrown away.</p>
-    </div>
-
-
-      </div>
-      </div>
-    </div>
-
-    
-  <!-- PROJECT -->
-    <div class="section" id="sec-project">
-      <div class="section-title">Kuituhamppu käyttöön -project introduction</div>
-      <div class="project-grid">
-
-        <div><p>Kuituhamppu käyttöön is societal project falling into the 17 Sustainable Development Goals of the United Nations. 
-          The project categories are goal number 7; affordable and clean energy for all and number 13; climate action (Lapland UAS, 2026). 
-          Kuituhamppu käyttöön project is budget is 846 817€ and it is funded by the European Union by 70% and Lapin Liitto covers the rest 30%. 
-          Project is scheduled to take place between 1.12.2023 and 28.2.2026 (Frostbit, 2026).  
+  
+    <!-- =======================================================
+         Findings Tab
+         This tab converts the filtered study export into short,
+         readable conclusions and supporting summary panels.
+         ======================================================= -->
+    <div class="section" id="sec-findings">
+      <div class="home-header findings-header">
+        <div class="home-eyebrow">Notebook-backed results</div>
+        <div class="home-title">Findings from the <strong>May-July 2025</strong> study window</div>
+        <p class="home-sub" id="findings-sub">
+          This tab summarizes only the 87 filtered notebook rows already used across the page, so every finding below stays inside the May 2025 to July 2025 window.
         </p>
+      </div>
+
+      <!-- =====================================================
+           Findings Statistics
+           These cards surface the strongest numbers at a glance:
+           window size, peak heat, temperature gap, and heating.
+           ===================================================== -->
+      <div class="stat-grid findings-stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="findings-stat-rows">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="findings-stat-range">06 May 2025 to 31 Jul 2025</div>
         </div>
 
-        <div><p>The aim of the Kuituhamppu project is to produce information on the potential of hemp, reed manna grass, and other similar plants 
-          as industrial raw materials to replace peat. The project examines the suitability of hemp and other organic by-products, among other things,
-          as raw materials for energy pellets, insulation materials in construction, and growth substrates – without forgetting the economic viability 
-          of production (Frostbit, 2026).  
-        </p></div>
-          
-        <div><p>According to Sitra approximately half of the global peat energy usage takes place in Finland where peat has played a significant role in 
-          district heating, although its energy use has decreased clearly from its peak levels in the 2000s. Peat is used both for energy production 
-          and for other purposes such as growing media and animal bedding. Globally, energy use of peat is declining, while its non-energy use may 
-          increase as there is global demand particularly in China (Soimakallio et al. 2020).  
-        </p></div>
+        <div class="stat-card">
+          <div class="stat-label">Peak Middle Temp</div>
+          <div class="stat-value" id="findings-stat-peak">60.4 C</div>
+          <div class="stat-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="findings-stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
+        </div>
 
-        <div><p>In 2020, the Finnish government decided to halve the use of peat for energy, after which its use declined rapidly. The goal has been to 
-          cut peat energy use by 50% by 2030. However, the war in Ukraine is changing the direction of energy policy, as Finland has considered restoring peat 
-          production to replace some of the energy means imported from Russia (Fritze, 2022). However, according to Neova Group, which is one of the largest 
-          peat manufacturers in Finland, peat use in Finland has decreased to about one-third of its 2019 level compared to 2025due to electrification, but 
-          it remains important for energy security, while mild weather in the Nordics has reduced heating demand and caused excess biomass supply (Neova, p. 64, 2025).</p></div>
-          
-        <div><p>The use of peat for energy has significant negative impacts on the climate and environment: it produces high greenhouse gas emissions, pollutes waterways, 
-          and threatens endangered peatland ecosystems. Peat is not a renewable energy source, despite some claims, because it regenerates extremely slowly. 
-          Both the EU and the IPCC classify peat alongside fossil fuels due to its emissions (Fritze, 2022).</p></div> 
-          
-        <div><p>Compost coders project focused on Kuituhamppu -project work package number 2 where hemp was investigated as growing medium in composts. The mean was 
-          surplus hemp that does not go to building materials and it was used in this case for composts which were in backyard of Lapland University of 
-          applied school building.  The composts had sensors to read for example moisture and heat levels in the composts. </p></div>
+        <div class="stat-card">
+          <div class="stat-label">Largest Temp Gap</div>
+          <div class="stat-value" id="findings-stat-gap">53.1 C</div>
+          <div class="stat-unit">largest compost vs outside gap</div>
+          <div class="stat-delta" id="findings-stat-gap-detail">56.7 C inside vs 3.6 C outside on 21 May 2025</div>
+        </div>
 
+        <div class="stat-card">
+          <div class="stat-label">Heating Use</div>
+          <div class="stat-value" id="findings-stat-heat">0 W</div>
+          <div class="stat-unit">heater output in exported rows</div>
+          <div class="stat-delta" id="findings-stat-heat-detail">C1 and C2 heating stayed at zero in this slice</div>
+        </div>
+      </div>
 
-        <div class="references">
-          <h3>References: </h3>
-          <ul>
-          <li>Lapland University of Applied sciences, Kuituhamppu investointi. Accessed 14.4.2026. Avaialble at:
-            <a href="https://lapinamk.fi/hanke/kuituhamppu-investointi-2/">https://lapinamk.fi/hanke/kuituhamppu-investointi-2/ </a></li>
-          <li>Frostbit, Kuituhamppu käyttöön. Accessed 15.4.2026. Available at:<a href="https://kuituhamppu.frostbit.fi/"> https://kuituhamppu.frostbit.fi/ </a></li>
-          <li>Soimakallio, S.,  Sankelo, P., Kopsakangas-Savolainen, M., Sederholm, C., Auvinen, K., Heinonen, T., Johansson, A., Judl, J., Karhinen, J., Lehtoranta, S., 
-          Räsänen, S., Savolainen, H., 22.6.2020. Sitra. Turpeen rooli ja sen käytöstä luopumisen vaikutukset Suomessa. Accessed 15.4.2026. Available at:  
-          <a href="https://www.sitra.fi/julkaisut/turpeen-rooli-ja-sen-kaytosta-luopumisen-vaikutukset-suomessa/">https://www.sitra.fi/julkaisut/turpeen-rooli-ja-sen-kaytosta-luopumisen-vaikutukset-suomessa/ </a></li>
-          <li>Fritze, J., WWF. 30.3.2022. Turpeen paluu ja lisääntyvät hakkuut, Muun muassa näillä viidellä tavalla Ukrainan sota voi vaikuttaa ympäristöön Suomessa. Accessed 15.4.2026. Available at: 
-          <a href="https://wwf.fi/uutiset/2022/03/turpeen-paluu-ja-lisaantyvat-hakkuut-muun-muassa-nailla-viidella-tavalla-ukrainan-sota-voi-vaikuttaa-ymparistoon-suomessa/">
-            https://wwf.fi/uutiset/2022/03/turpeen-paluu-ja-lisaantyvat-hakkuut-muun-muassa-nailla-viidella-tavalla-ukrainan-sota-voi-vaikuttaa-ymparistoon-suomessa/ </a></li>
-          <li>Neova Group, Vuosi 2025. Accessed 16.4.2026. Available at:  <a href="https://www.neova-group.com/wp-content/uploads/2026/03/neova_raportit_2025_24032026.pdf">
-          https://www.neova-group.com/wp-content/uploads/2026/03/neova_raportit_2025_24032026.pdf</a></li>
+      <!-- =====================================================
+           Findings Panels
+           The first panel frames the key patterns while the
+           second keeps the live measurements link separate.
+           ===================================================== -->
+      <div class="chart-grid findings-panels">
+        <div class="chart-card">
+          <h3>What Stands Out</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Peak Timing</div>
+              <p id="finding-timing-note">All of the highest internal temperatures landed in mid-May, early in the filtered export.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Layering</div>
+              <p id="finding-layering-note">Moisture concentrated in the lower layers while upper layers stayed far drier, especially in Composter 1.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Scope</div>
+              <p id="finding-window-note">These notes summarize only the filtered May to July 2025 notebook slice shown throughout this page.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Reference Link</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Measurements Dashboard</div>
+              <p>
+                The live measurements page is linked here for reference only. The findings on this tab are limited to the May-July 2025 notebook export above.
+              </p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Why It Is Separate</div>
+              <p>
+                Keeping the evidence inside one study window makes the findings consistent with the charts and statistics already shown on this webpage.
+              </p>
+            </div>
+          </div>
+          <a class="findings-link" href="https://kuituhamppu.frostbit.fi/composting/measurements" target="_blank" rel="noopener noreferrer">
+            Open Measurements Dashboard
+          </a>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           Findings Cards
+           Each card captures one evidence-backed takeaway from
+           the same May-July dataset used elsewhere on the page.
+           ===================================================== -->
+      <div class="findings-grid">
+        <div class="finding-card">
+          <div class="finding-label">Temperature</div>
+          <h3>Both composters reached thermophilic temperatures</h3>
+          <p id="finding-temp">In the filtered dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Timing</div>
+          <h3>The hottest phase arrived early in the study window</h3>
+          <p id="finding-timing">All six internal temperature peaks clustered in the middle of May, showing the strongest heat build-up early in the export.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Moisture</div>
+          <h3>Lower layers retained the most water</h3>
+          <p id="finding-moisture">The lower layer reached 100% moisture in both composters at some point, while upper layers were often extremely dry.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Comparison</div>
+          <h3>Composter 2 ran slightly warmer and wetter overall</h3>
+          <p id="finding-comparison">Composter 2 kept the warmest middle layer and carried noticeably more moisture higher up the pile than Composter 1.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Outside Conditions</div>
+          <h3>Compost temperatures climbed far above outside air</h3>
+          <p id="finding-outside">Within the exported notebook slice, outside temperatures ranged from 2.8 C to 26.7 C while compost temperatures climbed much higher.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Heating</div>
+          <h3>Heating stayed off throughout the exported slice</h3>
+          <p id="finding-heating">In this notebook's filtered May to July slice, heating wattage stayed at 0 W throughout the exported rows.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Composting Tab
+         This is the background-information section that explains
+         the composting process, phases, and key control factors.
+         ======================================================= -->
+    <div class="section" id="sec-composting">
+      <div class="section-title">Composting Facts</div>
+      <div class="composting-grid">
+        <div>
+          <h2>What is composting</h2>
+          <p>
+            Composting is turning organic waste into a valuable resource.
+            <br>
+            Compost is a dark, crumbly, soil‑like material that improves soil structure, boosts plant growth, and increases nutrient availability.
+            <br><br>
+            Compost is created from a mix of:
+          </p>
+          <ul style="margin-left: 20px;">
+            <li>Brown materials (carbon‑rich), such as dry leaves, twigs, and branches (bedding). They provide energy and structure for the compost.</li>
+            <li>Green materials (nitrogen‑rich), such as grass clippings, fruit scraps, and vegetable peels (= kitchen scraps), paper, etc. They provide proteins for microbial growth.</li>
+            <li>Water, which helps microorganisms thrive.</li>
           </ul>
+          <p>
+            Composting relies on microorganisms like bacteria and fungi to break down organic matter into simpler compounds. 
+            For creating ideal conditions it needs the right balance of temperature, moisture, and air.
+            <br><br>
+            To differentiate from (home) composting, anaerobic digestion occurs on an industrial level, in an oxygen-free environment, generating both biogas (renewable energy) and digestate, 
+            making it well-suited for large-scale operations like farms and food processing plants. It takes longer but can manage tougher waste types.
+          </p>
         </div>
-   
+
+        <div>
+          <h2>Phases of home composting</h2>
+          <img src="img/composting_phases.png" alt="Aerobic composting phases" style="width: 430px; margin: 20px 0;">
+          <p style="font-size: 12px;">
+            Source:
+            <a href="https://www.compostconnect.org/what-is-composting/" target="_blank" rel="noopener noreferrer">
+              https://www.compostconnect.org/what-is-composting/
+            </a>
+          </p>
+          <p>
+            <strong>Mesophilic (initiation) Phase</strong><br>
+            During this phase, mesophilic (moderate temperature) microorganisms begin breaking down organic materials.
+          </p>
+          <p>
+            <strong>Thermophilic Phase</strong><br>
+            During this phase, the compost pile heats up thanks to the activity of thermophilic (heat-loving) microorganisms. 
+            These high temperatures can help break down tougher materials.
+          </p>
+          <p>
+            <strong>Maturation Phase</strong><br>
+            Once the organic materials have broken down, the compost pile can cool down and enter the curing phase. 
+            Beneficial microorganisms still work, just at lower temperatures.
+          </p>
+        </div>
+
+        <div>
+          <h2>Key factors</h2>
+          <p>
+            The speed, efficiency, and quality of the final compost depend on a set of controllable environmental and nutritional factors.
+          </p>
+          <p>
+            <strong>1. Carbon to nitrogen (C/N) ratio</strong><br>
+            Optimal (C/N) ratio is between 20:1 and 40:1 for fast composting.<br>
+            Too much nitrogen causes odors, but too little isn't enough for microbial growth, and compost remains cool 
+            which means degradation at a slow rate.<br>
+            The ratio decreases throughout the process to 10-15:1 in a finished product.
+          </p>
+          <p>
+            <strong>2. Moisture content</strong><br>
+            It allows microorganisms to move, reproduce, and break down organic material efficiently, 
+            with optimal level at about 50–60%. Conditions that are too dry or too wet slow decomposition and reduce quality. 
+            Managing moisture through watering, covering, or adding dry materials helps maintain healthy microbial activity and stable temperatures.
+          </p>
+          <p>
+            <strong>3. Temperature</strong><br>
+            A composting pile has to generate heat to actively decompose.
+            Suitable temperatures in thermophilic phase destroy pathogens, weed seeds, and fly larvae that would otherwise survive in the compost,
+            but temperatures above 65 °C harm beneficial microbes.
+          </p>
+          <p>
+            <strong>4. Oxygen supply</strong><br>
+            Aerobic composting requires adequate oxygen for microorganisms to function efficiently.
+          </p>
+          <p>
+            <strong>5. pH balance</strong><br>
+            Maintaining proper pH helps optimize microbial activity throughout the composting process.
+          </p>
+        </div>
       </div>
     </div>
 
-  
-  
-    <!-- QUIZ -->
-
-      
-      <div class="section" id="sec-quiz">
-      <div class="section-title">TRY OUR QUIZ HERE</div>
-      <div class="quiz-grid">
-
-        <p>add game here</p>
-
-
-        <div class="fact">
-          <div><p>🍌 About 30% of household waste can be composted instead of thrown away.</p></div>
-        </div>
-
-
+    <!-- =======================================================
+         Quiz Tab
+         The markup here is intentionally small because the quiz
+         interface itself is rendered dynamically in main.js.
+         ======================================================= -->
+    <div class="section" id="sec-quiz">
+      <div class="section-title">Test Your Composting Knowledge</div>
+      <div class="quiz-container">
+        <div class="progress-bar" style="height:5px;background:rgba(140,190,80,0.1);border-radius:3px;margin-bottom:24px;"><div id="quiz-prog" style="width:0%;height:5px;background:#7abf3a;border-radius:3px;transition:width 0.3s;"></div></div>
+        <div id="quiz-app"></div>
       </div>
     </div>
 
-
+  </div><!-- end .root -->
+  <!-- =========================================================
+       External Scripts
+       Chart.js powers the visualizations and main.js handles
+       tab switching, findings text, chart setup, and the quiz.
+       ========================================================= -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script src="main.js"></script>
 </body>
