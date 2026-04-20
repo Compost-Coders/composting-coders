@@ -382,6 +382,30 @@ body {
   gap: 18px;
 }
 
+
+/* ── Project grid ───────────────────────────────────────────── */
+
+.project-grid {
+  font-size: 15px;
+  font-weight: 300;
+  color: #6b8c45;
+  max-width: 760px;
+  line-height: 1.7;
+}
+
+.project-grid p {
+  margin-bottom: 30px;
+}
+
+.project-grid {
+  font-size: 15px;
+  font-weight: 300;
+  color: #6b8c45;
+  max-width: 760px;
+  line-height: 1.7;
+}
+
+
 /* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
