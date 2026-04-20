@@ -345,8 +345,8 @@ function initCharts() {
           {
             label: "Upper layer",
             data: rows.map(function (row) { return row["C1_Up_T"]; }),
-            borderColor: "#a8d05a",
-            backgroundColor: "rgba(168, 208, 90, 0.08)",
+            borderColor: "#e8c84a",
+            backgroundColor: "rgba(232, 200, 74, 0.08)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -355,8 +355,8 @@ function initCharts() {
           {
             label: "Middle layer",
             data: rows.map(function (row) { return row["C1_Mid_T"]; }),
-            borderColor: "#7abf3a",
-            backgroundColor: "rgba(122, 191, 58, 0.10)",
+            borderColor: "#5ddb6a",
+            backgroundColor: "rgba(93, 219, 106, 0.10)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -365,8 +365,8 @@ function initCharts() {
           {
             label: "Lower layer",
             data: rows.map(function (row) { return row["C1_Low_T"]; }),
-            borderColor: "#4a9e6a",
-            backgroundColor: "rgba(74, 158, 106, 0.08)",
+            borderColor: "#4aa8d8",
+            backgroundColor: "rgba(74, 168, 216, 0.08)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -375,8 +375,8 @@ function initCharts() {
           {
             label: "Outside air",
             data: rows.map(function (row) { return row["Out_T"]; }),
-            borderColor: "#c47a3a",
-            backgroundColor: "rgba(196, 122, 58, 0.08)",
+            borderColor: "#e05555",
+            backgroundColor: "rgba(224, 85, 85, 0.08)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -389,6 +389,140 @@ function initCharts() {
         " C"
       );
 
+      // C2 full layer chart: mirrors the C1 chart for direct comparison.
+      createLineChart(
+        "lineChartC2",
+        labels,
+        [
+          {
+            label: "Upper layer",
+            data: rows.map(function (row) { return row["C2_Up_T"]; }),
+            borderColor: "#e8c84a",
+            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "Middle layer",
+            data: rows.map(function (row) { return row["C2_Mid_T"]; }),
+            borderColor: "#5ddb6a",
+            backgroundColor: "rgba(93, 219, 106, 0.10)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "Lower layer",
+            data: rows.map(function (row) { return row["C2_Low_T"]; }),
+            borderColor: "#4aa8d8",
+            backgroundColor: "rgba(74, 168, 216, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "Outside air",
+            data: rows.map(function (row) { return row["Out_T"]; }),
+            borderColor: "#e05555",
+            backgroundColor: "rgba(224, 85, 85, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2,
+            borderDash: [5, 5]
+          }
+        ],
+        0,
+        65,
+        " C"
+      );
+
+      // C1 moisture by layer: upper and lower C1 moisture series.
+      createLineChart(
+        "moistureChartC1",
+        labels,
+        [
+          {
+            label: "C1 upper moisture",
+            data: rows.map(function (row) { return row["C1_Up_M"]; }),
+            borderColor: "#e8c84a",
+            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "C1 middle moisture",
+            data: rows.map(function (row) { return row["C1_Mid_M"]; }),
+            borderColor: "#5ddb6a",
+            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "C1 lower moisture",
+            data: rows.map(function (row) { return row["C1_Low_M"]; }),
+            borderColor: "#4aa8d8",
+            backgroundColor: "rgba(74, 168, 216, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          }
+        ],
+        0,
+        100,
+        "%"
+      );
+
+      // C2 moisture by layer: upper and lower C2 moisture series.
+      createLineChart(
+        "moistureChartC2",
+        labels,
+        [
+          {
+            label: "C2 upper moisture",
+            data: rows.map(function (row) { return row["C2_Up_M"]; }),
+            borderColor: "#e8c84a",
+            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "C2 middle moisture",
+            data: rows.map(function (row) { return row["C2_Mid_M"]; }),
+            borderColor: "#5ddb6a",
+            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          },
+          {
+            label: "C2 lower moisture",
+            data: rows.map(function (row) { return row["C2_Low_M"]; }),
+            borderColor: "#4aa8d8",
+            backgroundColor: "rgba(74, 168, 216, 0.08)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 2
+          }
+        ],
+        0,
+        100,
+        "%"
+      );
+
       // Direct comparison between the two middle-layer temperature series.
       createLineChart(
         "comparisonChart",
@@ -397,8 +531,8 @@ function initCharts() {
           {
             label: "C1 middle",
             data: rows.map(function (row) { return row["C1_Mid_T"]; }),
-            borderColor: "#7abf3a",
-            backgroundColor: "rgba(122, 191, 58, 0.10)",
+            borderColor: "#5ddb6a",
+            backgroundColor: "rgba(93, 219, 106, 0.10)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -407,7 +541,7 @@ function initCharts() {
           {
             label: "C2 middle",
             data: rows.map(function (row) { return row["C2_Mid_T"]; }),
-            borderColor: "#d8e86e",
+            borderColor: "#a8e8b0",
             backgroundColor: "rgba(216, 232, 110, 0.08)",
             tension: 0.35,
             fill: false,
@@ -432,8 +566,8 @@ function initCharts() {
             {
               label: "C1 lower moisture",
               data: rows.map(function (row) { return row["C1_Low_M"]; }),
-              borderColor: "#7abf3a",
-              backgroundColor: "rgba(122, 191, 58, 0.08)",
+              borderColor: "#5ddb6a",
+              backgroundColor: "rgba(93, 219, 106, 0.08)",
               tension: 0.35,
               fill: false,
               pointRadius: 0,
@@ -442,8 +576,8 @@ function initCharts() {
             {
               label: "C2 lower moisture",
               data: rows.map(function (row) { return row["C2_Low_M"]; }),
-              borderColor: "#4a9e6a",
-              backgroundColor: "rgba(74, 158, 106, 0.08)",
+              borderColor: "#4aa8d8",
+              backgroundColor: "rgba(74, 168, 216, 0.08)",
               tension: 0.35,
               fill: false,
               pointRadius: 0,
@@ -483,8 +617,8 @@ function initCharts() {
           {
             label: "C1 heating",
             data: rows.map(function (row) { return row["C1_Inside_heat_w"]; }),
-            borderColor: "#c47a3a",
-            backgroundColor: "rgba(196, 122, 58, 0.08)",
+            borderColor: "#e05555",
+            backgroundColor: "rgba(224, 85, 85, 0.08)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -493,8 +627,8 @@ function initCharts() {
           {
             label: "C2 heating",
             data: rows.map(function (row) { return row["C2_Inside_heat_w"]; }),
-            borderColor: "#7abf3a",
-            backgroundColor: "rgba(122, 191, 58, 0.10)",
+            borderColor: "#5ddb6a",
+            backgroundColor: "rgba(93, 219, 106, 0.10)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,

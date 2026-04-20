@@ -22,6 +22,7 @@
       <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
         <button class="nav-tab active" onclick="showTab('home', this)">Overview</button>
+        <button class="nav-tab" onclick="showTab('project', this)">Project</button>
         <button class="nav-tab" onclick="showTab('team', this)">Team</button>
         <button class="nav-tab" onclick="showTab('findings', this)">Findings</button>
         <button class="nav-tab" onclick="showTab('composting', this)">Composting</button>
@@ -35,108 +36,212 @@
          and short insight cards for the filtered dataset.
          ======================================================= -->
     <div class="section active" id="sec-home">
+
+      <!-- Page header -->
       <div class="home-header">
-        <div class="home-eyebrow">Composting dataset dashboard</div>
-        <div class="home-title">Compost analysis of <strong>dataset</strong></div>
+        <div class="home-eyebrow">Composting dataset dashboard · May – July 2025</div>
+        <div class="home-title">Compost analysis of <strong>two heated composters</strong></div>
         <p class="home-sub">
-          Enter some text here about the dataset, or the analysis process, or key insights... or anything you figure i guess
+          87 daily readings from two side-by-side composters tracked across three internal layers each. Both units reached thermophilic temperatures above 59 °C, confirming active microbial decomposition throughout the study window.
         </p>
       </div>
 
       <!-- =====================================================
-           Overview Statistics
-           These cards summarize the study window, composters,
-           sensor layout, and headline temperature result.
+           Top stat row: 
+           study window - visual composter card - sensor layers - peak temperature
            ===================================================== -->
       <div class="stat-grid">
+
         <div class="stat-card">
           <div class="stat-label">Study Window</div>
           <div class="stat-value" id="stat-days">87</div>
           <div class="stat-unit">filtered rows from notebook</div>
           <div class="stat-delta" id="stat-range">May 2025 to July 2025</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Composters</div>
-          <div class="stat-value">2</div>
-          <div class="stat-unit">Composter 1 and Composter 2 tracked daily</div>
-          <div class="stat-delta">Six internal sensor positions total</div>
+
+        <!-- Visual composter comparison card -->
+        <div class="stat-card composter-visual-card">
+          <div class="stat-label">Sensor Layout</div>
+          <div class="composter-diagram">
+            <div class="composter-unit" id="cdiag-1">
+              <div class="cdiag-label">C1</div>
+              <div class="cdiag-bin">
+                <div class="cdiag-layer cdiag-upper"><span>upper</span></div>
+                <div class="cdiag-layer cdiag-middle"><span>middle</span></div>
+                <div class="cdiag-layer cdiag-lower"><span>lower</span></div>
+              </div>
+            </div>
+            <div class="composter-divider">
+              <div class="cdiv-line"></div>
+              <div class="cdiv-label">vs</div>
+              <div class="cdiv-line"></div>
+            </div>
+            <div class="composter-unit" id="cdiag-2">
+              <div class="cdiag-label">C2</div>
+              <div class="cdiag-bin">
+                <div class="cdiag-layer cdiag-upper"><span>upper</span></div>
+                <div class="cdiag-layer cdiag-middle"><span>middle</span></div>
+                <div class="cdiag-layer cdiag-lower"><span>lower</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="stat-delta" style="margin-top:8px;">3 sensor layers · 6 positions total</div>
         </div>
+
         <div class="stat-card">
           <div class="stat-label">Sensor Layers</div>
           <div class="stat-value">3</div>
           <div class="stat-unit">upper, middle, lower</div>
-          <div class="stat-delta">Temperature and moisture at each layer</div>
+          <div class="stat-delta neg">Lower layers reached 100% moisture</div>
         </div>
+
         <div class="stat-card">
           <div class="stat-label">Peak Temperature</div>
           <div class="stat-value" id="stat-peak">60.4 C</div>
           <div class="stat-unit" id="stat-peak-unit">Composter 2 middle maximum</div>
           <div class="stat-delta" id="stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
         </div>
+
       </div>
 
       <!-- =====================================================
-           Overview Charts
-           The canvases below are filled by Chart.js in main.js.
-           Each card focuses on one comparison in the study data.
+           Two-column split: 
+           LEFT = Composter 1, RIGHT = Composter 2
+           A sticky column header makes the affiliation obvious.
            ===================================================== -->
-      <div class="chart-grid">
+      <div class="overview-split">
+
+        <!-- ── COMPOSTER 1 column ─────────────────────────── -->
+        <div class="overview-col">
+          <div class="col-badge col-badge-1">Composter 1</div>
+
+          <!-- C1 temperature chart -->
+          <div class="chart-card">
+            <h3>Temperature vs Outside Air</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#5ddb6a"></span>Middle</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+              <span><span class="legend-dot" style="background:#e05555"></span>Outside</span>
+            </div>
+            <div class="canvas-wrap" style="height:220px;">
+              <canvas id="lineChart"></canvas>
+            </div>
+          </div>
+
+          <!-- C1 moisture by layer -->
+          <div class="chart-card">
+            <h3>Moisture by Layer</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+            </div>
+            <div class="canvas-wrap" style="height:180px;">
+              <canvas id="moistureChartC1"></canvas>
+            </div>
+          </div>
+
+          <!-- C1 key stats mini-panel -->
+          <div class="chart-card">
+            <h3>Composter 1 Key Stats</h3>
+            <div class="insight-stack">
+              <div class="insight-item">
+                <div class="insight-kicker">Peak middle temp</div>
+                <p>Middle layer peaked at <strong id="c1-peak-mid">59.9 C</strong>, with all six C1 temperature maxima clustered in mid-May.</p>
+              </div>
+              <div class="insight-item">
+                <div class="insight-kicker">Moisture stratification</div>
+                <p>Upper layer stayed dry throughout while lower layer averaged high moisture and reached 100% at least once.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Column divider ─────────────────────────────── -->
+        <div class="col-divider"></div>
+
+        <!-- ── COMPOSTER 2 column ─────────────────────────── -->
+        <div class="overview-col">
+          <div class="col-badge col-badge-2">Composter 2</div>
+
+          <!-- C2 temperature chart -->
+          <div class="chart-card">
+            <h3>Temperature vs Outside Air</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#5ddb6a"></span>Middle</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+              <span><span class="legend-dot" style="background:#e05555"></span>Outside</span>
+            </div>
+            <div class="canvas-wrap" style="height:220px;">
+              <canvas id="lineChartC2"></canvas>
+            </div>
+          </div>
+
+          <!-- C2 moisture by layer -->
+          <div class="chart-card">
+            <h3>Moisture by Layer</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+            </div>
+            <div class="canvas-wrap" style="height:180px;">
+              <canvas id="moistureChartC2"></canvas>
+            </div>
+          </div>
+
+          <!-- C2 key stats mini-panel -->
+          <div class="chart-card">
+            <h3>Composter 2 Key Stats</h3>
+            <div class="insight-stack">
+              <div class="insight-item">
+                <div class="insight-kicker">Peak middle temp</div>
+                <p>Middle layer hit <strong id="c2-peak-mid">60.4 C</strong> — the overall study maximum — running slightly warmer than C1 throughout.</p>
+              </div>
+              <div class="insight-item">
+                <div class="insight-kicker">Moisture stratification</div>
+                <p>Composter 2 carried noticeably more moisture higher up the pile, with a wetter upper layer compared to C1 across the study window.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================
+           Full-width comparison row: spans both columns so
+           cross-composter charts sit outside the C1/C2 split.
+           ===================================================== -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="col-badge col-badge-mix">C1 &amp; C2 — Combined</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="chart-grid" style="margin-top:20px;">
         <div class="chart-card">
-          <h3>Composter 1 Temperature vs Outside</h3>
+          <h3>Middle Layer Temperature — C1 vs C2</h3>
           <div class="legend">
-            <span><span class="legend-dot" style="background:#a8d05a"></span>Upper layer</span>
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Middle layer</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Lower layer</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Outside air</span>
+            <span><span class="legend-dot" style="background:#5ddb6a"></span>C1 middle</span>
+            <span><span class="legend-dot" style="background:#a8e8b0"></span>C2 middle</span>
           </div>
-          <div class="canvas-wrap" style="height:220px;">
-            <canvas id="lineChart"></canvas>
-          </div>
-        </div>
-
-        <div class="chart-card">
-          <h3>Dataset 1 analysis Focus</h3>
-          <div class="insight-stack">
-            <div class="insight-item">
-              <div class="insight-kicker">Temperature</div>
-              <p>The notebook plots each composter against outside air and annotates turning, waste additions, and removal events.</p>
-            </div>
-            <div class="insight-item">
-              <div class="insight-kicker">Moisture</div>
-              <p>The summary emphasizes strong vertical stratification: dry upper layers and wetter lower layers, especially in Composter 2.</p>
-            </div>
-            <div class="insight-item">
-              <div class="insight-kicker">Heating</div>
-              <p>Heating wattage is analyzed as its own time series, with winter values rising while outside temperatures drop far below zero.</p>
-            </div>
-            <div class="insight-item">
-              <div class="insight-kicker">Summary</div>
-              <p>The notebook concludes that dry hemp helps aeration, while moisture accumulates downward and should be redistributed by turning.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- =====================================================
-           Comparison Charts
-           These charts place the two composters side by side so
-           temperature and moisture differences are easy to see.
-           ===================================================== -->
-      <div class="chart-grid-2">
-        <div class="chart-card">
-          <h3>Middle Layer Temperature - Composter 1 vs Composter 2</h3>
           <div class="canvas-wrap" style="height:180px;">
             <canvas id="comparisonChart"></canvas>
           </div>
         </div>
 
         <div class="chart-card">
-          <h3>Lower Layer Moisture - Composter 1 vs Composter 2</h3>
+          <h3>Lower Layer Moisture — C1 vs C2</h3>
+          <div class="legend">
+            <span><span class="legend-dot" style="background:#5ddb6a"></span>C1 lower</span>
+            <span><span class="legend-dot" style="background:#4aa8d8"></span>C2 lower</span>
+          </div>
           <div class="canvas-wrap" style="height:180px;">
             <canvas id="moistureChart"></canvas>
           </div>
         </div>
       </div>
+
     </div>
 
     <!-- =======================================================
@@ -587,8 +692,126 @@
     <div class="section" id="sec-quiz">
       <div class="section-title">Test Your Composting Knowledge</div>
       <div class="quiz-container">
-        <div class="progress-bar" style="height:5px;background:rgba(140,190,80,0.1);border-radius:3px;margin-bottom:24px;"><div id="quiz-prog" style="width:0%;height:5px;background:#7abf3a;border-radius:3px;transition:width 0.3s;"></div></div>
+        <div class="progress-bar" style="height:5px;background:rgba(140,190,80,0.1);border-radius:3px;margin-bottom:24px;"><div id="quiz-prog" style="width:0%;height:5px;background:#5ddb6a;border-radius:3px;transition:width 0.3s;"></div></div>
         <div id="quiz-app"></div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Project Tab
+         This section provides background and context for the
+         Kuituhamppu käyttöön EU research project that the
+         composting experiment forms part of, including budget,
+         timeline, peat policy context, and references.
+         ======================================================= -->
+    <div class="section" id="sec-project">
+      <div class="home-header">
+        <div class="home-eyebrow">Background & Context</div>
+        <div class="home-title">Kuituhamppu <strong>käyttöön</strong></div>
+        <p class="home-sub">
+          An EU-funded research project exploring the potential of hemp and similar plants to replace peat in energy, construction, and as growing media.
+        </p>
+      </div>
+
+      <!-- =====================================================
+           Top stat row:
+           Total project budget and project period at a glance.
+           ===================================================== -->
+      <div class="stat-grid-2">
+        <div class="stat-card">
+          <div class="stat-label">Total Budget</div>
+          <div class="stat-value">846k</div>
+          <div class="stat-unit">€846 817 total project budget</div>
+          <div class="stat-delta">EU funds 70% · Lapin Liitto 30%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Project Period</div>
+          <div class="stat-value">2023–26</div>
+          <div class="stat-unit">Dec 2023 to Feb 2026</div>
+          <div class="stat-delta">Lapland University of Applied Sciences</div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           Two-column insight panels:
+           LEFT = project aims and our contribution,
+           RIGHT = peat context and policy background.
+           ===================================================== -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Project Aims</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Research focus</div>
+              <p>The project investigates the potential of hemp, reed manna grass, and similar plants as industrial raw materials with the potential to replace peat across multiple applications.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Applications studied</div>
+              <p>Suitability as raw material for energy pellets, insulation in construction, and growth substrates, alongside analysis of economic viability of production.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Our contribution</div>
+              <p>The Compost Coders project focused on Work Package 2, where surplus hemp not used in construction was tested as a growing medium in outdoor composters at Lapland UAS.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Sensor data</div>
+              <p>The composters were equipped with sensors tracking moisture and temperature at multiple internal positions, generating the dataset analysed in this dashboard.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Peat in Finland - Why It Matters</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">UN SDGs</div>
+              <p>The project addresses Goal 7 (affordable and clean energy for all) and Goal 13 (climate action), both of which are relevant to reducing dependence on peat as an energy source.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Global context</div>
+              <p>Finland accounts for roughly half of global peat energy use. Globally, energy use of peat is declining, while non-energy use may increase due to demand particularly from China. Peat also remains significant domestically for growing media and animal bedding.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Policy shifts</div>
+              <p>In 2020 the Finnish government set a target to cut peat energy use by 50% by 2030. The war in Ukraine complicated this, as Finland considered restoring peat production to replace energy previously imported from Russia. According to Neova Group's 2025 annual report, peat use in Finland has decreased to about one-third of its 2019 level by 2025, driven by electrification, mild Nordic winters, and excess biomass supply.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Environmental impact</div>
+              <p>Peat combustion generates high greenhouse gas emissions, pollutes waterways, and threatens peatland ecosystems. The EU and IPCC classify peat alongside fossil fuels as it regenerates so slowly it is not considered renewable.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           References card
+           Full-width panel listing all sources cited in the
+           project context and peat policy sections above.
+           ===================================================== -->
+      <div class="chart-card" style="margin-top: 0;">
+        <h3>References</h3>
+        <div class="ref-list">
+          <div class="ref-item">
+            <span class="ref-label">Lapland UAS</span>
+            <span class="ref-text">Kuituhamppu investointi. Accessed 14.4.2026. <a class="ref-link" href="https://lapinamk.fi/hanke/kuituhamppu-investointi-2/" target="_blank">lapinamk.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Frostbit</span>
+            <span class="ref-text">Kuituhamppu käyttöön. Accessed 15.4.2026. <a class="ref-link" href="https://kuituhamppu.frostbit.fi/" target="_blank">kuituhamppu.frostbit.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Soimakallio et al., 2020</span>
+            <span class="ref-text">Turpeen rooli ja sen käytöstä luopumisen vaikutukset Suomessa. Sitra. <a class="ref-link" href="https://www.sitra.fi/julkaisut/turpeen-rooli-ja-sen-kaytosta-luopumisen-vaikutukset-suomessa/" target="_blank">sitra.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Fritze, J., WWF, 2022</span>
+            <span class="ref-text">Turpeen paluu ja lisääntyvät hakkuut. Accessed 15.4.2026. <a class="ref-link" href="https://wwf.fi/uutiset/2022/03/turpeen-paluu-ja-lisaantyvat-hakkuut-muun-muassa-nailla-viidella-tavalla-ukrainan-sota-voi-vaikuttaa-ymparistoon-suomessa/" target="_blank">wwf.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Neova Group, 2025</span>
+            <span class="ref-text">Vuosi 2025 annual report. Accessed 16.4.2026. <a class="ref-link" href="https://www.neova-group.com/wp-content/uploads/2026/03/neova_raportit_2025_24032026.pdf" target="_blank">neova-group.com</a></span>
+          </div>
+        </div>
       </div>
     </div>
 
