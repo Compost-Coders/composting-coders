@@ -201,12 +201,37 @@ function updateSummary(rows) {
   var avgC2MidT = avgValue(rows, "C2_Mid_T");
   var avgC1MidT = avgValue(rows, "C1_Mid_T");
 
-  // Overview tab summary cards.
+// Overview tab summary cards.
   setText("stat-days", String(rows.length));
-  setText("stat-range", formatMonthRange(rows[0].Day, rows[rows.length - 1].Day));
-  setText("stat-peak", peakC2.toFixed(1) + " C");
-  setText("stat-peak-unit", "C2 middle maximum");
-  setText("stat-peak-detail", "C1 middle also reached " + peakC1.toFixed(1) + " C");
+  setText("stat-range", formatFullDate(rows[0].Day) + " to " + formatFullDate(rows[rows.length - 1].Day));
+
+  // Per-layer peak and min temperature — C1 and C2.
+  setText("c1-up-peak",  maxValue(rows, "C1_Up_T").toFixed(1)  + " C");
+  setText("c1-up-min",   minValue(rows, "C1_Up_T").toFixed(1)  + " C");
+  setText("c1-mid-peak", maxValue(rows, "C1_Mid_T").toFixed(1) + " C");
+  setText("c1-mid-min",  minValue(rows, "C1_Mid_T").toFixed(1) + " C");
+  setText("c1-low-peak", maxValue(rows, "C1_Low_T").toFixed(1) + " C");
+  setText("c1-low-min",  minValue(rows, "C1_Low_T").toFixed(1) + " C");
+  setText("c2-up-peak",  maxValue(rows, "C2_Up_T").toFixed(1)  + " C");
+  setText("c2-up-min",   minValue(rows, "C2_Up_T").toFixed(1)  + " C");
+  setText("c2-mid-peak", maxValue(rows, "C2_Mid_T").toFixed(1) + " C");
+  setText("c2-mid-min",  minValue(rows, "C2_Mid_T").toFixed(1) + " C");
+  setText("c2-low-peak", maxValue(rows, "C2_Low_T").toFixed(1) + " C");
+  setText("c2-low-min",  minValue(rows, "C2_Low_T").toFixed(1) + " C");
+
+  // Per-layer peak and min moisture — C1 and C2 (upper and lower only).
+  setText("c1-up-mpeak",  maxValue(rows, "C1_Up_M").toFixed(1)  + "%");
+  setText("c1-up-mmin",   minValue(rows, "C1_Up_M").toFixed(1)  + "%");
+  setText("c1-mid-mpeak", maxValue(rows, "C1_Mid_M").toFixed(1) + "%");
+  setText("c1-mid-mmin",  minValue(rows, "C1_Mid_M").toFixed(1) + "%");
+  setText("c1-low-mpeak", maxValue(rows, "C1_Low_M").toFixed(1) + "%");
+  setText("c1-low-mmin",  minValue(rows, "C1_Low_M").toFixed(1) + "%");
+  setText("c2-up-mpeak",  maxValue(rows, "C2_Up_M").toFixed(1)  + "%");
+  setText("c2-up-mmin",   minValue(rows, "C2_Up_M").toFixed(1)  + "%");
+  setText("c2-mid-mpeak", maxValue(rows, "C2_Mid_M").toFixed(1) + "%");
+  setText("c2-mid-mmin",  minValue(rows, "C2_Mid_M").toFixed(1) + "%");
+  setText("c2-low-mpeak", maxValue(rows, "C2_Low_M").toFixed(1) + "%");
+  setText("c2-low-mmin",  minValue(rows, "C2_Low_M").toFixed(1) + "%");
 
   // Findings tab intro and its headline statistics.
   setText("findings-sub",
@@ -460,7 +485,7 @@ function initCharts() {
             label: "C1 middle moisture",
             data: rows.map(function (row) { return row["C1_Mid_M"]; }),
             borderColor: "#5ddb6a",
-            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            backgroundColor: "rgba(93, 219, 106, 0.10)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,
@@ -501,7 +526,7 @@ function initCharts() {
             label: "C2 middle moisture",
             data: rows.map(function (row) { return row["C2_Mid_M"]; }),
             borderColor: "#5ddb6a",
-            backgroundColor: "rgba(232, 200, 74, 0.08)",
+            backgroundColor: "rgba(93, 219, 106, 0.10)",
             tension: 0.35,
             fill: false,
             pointRadius: 0,

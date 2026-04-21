@@ -934,6 +934,64 @@ body {
   letter-spacing: 0.08em;
 }
 
+/* ── Per-layer temperature table card ───────────────────── */
+
+.temp-table-card {
+  padding: 18px 20px 16px;
+}
+
+.temp-table {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.temp-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+}
+
+.temp-table-row-wide {
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+}
+
+.temp-table-head {
+  color: #4a6630;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid rgba(140, 190, 80, 0.1);
+  margin-bottom: 2px;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+}
+
+.tt-head-c1 { color: #a8d05a; }
+.tt-head-c2 { color: #d8e86e; }
+
+.temp-table-row span:not(.tt-layer) {
+  color: #d4e4b8;
+}
+
+.tt-layer {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  width: fit-content;
+}
+
+.tt-upper  { background: rgba(232, 200, 74,  0.12); color: #e8c84a; }
+.tt-middle { background: rgba(93,  219, 106, 0.12); color: #5ddb6a; }
+.tt-lower  { background: rgba(74,  168, 216, 0.12); color: #4aa8d8; }
+
 /* ── Column divider (vertical line between C1 and C2) ───── */
 
 .col-divider {
@@ -972,64 +1030,6 @@ body {
   box-shadow: none;
 }
 
-/* ── Project tab ─────────────────────────────────────────── */
-
-/* Two-column stat grid used on the Project tab budget/period row */
-.stat-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-/* Reference list inside the full-width references card */
-.ref-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.ref-item {
-  display: flex;
-  gap: 16px;
-  font-size: 13px;
-  line-height: 1.6;
-  border-bottom: 0.5px solid rgba(140, 190, 80, 0.08);
-  padding-bottom: 10px;
-}
-
-.ref-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* Monospaced label column keeps the source name visually distinct */
-.ref-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: #7abf3a;
-  min-width: 160px;
-  padding-top: 2px;
-  letter-spacing: 0.03em;
-}
-
-.ref-text {
-  color: #6b8c45;
-  flex: 1;
-}
-
-.ref-link {
-  color: #8cbe50;
-  text-decoration: none;
-  border-bottom: 0.5px solid rgba(140, 190, 80, 0.3);
-  transition: color 0.15s;
-}
-
-.ref-link:hover {
-  color: #d4e4b8;
-  border-bottom-color: rgba(212, 228, 184, 0.5);
-}
-
 /*Responsive*/
 
 @media (max-width: 1024px) {
@@ -1047,10 +1047,7 @@ body {
   .section { padding: 24px 20px; }
   .home-title { font-size: 28px; }
   .stat-grid { grid-template-columns: 1fr; }
-  .stat-grid-2 { grid-template-columns: 1fr; }
   .findings-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
-  .ref-item { flex-direction: column; gap: 4px; }
-  .ref-label { min-width: unset; }
 }
 
