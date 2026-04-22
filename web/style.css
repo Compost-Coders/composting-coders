@@ -491,7 +491,7 @@ body {
 
 .member.work {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.08em;
   color: #8cbe50;
   margin-top: 15px;
@@ -499,13 +499,25 @@ body {
 }
 
 .no-bullets {
-      list-style-type: none;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 8px;
-      letter-spacing: 0.10em;
-      color: #8cbe50;
-      margin-bottom: 20;      
-    }
+  list-style-type: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  color: #8cbe50;
+  margin-bottom: 20px;      
+}
+
+.no-bullets li {
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  border-bottom: 0.5px solid rgba(140, 190, 80, 0.15);
+}
+
+.no-bullets li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
 
 .member-skills {
   display: flex;
