@@ -27,6 +27,9 @@ function showTab(id, el) {
   if (id === 'home') {
     initCharts();
   }
+  if (id === 'composting') {
+    animatePhases();
+  }
   if (id === 'quiz') {
     renderQuiz();
   }
@@ -670,6 +673,80 @@ function initCharts() {
     });
 }
 
+
+/* ============================================================
+   Composting Phases Animated SVG
+   ============================================================ */
+function animatePhases() {
+  var curve  = document.getElementById('phases-curve');
+  var fill   = document.getElementById('phases-fill');
+  var div1   = document.getElementById('div1');
+  var div2   = document.getElementById('div2');
+  var lblInit   = document.getElementById('lbl-init');
+  var lblThermo = document.getElementById('lbl-thermo');
+  var lblMature = document.getElementById('lbl-mature');
+  var sanitLine  = document.getElementById('sanit-line');
+  var sanitLabel = document.getElementById('sanit-label');
+  var orgMeso1  = document.getElementById('org-meso1');
+  var orgThermo = document.getElementById('org-thermo');
+  var orgMeso2  = document.getElementById('org-meso2');
+  if (!curve) return;
+
+  // Reset animation state
+  [curve, fill, div1, div2, lblInit, lblThermo, lblMature, sanitLine, sanitLabel, orgMeso1, orgThermo, orgMeso2].forEach(function(el) {
+    if (el) { el.style.transition = 'none'; }
+  });
+  curve.style.strokeDashoffset = '1';
+  curve.style.opacity = '0';
+  fill.style.opacity = '0';
+  div1.style.opacity = '0';
+  div2.style.opacity = '0';
+  lblInit.style.opacity = '0';
+  lblThermo.style.opacity = '0';
+  lblMature.style.opacity = '0';
+  sanitLine.style.opacity = '0';
+  sanitLabel.style.opacity = '0';
+  orgMeso1.style.opacity = '0';
+  orgThermo.style.opacity = '0';
+  orgMeso2.style.opacity = '0';
+
+  setTimeout(function() {
+    // Draw the curve
+    curve.style.transition = 'stroke-dashoffset 2s ease-in-out, opacity 0.3s';
+    curve.style.opacity = '1';
+    curve.style.strokeDashoffset = '0';
+  }, 50);
+
+  setTimeout(function() {
+    // Fade in fill
+    fill.style.transition = 'opacity 0.8s ease';
+    fill.style.opacity = '0.35';
+  }, 1800);
+
+  setTimeout(function() {
+    // Phase dividers
+    div1.style.transition = 'opacity 0.5s'; div1.style.opacity = '1';
+    div2.style.transition = 'opacity 0.5s'; div2.style.opacity = '1';
+    sanitLine.style.transition = 'opacity 0.5s'; sanitLine.style.opacity = '1';
+    sanitLabel.style.transition = 'opacity 0.5s'; sanitLabel.style.opacity = '1';
+  }, 2200);
+
+  setTimeout(function() {
+    lblInit.style.transition = 'opacity 0.4s'; lblInit.style.opacity = '1';
+    orgMeso1.style.transition = 'opacity 0.4s'; orgMeso1.style.opacity = '1';
+  }, 2500);
+
+  setTimeout(function() {
+    lblThermo.style.transition = 'opacity 0.4s'; lblThermo.style.opacity = '1';
+    orgThermo.style.transition = 'opacity 0.4s'; orgThermo.style.opacity = '1';
+  }, 2800);
+
+  setTimeout(function() {
+    lblMature.style.transition = 'opacity 0.4s'; lblMature.style.opacity = '1';
+    orgMeso2.style.transition = 'opacity 0.4s'; orgMeso2.style.opacity = '1';
+  }, 3100);
+}
+
 /* ============================================================
    Quiz Question Bank
    The full quiz content lives here so future edits mostly mean
@@ -779,6 +856,186 @@ function pickQuiz(i) {
    ============================================================ */
 function nextQuiz() { quizCurrent++; renderQuiz(); }
 function restartQuiz() { quizCurrent = 0; quizScore = 0; renderQuiz(); }
+
+/* ============================================================
+   AI Chat
+    This section handles the user interface and API calls for the
+    LM Studio chatbot in the "AI Chat" tab. The SYSTEM_PROMPT
+   ============================================================ */
+var chatHistory = [];
+var SYSTEM_PROMPT = `You are an expert assistant for the Compost Lab research project (Expo 2026) at Lapland University of Applied Sciences. You have detailed knowledge of the following:
+
+DATASET SUMMARY (May–July 2025, 87 daily sensor rows):
+- Two composters (C1 and C2) were monitored with sensors at upper, middle, and lower layers
+- Sensors measured: temperature (°C) and moisture (%) at each layer, outside air temperature, and heating wattage
+- Peak temperatures: C1 middle = 59.9°C, C2 middle = 60.4°C (both thermophilic phase)
+- All six internal temperature peaks clustered in mid-May 2025
+- Moisture was highly stratified: lower layers were often near 100% wet, upper layers were very dry
+- C2 ran slightly warmer and wetter overall than C1
+- Outside temperature ranged from 2.8°C to 26.7°C during the period
+- Heating wattage stayed at 0W throughout May–July (no artificial heating needed)
+- Largest compost-vs-outside temperature gap was approximately 53°C
+
+COMPOSTING SCIENCE:
+- Three phases: Mesophilic/Initiation (moderate temps, 20–40°C), Thermophilic (45–65°C, kills pathogens), Maturation/Curing (cooling down)
+- Key factors: C/N ratio (optimal 20:1 to 40:1), moisture (optimal 50–60%), temperature, oxygen supply, pH
+- Temperatures above 45°C sanitize the compost (kill weed seeds and pathogens)
+- Temperatures above 65°C harm beneficial microbes
+- Turning compost adds oxygen and redistributes moisture
+- Dry hemp fiber was used as bedding (carbon-rich material) in this study
+
+Be concise, informative, and reference the dataset when possible. If asked about things beyond the dataset or composting science, politely note your scope.`;
+
+function appendChatMsg(role, text, loading) {
+  var msgs = document.getElementById('chat-messages');
+  if (!msgs) return null;
+  var div = document.createElement('div');
+  div.className = 'chat-msg ' + role;
+  var avatar = document.createElement('div');
+  avatar.className = 'chat-avatar';
+  avatar.textContent = role === 'user' ? 'You' : 'AI';
+  var bubble = document.createElement('div');
+  bubble.className = 'chat-bubble' + (loading ? ' loading-bubble' : '');
+  bubble.innerHTML = loading ? '<span class="dot-pulse"><span></span><span></span><span></span></span>' : renderMarkdown(text);
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderMarkdown(t) {
+  // Strip bare LaTeX commands that appear outside $...$ (e.g. \mathbf{45})
+  t = t.replace(/\\math(?:bf|rm|it|sf|tt|cal|bb|frak)\{([^}]+)\}/g, '$1');
+  t = t.replace(/\\text\{([^}]+)\}/g, '$1');
+
+  // Convert LaTeX math ($...$) to plain readable text
+  t = t.replace(/\$([^$\n]+)\$/g, function(_, math) {
+    return math
+      .replace(/\^?\{?\\circ\}?/g, '°')
+      .replace(/\\text\{([^}]+)\}/g, '$1')
+      .replace(/\\math(?:bf|rm|it|sf|tt|cal|bb|frak)\{([^}]+)\}/g, '$1')
+      .replace(/\^\{([^}]+)\}/g, '$1')
+      .replace(/\^([A-Za-z0-9])/g, '$1')
+      .replace(/[{}_\\]/g, '');
+  });
+
+  // Process line by line so tables can be converted to HTML
+  var lines = t.split('\n');
+  var output = [];
+  var tableLines = [];
+
+  function flushTable() {
+    if (!tableLines.length) return;
+    var html = '<table style="border-collapse:collapse;width:100%;margin:10px 0;">';
+    var isHeader = true;
+    tableLines.forEach(function(row) {
+      // Skip separator rows like | :--- | --- |
+      if (/^\|[\s|:\-]+\|$/.test(row.trim())) return;
+      var cells = row.split('|').slice(1, -1);
+      var tag = isHeader ? 'th' : 'td';
+      var style = isHeader
+        ? 'padding:6px 10px;border:0.5px solid rgba(140,190,80,0.25);color:#a8d05a;font-family:IBM Plex Mono,monospace;font-size:11px;text-align:left;'
+        : 'padding:6px 10px;border:0.5px solid rgba(140,190,80,0.12);color:#d4e4b8;font-size:12px;';
+      html += '<tr>' + cells.map(function(c) {
+        return '<' + tag + ' style="' + style + '">' + escapeHtml(c.trim()) + '</' + tag + '>';
+      }).join('') + '</tr>';
+      isHeader = false;
+    });
+    html += '</table>';
+    output.push(html);
+    tableLines = [];
+  }
+
+  lines.forEach(function(line) {
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      tableLines.push(line);
+    } else {
+      flushTable();
+      output.push(escapeHtml(line));
+    }
+  });
+  flushTable();
+
+  var html = output.join('\n');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/(^|\n)([ \t]*)\*[ \t]+/g, function(m, nl, sp) {
+    return nl + (sp.length > 0 ? '&nbsp;&nbsp;&nbsp;&nbsp;' : '') + '\u2022 ';
+  });
+  html = html.replace(/\*([^\s*][^*\n]*?)\*/g, '<em>$1</em>');
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+function sendSuggestion(btn) {
+  var text = btn.textContent;
+  var input = document.getElementById('chat-input');
+  if (input) input.value = text;
+  sendChat();
+}
+
+function sendChat() {
+  var input = document.getElementById('chat-input');
+  if (!input) return;
+  var text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  appendChatMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  var loadingDiv = appendChatMsg('assistant', '', true);
+
+  // Prepare messages in OpenAI format for LM Studio
+  var messages = [{ role: 'system', content: SYSTEM_PROMPT }].concat(chatHistory);
+
+  fetch('http://127.0.0.1:5000/v1/chat/completions', {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'local-model',
+      messages: messages,
+      max_tokens: 10000,
+      temperature: 0.7
+    })
+  })
+  .then(function(r) { 
+    if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
+    return r.json(); 
+  })
+  .then(function(data) {
+    var reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) ? data.choices[0].message.content : 'Sorry, I could not generate a response.';
+    chatHistory.push({ role: 'assistant', content: reply });
+    if (loadingDiv) {
+      var bubble = loadingDiv.querySelector('.chat-bubble');
+      if (bubble) {
+        bubble.classList.remove('loading-bubble');
+        bubble.innerHTML = renderMarkdown(reply);
+      }
+    }
+    var msgs = document.getElementById('chat-messages');
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  })
+  .catch(function(err) {
+    var errorMsg = 'Error: Could not reach the AI. Please try again.';
+    if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError') || err.message.includes('ERR_CONNECTION_REFUSED')) {
+      errorMsg = 'Connection to Local LLM failed';
+    } else if (err.message.includes('HTTP')) {
+      errorMsg = 'Server error: ' + err.message;
+    }
+    if (loadingDiv) {
+      var bubble = loadingDiv.querySelector('.chat-bubble');
+      if (bubble) { bubble.classList.remove('loading-bubble'); bubble.innerHTML = errorMsg; }
+    }
+    console.error('Chat error:', err);
+  });
+}
 
 /* ============================================================
    Boot Sequence
