@@ -3,200 +3,407 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compost Lab — Research Expo 2026</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>Compost Lab - Research Expo 2026</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <!-- =========================================================
+       App Shell
+       The root wrapper contains the navigation and all tabbed
+       sections that JavaScript shows or hides during use.
+       ========================================================= -->
   <div class="root">
+    <!-- =======================================================
+         Navigation
+         Each button maps directly to a section id further below.
+         The active state is handled in main.js by showTab().
+         ======================================================= -->
     <nav class="nav">
-      <div class="nav-logo">// Compost Lab &nbsp;·&nbsp; Expo 2026</div>
+      <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('home', this)">Analytics</button>
+        <button class="nav-tab active" onclick="showTab('home', this)">Overview</button>
         <button class="nav-tab" onclick="showTab('team', this)">Team</button>
+        <button class="nav-tab" onclick="showTab('findings', this)">Findings</button>
         <button class="nav-tab" onclick="showTab('composting', this)">Composting</button>
-        <button class="nav-tab" onclick="showTab('quizz', this)">Quizz</button>
-
+        <button class="nav-tab" onclick="showTab('quiz', this)">Quiz</button>
       </div>
     </nav>
 
-    <!-- ANALYTICS -->
+    <!-- =======================================================
+         Overview Tab
+         This is the landing dashboard with study stats, charts,
+         and short insight cards for the filtered dataset.
+         ======================================================= -->
     <div class="section active" id="sec-home">
+
+      <!-- Page header -->
       <div class="home-header">
-        <div class="home-eyebrow">Compost Bin Analysis</div>
-        <div class="home-title">Monitoring <strong>thermophilic decomposition</strong><br>in real-time sensors.</div>
-        <p class="home-sub">Comprehensive analysis of temperature, moisture, and decomposition dynamics across dual compost bins (May 2025–September 16, 2025).</p>
+        <div class="home-eyebrow">Composting dataset dashboard · May – July 2025</div>
+        <div class="home-title">Compost analysis of <strong>two heated composters</strong></div>
+        <p class="home-sub">
+          87 daily readings from two side-by-side composters tracked across three internal layers each. Both units reached thermophilic temperatures above 59 °C, confirming active microbial decomposition throughout the study window.
+        </p>
       </div>
 
+      <!-- =====================================================
+           Top stat row: 
+           study window - visual composter card - sensor layers - peak temperature
+           ===================================================== -->
       <div class="stat-grid">
+
+        <div class="stat-card">
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="stat-days">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="stat-range">06 May 2025 to 31 July 2025</div>
+        </div>
+
+      <!-- Combined C1 + C2 peak/min temperature per layer -->
+        <div class="stat-card temp-table-card">
+          <div class="stat-label">Temperature — Peak &amp; Min by Layer</div>
+          <div class="temp-table">
+            <div class="temp-table-row temp-table-head">
+              <span>Layer</span>
+              <span class="tt-head-c1">Peak</span>
+              <span class="tt-head-c1">Min</span>
+              <span class="tt-head-c2">Peak</span>
+              <span class="tt-head-c2">Min</span>
+            </div>
+            <div class="temp-table-row temp-table-row-wide">
+              <span class="tt-layer tt-upper">Upper</span>
+              <span id="c1-up-peak">—</span>
+              <span id="c1-up-min">—</span>
+              <span id="c2-up-peak">—</span>
+              <span id="c2-up-min">—</span>
+            </div>
+            <div class="temp-table-row temp-table-row-wide">
+              <span class="tt-layer tt-middle">Middle</span>
+              <span id="c1-mid-peak">—</span>
+              <span id="c1-mid-min">—</span>
+              <span id="c2-mid-peak">—</span>
+              <span id="c2-mid-min">—</span>
+            </div>
+            <div class="temp-table-row temp-table-row-wide">
+              <span class="tt-layer tt-lower">Lower</span>
+              <span id="c1-low-peak">—</span>
+              <span id="c1-low-min">—</span>
+              <span id="c2-low-peak">—</span>
+              <span id="c2-low-min">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combined C1 + C2 peak/min moisture per layer -->
+        <div class="stat-card temp-table-card">
+          <div class="stat-label">Moisture — Peak &amp; Min by Layer</div>
+          <div class="temp-table">
+            <div class="temp-table-row temp-table-head">
+              <span>Layer</span>
+              <span class="tt-head-c1">Peak</span>
+              <span class="tt-head-c1">Min</span>
+              <span class="tt-head-c2">Peak</span>
+              <span class="tt-head-c2">Min</span>
+            </div>
+            <div class="temp-table-row temp-table-row-wide">
+              <span class="tt-layer tt-upper">Upper</span>
+              <span id="c1-up-mpeak">—</span>
+              <span id="c1-up-mmin">—</span>
+              <span id="c2-up-mpeak">—</span>
+              <span id="c2-up-mmin">—</span>
+            </div>
+            <div class="temp-table-row temp-table-row-wide">
+              <span class="tt-layer tt-middle">Middle</span>
+              <span id="c1-mid-mpeak">—</span>
+              <span id="c1-mid-mmin">—</span>
+              <span id="c2-mid-mpeak">—</span>
+              <span id="c2-mid-mmin">—</span>
+            </div>
+            <div class="temp-table-row temp-table-row-wide">
+              <span class="tt-layer tt-lower">Lower</span>
+              <span id="c1-low-mpeak">—</span>
+              <span id="c1-low-mmin">—</span>
+              <span id="c2-low-mpeak">—</span>
+              <span id="c2-low-mmin">—</span>
+            </div>
+          </div>
+        </div>
         <div class="stat-card">
           <div class="stat-label">Peak Temperature</div>
-          <div class="stat-value">59.9</div>
-          <div class="stat-unit">°C (May 2025)</div>
-          <div class="stat-delta">↑ Optimum thermophilic</div>
+          <div class="stat-value" id="stat-peak">60.4 C</div>
+          <div class="stat-unit" id="stat-peak-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Avg. Decomposition</div>
-          <div class="stat-value">25.3</div>
-          <div class="stat-unit">°C over 134 days</div>
-          <div class="stat-delta">✓ Healthy microbial</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Active Phase</div>
-          <div class="stat-value">12</div>
-          <div class="stat-unit">days above 40°C</div>
-          <div class="stat-delta">✓ Thermophilic period</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Monitoring Period</div>
-          <div class="stat-value">134</div>
-          <div class="stat-unit">days (May '25–Sep '25)</div>
-          <div class="stat-delta">✓ Full-year tracking</div>
-        </div>
+
       </div>
-      <div class="chart-grid">
-        <div class="chart-card">
-          <h3>Bin 1 — Temperature Over 134 Days</h3>
-          <div class="legend">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Lower</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Middle</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Upper</span>
+
+      <!-- =====================================================
+           Two-column split: 
+           LEFT = Composter 1, RIGHT = Composter 2
+           A sticky column header makes the affiliation obvious.
+           ===================================================== -->
+      <div class="overview-split">
+
+        <!-- ── COMPOSTER 1 column ─────────────────────────── -->
+        <div class="overview-col">
+          <div class="col-badge col-badge-1">Composter 1</div>
+
+          <!-- C1 temperature chart -->
+          <div class="chart-card">
+            <h3>Temperature vs Outside Air</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#5ddb6a"></span>Middle</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+              <span><span class="legend-dot" style="background:#e05555"></span>Outside</span>
+            </div>
+            <div class="canvas-wrap" style="height:220px;">
+              <canvas id="lineChart"></canvas>
+            </div>
           </div>
-          <div class="canvas-wrap" style="height:220px;">
-            <canvas id="bin1TempChart"></canvas>
+
+          <!-- C1 moisture by layer -->
+          <div class="chart-card">
+            <h3>Moisture by Layer</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#5ddb6a"></span>Middle</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+            </div>
+            <div class="canvas-wrap" style="height:180px;">
+              <canvas id="moistureChartC1"></canvas>
+            </div>
+          </div>
+
+          <!-- C1 key stats mini-panel -->
+          <div class="chart-card">
+            <h3>Composter 1 Key Stats</h3>
+            <div class="insight-stack">
+              <div class="insight-item">
+                <div class="insight-kicker">Peak middle temp</div>
+                <p>Middle layer peaked at <strong id="c1-peak-mid">59.9 C</strong>, with all six C1 temperature maxima clustered in mid-May.</p>
+              </div>
+              <div class="insight-item">
+                <div class="insight-kicker">Moisture stratification</div>
+                <p>Upper layer stayed dry throughout while lower layer averaged high moisture and reached 100% at least once.</p>
+              </div>
+              <div class="insight-item">
+                <div class="insight-kicker">Heating</div>
+                <p>Internal heating stayed at 0 W across the full May–July slice — decomposition heat alone drove temperatures.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="chart-card">
-          <h3>Bin 1 — Moisture Over 134 Days</h3>
-          <div class="legend">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Lower</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Middle</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Upper</span>
+
+        <!-- ── Column divider ─────────────────────────────── -->
+        <div class="col-divider"></div>
+
+        <!-- ── COMPOSTER 2 column ─────────────────────────── -->
+        <div class="overview-col">
+          <div class="col-badge col-badge-2">Composter 2</div>
+
+          <!-- C2 temperature chart -->
+          <div class="chart-card">
+            <h3>Temperature vs Outside Air</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#5ddb6a"></span>Middle</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+              <span><span class="legend-dot" style="background:#e05555"></span>Outside</span>
+            </div>
+            <div class="canvas-wrap" style="height:220px;">
+              <canvas id="lineChartC2"></canvas>
+            </div>
           </div>
-          <div class="canvas-wrap" style="height:220px;">
-            <canvas id="bin1MoistChart"></canvas>
+
+          <!-- C2 moisture by layer -->
+          <div class="chart-card">
+            <h3>Moisture by Layer</h3>
+            <div class="legend">
+              <span><span class="legend-dot" style="background:#e8c84a"></span>Upper</span>
+              <span><span class="legend-dot" style="background:#5ddb6a"></span>Middle</span>
+              <span><span class="legend-dot" style="background:#4aa8d8"></span>Lower</span>
+            </div>
+            <div class="canvas-wrap" style="height:180px;">
+              <canvas id="moistureChartC2"></canvas>
+            </div>
+          </div>
+
+          <!-- C2 key stats mini-panel -->
+          <div class="chart-card">
+            <h3>Composter 2 Key Stats</h3>
+            <div class="insight-stack">
+              <div class="insight-item">
+                <div class="insight-kicker">Peak middle temp</div>
+                <p>Middle layer hit <strong id="c2-peak-mid">60.4 C</strong> — the overall study maximum — running slightly warmer than C1 throughout.</p>
+              </div>
+              <div class="insight-item">
+                <div class="insight-kicker">Moisture stratification</div>
+                <p>C2 carried noticeably more moisture higher up the pile, with a wetter upper layer compared to C1 across the study window.</p>
+              </div>
+              <div class="insight-item">
+                <div class="insight-kicker">Heating</div>
+                <p>Like C1, internal heating remained at 0 W — the stronger microbial activity in C2 was self-sustaining throughout.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================
+           Full-width comparison row: spans both columns so
+           cross-composter charts sit outside the C1/C2 split.
+           ===================================================== -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="col-badge col-badge-mix">C1 &amp; C2 — Combined</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="chart-grid" style="margin-top:20px;">
+        <div class="chart-card">
+          <h3>Middle Layer Temperature — C1 vs C2</h3>
+          <div class="legend">
+            <span><span class="legend-dot" style="background:#5ddb6a"></span>C1 middle</span>
+            <span><span class="legend-dot" style="background:#a8e8b0"></span>C2 middle</span>
+          </div>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="comparisonChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Lower Layer Moisture — C1 vs C2</h3>
+          <div class="legend">
+            <span><span class="legend-dot" style="background:#5ddb6a"></span>C1 lower</span>
+            <span><span class="legend-dot" style="background:#4aa8d8"></span>C2 lower</span>
+          </div>
+          <div class="canvas-wrap" style="height:180px;">
+            <canvas id="moistureChart"></canvas>
           </div>
         </div>
       </div>
 
-      <div class="chart-grid">
-        <div class="chart-card">
-          <h3>Bin 2 — Temperature Over 134 Days</h3>
-          <div class="legend">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Lower</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Middle</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Upper</span>
-          </div>
-          <div class="canvas-wrap" style="height:220px;">
-            <canvas id="bin2TempChart"></canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <h3>Bin 2 — Moisture Over 134 Days</h3>
-          <div class="legend">
-            <span><span class="legend-dot" style="background:#7abf3a"></span>Lower</span>
-            <span><span class="legend-dot" style="background:#4a9e6a"></span>Middle</span>
-            <span><span class="legend-dot" style="background:#c47a3a"></span>Upper</span>
-          </div>
-          <div class="canvas-wrap" style="height:220px;">
-            <canvas id="bin2MoistChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="chart-grid-2">
-        <div class="chart-card">
-          <h3>Upper Layer Moisture Trend (May 2025–Apr 2026)</h3>
-          <div class="canvas-wrap" style="height:160px;">
-            <canvas id="barChart"></canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <h3>Soil Health Indicators</h3>
-          <div class="progress-item">
-            <div class="progress-label"><span>Nitrogen (N)</span><span>0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:#7abf3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Phosphorus (P)</span><span>0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:#4a9e6a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Potassium (K)</span><span>0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:#7abf3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Moisture</span><span>0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:#c47a3a;"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label"><span>Microbial Activity</span><span>0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:#7abf3a;"></div></div>
-          </div>
-        </div>
-        <div class="chart-card">
-          <h3>Initial Thermophilic Phase — First 30 Days</h3>
-          <div class="canvas-wrap" style="height:160px;">
-            <canvas id="tempChart"></canvas>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- TEAM -->
+    <!-- =======================================================
+         Team Tab
+         This section is mostly static content and documents who
+         worked on the project and what their roles were.
+         ======================================================= -->
     <div class="section" id="sec-team">
       <div class="section-title">Research Team</div>
       <div class="team-grid">
 
         <div class="member-card">
-          <div class="member-avatar">AJ</div>
-          <div class="member-name">Dr. Alex Johnson</div>
-          <div class="member-role">Principal Investigator</div>
-          <p class="member-bio">Soil ecologist with 12 years studying organic matter decomposition and circular nutrient systems in northern climates.</p>
+          <div class="member-avatar">JR</div>
+          <div class="member-name">Jan Raivio</div>
+          <div class="member-role">Project Manager</div>
+        <p class="member-work">Work Experience:
+          <li class="no-bullets">Magnetic MRO, Aircraft technician trainee, 04.2022-06.2022</li>
+        </p>
+
+          <p class="member-work">Education:</p>
+            <ul class="no-bullets">
+            <li>Machine Learning and Data Engineering student · Lapland University of applied sciences, started 2025</li>
+            <li>Vocational Qualification in Aircraft Maintenance · Lapland Education Centre REDU, graduated 2022 </li>
+          </ul>
+
+          <p class="member-work">Language Skills:</p>
           <div class="member-skills">
-            <span class="skill-tag">Soil Science</span>
-            <span class="skill-tag">Ecology</span>
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">Field Trials</span>
+            <span class="skill-tag">Finnish</span>
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Estonian</span>
           </div>
+          
+          <p class="member-work">IT skills:</p>
+          <div class="member-skills">
+            <span class="skill-tag">HTML coding</span>
+            <span class="skill-tag">CSS coding</span>
+            <span class="skill-tag">Python coding</span>
+          </div>
+          
           <div class="member-contact">
-            <span>PhD · Soil Ecology, Wageningen</span>
-            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7e1f50141116100d11103e0b1017081b0c0d170a07501b1a0b">[email&#160;protected]</a></span>
+            <span></span>
+            <span>jan.raivio@outlook.com</span>
           </div>
         </div>
 
         <div class="member-card">
-          <div class="member-avatar">MS</div>
-          <div class="member-name">Maria Santos</div>
-          <div class="member-role">Microbiology Lead</div>
-          <p class="member-bio">Studies microbial community dynamics in compost piles, with a focus on thermophilic bacteria and fungal succession.</p>
+          <div class="member-avatar">SK</div>
+          <div class="member-name">Savindu Kariyawasam</div>
+          <div class="member-role">Data Analysis Lead</div>
+        <p class="member-work">Work Experience:
+          <li class="no-bullets">Customer Guide (Fun Crew), Snowman World, Santa Claus village, Rovaniemi Finland since 2025</li>
+          <li class="no-bullets">Flight Operations administrator - intern, Asian Aviotion Centre, 2022-2023 </li>
+          </p>
+
+          <p class="member-work">Education:</p>
+            <ul class="no-bullets">
+            <li>Machine Learning and Data Engineering student · Lapland University of applied sciences, started 2025</li>
+            <li>Advance Diploma in Information Technology · Hybrid international campus, graduated 2024 </li>
+            <li>Pilot training · Asian Aviation Centre, graduated 2022 </li>
+            <li>GCE Advance Level · Prince of Wales College, graduated 2024 </li>
+          </ul>
+
+          <p class="member-work">Language Skills:</p>
           <div class="member-skills">
-            <span class="skill-tag">Microbiology</span>
-            <span class="skill-tag">16S rRNA</span>
-            <span class="skill-tag">QIIME2</span>
-            <span class="skill-tag">Lab Culture</span>
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Sinhala</span>
           </div>
+          
+          <p class="member-work">IT skills:</p>
+          <div class="member-skills">
+            <span class="skill-tag">HTML coding</span>
+            <span class="skill-tag">Python coding</span>
+          </div>
+          
           <div class="member-contact">
-            <span>PhD · Microbial Ecology, Helsinki</span>
-            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88e5a6fbe9e6fce7fbc8fde6e1feedfafbe1fcf1a6edecfd">[email&#160;protected]</a></span>
+            <span>..</span>
+            <span>savinduthathsara@gmail.com</span>
           </div>
         </div>
 
         <div class="member-card">
-          <div class="member-avatar">KL</div>
-          <div class="member-name">Kevin Lee</div>
-          <div class="member-role">Data & Sensors</div>
-          <p class="member-bio">Designs and deploys IoT sensor arrays across compost sites to capture temperature, moisture, and gas emissions in real time.</p>
+          <div class="member-avatar">NS</div>
+          <div class="member-name">Natalia Suopanki</div>
+          <div class="member-role">Content & Research Contributor</div>
+        <p class="member-work">Work Experience:
+          <li class="no-bullets">Front desk receptionist, Lapland Hotels Sky Ounasvaara, Rovaniemi Finland since 2024</li>
+          <li class="no-bullets">Healthcare services analyst, KAGes – Steiermärkische Krankenanstaltenges. m.b.H., 
+            Graz Austria, 2020-2024 </li>
+          <li class="no-bullets">Safari guide, Lapland Safaris, Rovaniemi Finland 2019-2020</li>
+          <li class="no-bullets">Business Controller, LKH-Univ. Klinikum Graz (University hospital in Graz),
+             Graz Austria, 2013-2018</li>
+          </p>
+
+          <p class="member-work">Education:</p>
+            <ul class="no-bullets">
+            <li>Machine Learning and Data Engineering student · Lapland University of applied sciences, started 2025</li>
+            <li>Master of Business · University of Graz, graduated 2019 </li>
+            <li>Bachelor of Arts in Transcultural Communication · University of Graz, graduated 2015 </li>
+
+          </ul>
+
+          <p class="member-work">Language Skills:</p>
           <div class="member-skills">
-            <span class="skill-tag">IoT</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Time-Series</span>
-            <span class="skill-tag">LoRaWAN</span>
+            <span class="skill-tag">Polish</span>
+            <span class="skill-tag">German</span>
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Finnish</span>
           </div>
+          
+          <p class="member-work">IT skills:</p>
+          <div class="member-skills">
+            <span class="skill-tag">SAP Crystal reports</span>
+            <span class="skill-tag">SAP Businessobjects</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Python coding</span>
+          </div>
+          
           <div class="member-contact">
-            <span>MSc · Environmental Engineering</span>
-            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b8d396d4ddddf8cdd6d1ceddcacbd1ccc196dddccd">[email&#160;protected]</a></span>
+            <span>..</span>
+            <span>nat.suopanki@gmail.com</span>
           </div>
         </div>
 
@@ -205,153 +412,371 @@
           <div class="member-name">Laura Ryönänkoski</div>
           <div class="member-role">Web Developer</div>
           <p class="member-work">Work Experience:
-          <li class="member-work">Senior Sanctions Expert, Nordea Bank, Helsinki Finland since 2016</li>
-          <li class="member-work">Customer Service Representative, Nets Oy, Helsinki Finland 2014-2016 </li>
-          <li class="member-work">Customer Service Representative, Konika Minolta Business Solutions, Espoo Finland 2013-2014</li>
+          <li class="no-bullets">Senior Sanctions Expert, Nordea Bank, Helsinki Finland since 2016</li>
+          <li class="no-bullets">Customer Service Representative, Nets Oy, Helsinki Finland 2014-2016 </li>
+          <li class="no-bullets">Customer Service Representative, Konika Minolta Business Solutions, Espoo Finland 2013-2014</li>
           </p>
+
+          <p class="member-work">Education:</p>
+            <ul class="no-bullets">
+            <li>Machine Learning and Data Engineering student · Lapland University of applied sciences, started 2025</li>
+            <li class="no-bullets">Bachelor of Business · Lahti University of applied sciences, graduated 2011 </li>
+          </ul>
+
           <p class="member-work">Language Skills:</p>
           <div class="member-skills">
             <span class="skill-tag">Finnish</span>
             <span class="skill-tag">English</span>
             <span class="skill-tag">Swedish</span>
+          </div>
+          
+          <p class="member-work">IT skills:</p>
+          <div class="member-skills">
             <span class="skill-tag">HTML coding</span>
+            <span class="skill-tag">Python coding</span>
           </div>
+          
+          
           <div class="member-contact">
-            <span>PhD candidate · Aalto University</span>
-            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5e2e70303f372c1e2b3037283b2c2d372a27703b3a2b">[email&#160;protected]</a></span>
+          <span>Machine Learning and Data Engineering student · Lapland University of applied sciences</span>
+          <span>lryonank@edu.lapinamk.fi</span>
           </div>
         </div>
 
         <div class="member-card">
-          <div class="member-avatar">TW</div>
-          <div class="member-name">Tom Wilder</div>
-          <div class="member-role">Field Researcher</div>
-          <p class="member-bio">Manages day-to-day site operations, feedstock logging, sample collection, and compost quality assessments.</p>
+          <div class="member-avatar">FF</div>
+          <div class="member-name">Fabian Frank</div>
+          <div class="member-role">GitHub Manager & Data Support</div>
+        <p class="member-work">Work Experience:
+          <li class="no-bullets">Incoming Intern, Electronics Development in Laboratory Environment, 
+            ZEISS SMT, 04.2026-10.2026</li>
+          <li class="no-bullets">Research and Venture Fellow (Builder Track), NanoTRIZ Innovation Institute (Australia), since 2026 </li>
+          <li class="no-bullets">Other: Stock Market Analyzer Web UI, PINN: Flow Around a Cylinder, Self-Hosted Infrastructure with Docker</li>
+          </p>
+
+          <p class="member-work">Education:</p>
+            <ul class="no-bullets">
+            <li>Machine Learning and Data Engineering student · Lapland University of applied sciences, started 2025</li>
+            <li>Helfenstein Gymnasium, Geislingen, graduated 2025</li>
+          </ul>
+
+          <p class="member-work">Language Skills:</p>
           <div class="member-skills">
-            <span class="skill-tag">Field Work</span>
-            <span class="skill-tag">Soil Sampling</span>
-            <span class="skill-tag">Quality Testing</span>
+            <span class="skill-tag">German</span>
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">French</span>
+            <span class="skill-tag">Finnish</span>
+            <span class="skill-tag">Japanese</span>
+            <span class="skill-tag">Chinese</span>
           </div>
+          
+          <p class="member-work">IT skills:</p>
+          <div class="member-skills">
+            <span class="skill-tag">C++ coding</span>
+            <span class="skill-tag">Python coding</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">Polars</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">SQL</span>
+          </div>
+          
           <div class="member-contact">
-            <span>BSc · Environmental Science</span>
-            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c68326b757078796e5c6972756a796e6f75686532797869">[email&#160;protected]</a></span>
+            <span>..</span>
+            <span>contact@fabian-frank.eu</span>
           </div>
         </div>
 
-        <div class="member-card">
-          <div class="member-avatar">YC</div>
-          <div class="member-name">Yuki Chen</div>
-          <div class="member-role">Research Analyst</div>
-          <p class="member-bio">Synthesises field data, maintains the project database, and produces statistical reports for publication and funding bodies.</p>
-          <div class="member-skills">
-            <span class="skill-tag">Statistics</span>
-            <span class="skill-tag">ggplot2</span>
-            <span class="skill-tag">LaTeX</span>
-            <span class="skill-tag">SPSS</span>
-          </div>
-          <div class="member-contact">
-            <span>MSc · Biometrics, Oulu</span>
-            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c89fd2d9d4dff1c4dfd8c7d4c3c2d8c5c89fd4d5c4">[email&#160;protected]</a></span>
-          </div>
-        </div>
 
       </div>
     </div>
-
-    <!-- COMPOSTING -->
-    <div class="section" id="sec-composting">
-      <div class="section-title">COMPOSTING FACTS</div>
-      <div class="composting-grid">
-
-       <div><h1>What is composting</h1><p>
-        <br>
-        Composting is turning organic waste into a valuable resource.
-        <br>
-        Compost is a dark, crumbly, soil‑like material that improves soil structure, boosts plant growth, and increases nutrient availability.
-        <br></br>
-        Compost is created from a mix of:
-        <li>Brown materials (carbon‑rich), such as dry leaves, twigs, and branches (bedding).
-        <br>They provide energy and structure for the compost.</li>
-        <li>Green materials (nitrogen‑rich), such as grass clippings, fruit scraps, and vegetable peels (= kitchen scraps), paper, etc.
-        <br>They provide proteins for microbial growth.</li>
-        <li>Water, which helps microorganisms thrive.</li>
-        <br>
-        Composting relies on microorganisms like bacteria and fungi to break down organic matter into simpler compounds. 
-        For creating ideal conditions it needs the right balance of temperature, moisture, and air.
-        <br></br>
-        To differentiate from (home) composting, anaerobic digestion occurs on an industrial level, in an oxygen-free environment, generating both biogas (renewable energy) and digestate, 
-        making it well-suited for large-scale operations like farms and food processing plants. It takes longer but can manage tougher waste types.
-       </p>
+  </div>
+  
+    <!-- =======================================================
+         Findings Tab
+         This tab converts the filtered study export into short,
+         readable conclusions and supporting summary panels.
+         ======================================================= -->
+    <div class="section" id="sec-findings">
+      <div class="home-header findings-header">
+        <div class="home-eyebrow">Notebook-backed results</div>
+        <div class="home-title">Findings from the <strong>May-July 2025</strong> study window</div>
+        <p class="home-sub" id="findings-sub">
+          This tab summarizes only the 87 filtered notebook rows already used across the page, so every finding below stays inside the May 2025 to July 2025 window.
+        </p>
       </div>
 
-        <div><h1>Phases of home composting</h1><p>
-        <br>
-        <img src="composting_phases.png" alt="Aerobic composting phases" style="width: 430px;">
-        <p style="font-size: 12px;">
-          Source:
-          <a href="https://www.compostconnect.org/what-is-composting/"
-            target="_blank"
-            rel="noopener noreferrer">
-            https://www.compostconnect.org/what-is-composting/
+      <!-- =====================================================
+           Findings Statistics
+           These cards surface the strongest numbers at a glance:
+           window size, peak heat, temperature gap, and heating.
+           ===================================================== -->
+      <div class="stat-grid findings-stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Study Window</div>
+          <div class="stat-value" id="findings-stat-rows">87</div>
+          <div class="stat-unit">filtered rows from notebook</div>
+          <div class="stat-delta" id="findings-stat-range">06 May 2025 to 31 Jul 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Peak Middle Temp</div>
+          <div class="stat-value" id="findings-stat-peak">60.4 C</div>
+          <div class="stat-unit">Composter 2 middle maximum</div>
+          <div class="stat-delta" id="findings-stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Largest Temp Gap</div>
+          <div class="stat-value" id="findings-stat-gap">53.1 C</div>
+          <div class="stat-unit">largest compost vs outside gap</div>
+          <div class="stat-delta" id="findings-stat-gap-detail">56.7 C inside vs 3.6 C outside on 21 May 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Heating Use</div>
+          <div class="stat-value" id="findings-stat-heat">0 W</div>
+          <div class="stat-unit">heater output in exported rows</div>
+          <div class="stat-delta" id="findings-stat-heat-detail">C1 and C2 heating stayed at zero in this slice</div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           Findings Panels
+           The first panel frames the key patterns while the
+           second keeps the live measurements link separate.
+           ===================================================== -->
+      <div class="chart-grid findings-panels">
+        <div class="chart-card">
+          <h3>What Stands Out</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Peak Timing</div>
+              <p id="finding-timing-note">All of the highest internal temperatures landed in mid-May, early in the filtered export.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Layering</div>
+              <p id="finding-layering-note">Moisture concentrated in the lower layers while upper layers stayed far drier, especially in Composter 1.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Scope</div>
+              <p id="finding-window-note">These notes summarize only the filtered May to July 2025 notebook slice shown throughout this page.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Reference Link</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Measurements Dashboard</div>
+              <p>
+                The live measurements page is linked here for reference only. The findings on this tab are limited to the May-July 2025 notebook export above.
+              </p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Why It Is Separate</div>
+              <p>
+                Keeping the evidence inside one study window makes the findings consistent with the charts and statistics already shown on this webpage.
+              </p>
+            </div>
+          </div>
+          <a class="findings-link" href="https://kuituhamppu.frostbit.fi/composting/measurements" target="_blank" rel="noopener noreferrer">
+            Open Measurements Dashboard
           </a>
-        </p>
-        <br>
-        <b>Mesophilic (initiation) Phase</b><br>
-        During this phase, mesophilic (moderate temperature) microorganisms begin breaking down organic materials.
-        <br></br>
-        <b>Thermophilic Phase</b><br>
-        During this phase, the compost pile heats up thanks to the activity of thermophilic (heat-loving) microorganisms. 
-        These high temperatures can help break down tougher materials.
-        <br></br>
-        <b>Maturation Phase</b><br>
-        Once the organic materials have broken down, the compost pile can cool down and enter the curing phase. 
-        Beneficial microorganisms still work, just at lower temperatures.
-        </p></div>
-        
-        <!--feature
-        <div class="fact-card"><p>🍌 About 30% of household waste can be composted instead of thrown away.</p></div>
-        -->
+        </div>
+      </div>
 
-        <div><h1>Key factors</h1><p>
-        <br>
-        The speed, efficiency, and quality of the final compost depend on a set of controllable environmental and nutritional factors.
-        <br></br>
-        1. Carbon to nitrogen (C/N) ratio<br>
-        Optimal (C/N) ratio is between 20:1 and 40:1 for fast composting.<br>
-        Too much nitrogen causes odors, but too little isn't enough for microbial growth, and compost remains cool 
-        which means degradation at a slow rate.<br>
-        The ration decreases throughout the process to 10-15:1 in a finished product.
-        <br></br>
-        2. Moisture content<br>
-        It allows microorganisms to move, reproduce, and break down organic material efficiently, 
-        with optimal level at about 50–60%. Conditions that are too dry or too wet slow decomposition and reduce quality. 
-        Managing moisture through watering, covering, or adding dry materials helps maintain healthy microbial activity and stable temperatures.
-        <br></br>
-        3. Temperature<br>
-        A composting pile has to generate heat to actively decompose.
-        Suitable temperatures in thermofilic phase destroy pathogens, weed seeds, and fly larvae that would otherwise survive in the compost,
-        but temperatures above 65 °C harm beneficial microbes.
-        <br></br>
-        4. Oxygen supply<br>
-        <br></br>
-        5. pH balance<br>
+      <!-- =====================================================
+           Findings Cards
+           Each card captures one evidence-backed takeaway from
+           the same May-July dataset used elsewhere on the page.
+           ===================================================== -->
+      <div class="findings-grid">
+        <div class="finding-card">
+          <div class="finding-label">Temperature</div>
+          <h3>Both composters reached thermophilic temperatures</h3>
+          <p id="finding-temp">In the filtered dataset, the middle layer peaked at 59.9 C in Composter 1 and 60.4 C in Composter 2.</p>
+        </div>
 
+        <div class="finding-card">
+          <div class="finding-label">Timing</div>
+          <h3>The hottest phase arrived early in the study window</h3>
+          <p id="finding-timing">All six internal temperature peaks clustered in the middle of May, showing the strongest heat build-up early in the export.</p>
+        </div>
 
-      </div><!-- end .composting-grid -->
-    </div><!-- end #sec-composting -->
+        <div class="finding-card">
+          <div class="finding-label">Moisture</div>
+          <h3>Lower layers retained the most water</h3>
+          <p id="finding-moisture">The lower layer reached 100% moisture in both composters at some point, while upper layers were often extremely dry.</p>
+        </div>
 
+        <div class="finding-card">
+          <div class="finding-label">Comparison</div>
+          <h3>Composter 2 ran slightly warmer and wetter overall</h3>
+          <p id="finding-comparison">Composter 2 kept the warmest middle layer and carried noticeably more moisture higher up the pile than Composter 1.</p>
+        </div>
 
-    <!-- QUIZZ -->
-    <div class="section" id="sec-quizz">
+        <div class="finding-card">
+          <div class="finding-label">Outside Conditions</div>
+          <h3>Compost temperatures climbed far above outside air</h3>
+          <p id="finding-outside">Within the exported notebook slice, outside temperatures ranged from 2.8 C to 26.7 C while compost temperatures climbed much higher.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Composting Materials</div>
+          <h3>Adding biowaste versus sludge to the composts</h3>
+          <p id="finding-materials">Differences in the composting material added to C1 (biowaste) and C2 (sludge) may explain the variability observed in their temperature and moisture profiles.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Turning Compost</div>
+          <h3>Temperature rose temporarily</h3>
+          <p id="finding-turning">Turning it twice led to a temporary rise in temperature, followed by declining peaks as readily degradable material was exhausted, while no corresponding decrease in moisture was observed.</p>
+        </div>
+
+        <div class="finding-card">
+          <div class="finding-label">Removing Compost</div>
+          <h3>Moisture dropped after partly removing compost</h3>
+          <p id="finding-removing">Removing 80 L of partially decomposed waste from both composters on 30.05 coincided with moisture levels dropping to 20% or below.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Composting Tab
+         This is the background-information section that explains
+         the composting process, phases, and key control factors.
+         ======================================================= -->
+    <div class="section" id="sec-composting">
+      <div class="section-title">Composting Facts</div>
+      <div class="composting-grid">
+        <div>
+          <h2>What is composting</h2>
+          <p>
+            Composting is turning organic waste into a valuable resource.
+            <br>
+            Compost is a dark, crumbly, soil‑like material that improves soil structure, boosts plant growth, and increases nutrient availability.
+            <br><br>
+            Compost is created from a mix of:
+          </p>
+          <ul style="margin-left: 20px;">
+            <li>Brown materials (carbon‑rich), such as dry leaves, twigs, and branches (bedding). They provide energy and structure for the compost.</li>
+            <li>Green materials (nitrogen‑rich), such as grass clippings, fruit scraps, and vegetable peels (= kitchen scraps), paper, etc. They provide proteins for microbial growth.</li>
+            <li>Water, which helps microorganisms thrive.</li>
+          </ul>
+          <p>
+            Composting relies on microorganisms like bacteria and fungi to break down organic matter into simpler compounds. 
+            For creating ideal conditions it needs the right balance of temperature, moisture, and air.
+            <br><br>
+            To differentiate from (home) composting, anaerobic digestion occurs on an industrial level, in an oxygen-free environment, generating both biogas (renewable energy) and digestate, 
+            making it well-suited for large-scale operations like farms and food processing plants. It takes longer but can manage tougher waste types.
+          </p>
+        </div>
+
+        <div>
+          <h2>Phases of home composting</h2>
+          <img src="img/composting_phases.png" alt="Aerobic composting phases" style="width: 430px; margin: 20px 0;">
+          <p style="font-size: 12px;">
+            Source:
+            <a href="https://www.compostconnect.org/what-is-composting/" target="_blank" rel="noopener noreferrer">
+              https://www.compostconnect.org/what-is-composting/
+            </a>
+          </p>
+          <p>
+            <strong>Mesophilic (initiation) Phase</strong><br>
+            During this phase, mesophilic (moderate temperature) microorganisms begin breaking down organic materials.
+          </p>
+          <p>
+            <strong>Thermophilic Phase</strong><br>
+            During this phase, the compost pile heats up thanks to the activity of thermophilic (heat-loving) microorganisms. 
+            These high temperatures can help break down tougher materials.
+          </p>
+          <p>
+            <strong>Maturation Phase</strong><br>
+            Once the organic materials have broken down, the compost pile can cool down and enter the curing phase. 
+            Beneficial microorganisms still work, just at lower temperatures.
+          </p>
+        </div>
+
+        <div>
+          <h2>Key factors</h2>
+          <p>
+            The speed, efficiency, and quality of the final compost depend on a set of controllable environmental and nutritional factors.
+          </p>
+          <p>
+            <strong>1. Carbon to nitrogen (C/N) ratio</strong><br>
+            Optimal (C/N) ratio is between 20:1 and 40:1 for fast composting.<br>
+            Too much nitrogen causes odors, but too little isn't enough for microbial growth, and compost remains cool 
+            which means degradation at a slow rate.<br>
+            The ratio decreases throughout the process to 10-15:1 in a finished product.
+          </p>
+          <p>
+            <strong>2. Moisture content</strong><br>
+            It allows microorganisms to move, reproduce, and break down organic material efficiently, 
+            with optimal level at about 50–60%. Conditions that are too dry or too wet slow decomposition and reduce quality. 
+            Managing moisture through watering, covering, or adding dry materials helps maintain healthy microbial activity and stable temperatures.
+          </p>
+          <p>
+            <strong>3. Temperature</strong><br>
+            A composting pile has to generate heat to actively decompose.
+            Suitable temperatures in thermophilic phase destroy pathogens, weed seeds, and fly larvae that would otherwise survive in the compost,
+            but temperatures above 65 °C harm beneficial microbes.
+          </p>
+          <p>
+            <strong>4. Oxygen supply</strong><br>
+            Aerobic composting requires adequate oxygen for microorganisms to function efficiently.
+          </p>
+          <p>
+            <strong>5. pH balance</strong><br>
+            Maintaining proper pH helps optimize microbial activity throughout the composting process.
+          </p>
+        </div>
+      </div>
+    </div>
+
+      <!-- =====================================================
+           References card
+           Full-width panel listing all sources cited in the
+           project context and peat policy sections above.
+           ===================================================== -->
+      <div class="chart-card" style="margin-top: 0;">
+        <h3>References</h3>
+        <div class="ref-list">
+          <div class="ref-item">
+            <span class="ref-label">Team Compost Connect</span>
+            <span class="ref-text">What is Composting? Accessed 15.4.2026. <a class="ref-link" href="https://www.compostconnect.org/what-is-composting/" target="_blank">compostconnect.org</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Skip Shapiro Enterprises</span>
+            <span class="ref-text">Aerobic vs Anaerobic Composting: What’s the Difference? Accessed 15.4.2026. <a class="ref-link" href="https://shapiroe.com/blog/aerobic-vs-anaerobic-composting/" target="_blank">shapiroe.com</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Agriculture.Institute</span>
+            <span class="ref-text">Key Factors Influencing the Composting Process. Accessed 15.4.2026. <a class="ref-link" href="https://agriculture.institute/organic-production-system/key-factors-influencing-composting-process/" target="_blank">agriculture.institute</a></span>
+          </div>
+        </div>
+      </div>
+
+    <!-- =======================================================
+         Quiz Tab
+         The markup here is intentionally small because the quiz
+         interface itself is rendered dynamically in main.js.
+         ======================================================= -->
+    <div class="section" id="sec-quiz">
       <div class="section-title">Test Your Composting Knowledge</div>
       <div class="quiz-container">
-        <div class="progress-bar" style="height:5px;background:rgba(140,190,80,0.1);border-radius:3px;margin-bottom:24px;"><div id="quiz-prog" style="width:0%;height:5px;background:#7abf3a;border-radius:3px;transition:width 0.3s;"></div></div>
+        <div class="progress-bar" style="height:5px;background:rgba(140,190,80,0.1);border-radius:3px;margin-bottom:24px;"><div id="quiz-prog" style="width:0%;height:5px;background:#5ddb6a;border-radius:3px;transition:width 0.3s;"></div></div>
         <div id="quiz-app"></div>
       </div>
     </div>
 
   </div><!-- end .root -->
-
+  <!-- =========================================================
+       External Scripts
+       Chart.js powers the visualizations and main.js handles
+       tab switching, findings text, chart setup, and the quiz.
+       ========================================================= -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script src="main.js"></script>
 </body>
