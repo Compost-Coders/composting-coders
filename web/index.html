@@ -22,6 +22,7 @@
       <div class="nav-logo">// Compost Lab - Expo 2026</div>
       <div class="nav-tabs">
         <button class="nav-tab active" onclick="showTab('home', this)">Overview</button>
+        <button class="nav-tab" onclick="showTab('project', this)">Project</button>
         <button class="nav-tab" onclick="showTab('team', this)">Team</button>
         <button class="nav-tab" onclick="showTab('findings', this)">Findings</button>
         <button class="nav-tab" onclick="showTab('composting', this)">Composting</button>
@@ -342,6 +343,125 @@
       </div>
 
     </div>
+
+    <!-- =======================================================
+         Project Tab
+         This section provides background and context for the
+         Kuituhamppu käyttöön EU research project that the
+         composting experiment forms part of, including budget,
+         timeline, peat policy context, and references.
+         ======================================================= -->
+    <div class="section" id="sec-project">
+      <div class="home-header">
+        <div class="home-eyebrow">Background & Context</div>
+        <div class="home-title">Kuituhamppu <strong>käyttöön</strong></div>
+        <p class="home-sub">
+          An EU-funded research project exploring the potential of hemp and similar plants to replace peat in energy, construction, and as growing media.
+        </p>
+      </div>
+
+      <!-- =====================================================
+           Top stat row:
+           Total project budget and project period at a glance.
+           ===================================================== -->
+      <div class="stat-grid-2">
+        <div class="stat-card">
+          <div class="stat-label">Total Budget</div>
+          <div class="stat-value">846k</div>
+          <div class="stat-unit">€846 817 total project budget</div>
+          <div class="stat-delta">EU funds 70% · Lapin Liitto 30%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Project Period</div>
+          <div class="stat-value">2023–26</div>
+          <div class="stat-unit">Dec 2023 to Feb 2026</div>
+          <div class="stat-delta">Lapland University of Applied Sciences</div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           Two-column insight panels:
+           LEFT = project aims and our contribution,
+           RIGHT = peat context and policy background.
+           ===================================================== -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Project Aims</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">Research focus</div>
+              <p>The project investigates the potential of hemp, reed manna grass, and similar plants as industrial raw materials with the potential to replace peat across multiple applications.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Applications studied</div>
+              <p>Suitability as raw material for energy pellets, insulation in construction, and growth substrates, alongside analysis of economic viability of production.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Our contribution</div>
+              <p>The Compost Coders project focused on Work Package 2, where surplus hemp not used in construction was tested as a growing medium in outdoor composters at Lapland UAS.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Sensor data</div>
+              <p>The composters were equipped with sensors tracking moisture and temperature at multiple internal positions, generating the dataset analysed in this dashboard.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Peat in Finland - Why It Matters</h3>
+          <div class="insight-stack">
+            <div class="insight-item">
+              <div class="insight-kicker">UN SDGs</div>
+              <p>The project addresses Goal 7 (affordable and clean energy for all) and Goal 13 (climate action), both of which are relevant to reducing dependence on peat as an energy source.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Global context</div>
+              <p>Finland accounts for roughly half of global peat energy use. Globally, energy use of peat is declining, while non-energy use may increase due to demand particularly from China. Peat also remains significant domestically for growing media and animal bedding.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Policy shifts</div>
+              <p>In 2020 the Finnish government set a target to cut peat energy use by 50% by 2030. The war in Ukraine complicated this, as Finland considered restoring peat production to replace energy previously imported from Russia. According to Neova Group's 2025 annual report, peat use in Finland has decreased to about one-third of its 2019 level by 2025, driven by electrification, mild Nordic winters, and excess biomass supply.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-kicker">Environmental impact</div>
+              <p>Peat combustion generates high greenhouse gas emissions, pollutes waterways, and threatens peatland ecosystems. The EU and IPCC classify peat alongside fossil fuels as it regenerates so slowly it is not considered renewable.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           References card
+           Full-width panel listing all sources cited in the
+           project context and peat policy sections above.
+           ===================================================== -->
+      <div class="chart-card" style="margin-top: 0;">
+        <h3>References</h3>
+        <div class="ref-list">
+          <div class="ref-item">
+            <span class="ref-label">Lapland UAS</span>
+            <span class="ref-text">Kuituhamppu investointi. Accessed 14.4.2026. <a class="ref-link" href="https://lapinamk.fi/hanke/kuituhamppu-investointi-2/" target="_blank">lapinamk.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Frostbit</span>
+            <span class="ref-text">Kuituhamppu käyttöön. Accessed 15.4.2026. <a class="ref-link" href="https://kuituhamppu.frostbit.fi/" target="_blank">kuituhamppu.frostbit.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Soimakallio et al., 2020</span>
+            <span class="ref-text">Turpeen rooli ja sen käytöstä luopumisen vaikutukset Suomessa. Sitra. <a class="ref-link" href="https://www.sitra.fi/julkaisut/turpeen-rooli-ja-sen-kaytosta-luopumisen-vaikutukset-suomessa/" target="_blank">sitra.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Fritze, J., WWF, 2022</span>
+            <span class="ref-text">Turpeen paluu ja lisääntyvät hakkuut. Accessed 15.4.2026. <a class="ref-link" href="https://wwf.fi/uutiset/2022/03/turpeen-paluu-ja-lisaantyvat-hakkuut-muun-muassa-nailla-viidella-tavalla-ukrainan-sota-voi-vaikuttaa-ymparistoon-suomessa/" target="_blank">wwf.fi</a></span>
+          </div>
+          <div class="ref-item">
+            <span class="ref-label">Neova Group, 2025</span>
+            <span class="ref-text">Vuosi 2025 annual report. Accessed 16.4.2026. <a class="ref-link" href="https://www.neova-group.com/wp-content/uploads/2026/03/neova_raportit_2025_24032026.pdf" target="_blank">neova-group.com</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <!-- =======================================================
          Team Tab
