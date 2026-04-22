@@ -941,63 +941,124 @@ body {
   letter-spacing: 0.08em;
 }
 
-/* ── Per-layer temperature table card ───────────────────── */
+/* ── Per-layer temperature/moisture table card ───────────── */
 
 .temp-table-card {
   padding: 18px 20px 16px;
 }
 
-.temp-table {
+.tt-table {
   margin-top: 10px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.temp-table-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  gap: 4px;
+  border-collapse: collapse;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
 }
 
-.temp-table-row-wide {
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
-}
-
-.temp-table-head {
-  color: #4a6630;
+/* Composter header row */
+.tt-table .tt-composter-row th {
+  padding: 2px 4px 4px;
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding-bottom: 4px;
-  border-bottom: 0.5px solid rgba(140, 190, 80, 0.1);
-  margin-bottom: 2px;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Column-label row (Peak / Min) */
+.tt-table .tt-col-head th {
+  padding: 4px 6px 5px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  border-bottom: 0.5px solid rgba(140, 190, 80, 0.18);
+}
+
+.tt-table .tt-col-head th:first-child {
+  text-align: left;
+  color: #4a6630;
+}
+
+/* Body cells */
+.tt-table tbody td {
+  padding: 6px 6px;
+  color: #d4e4b8;
+  vertical-align: middle;
+}
+
+.tt-table tbody tr + tr td {
+  border-top: 0.5px solid rgba(140, 190, 80, 0.07);
+}
+
+/* Composter label colours + backgrounds */
+.tt-composter-label {
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+.tt-composter-label.tt-head-c1 {
+  background: rgba(168, 208, 90, 0.08);
+  border-bottom: 1px solid rgba(168, 208, 90, 0.25);
+}
+
+.tt-composter-label.tt-head-c2 {
+  background: rgba(216, 232, 110, 0.08);
+  border-bottom: 1px solid rgba(216, 232, 110, 0.25);
 }
 
 .tt-head-c1 { color: #a8d05a; }
 .tt-head-c2 { color: #d8e86e; }
 
-.temp-table-row span:not(.tt-layer) {
-  color: #d4e4b8;
+/* Solid vertical divider column between C1 and C2 */
+.tt-divider-th,
+.tt-divider-td {
+  width: 16px;
+  min-width: 16px;
+  max-width: 16px;
+  padding: 0;
+  background: none;
+  position: relative;
 }
 
+.tt-divider-th::after,
+.tt-divider-td::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0.5px;
+  background: rgba(140, 190, 80, 0.35);
+}
+
+/* Center-align all value cells; keep layer column left */
+.tt-table thead th,
+.tt-table tbody td {
+  text-align: center;
+}
+
+.tt-table thead th:first-child,
+.tt-table tbody td:first-child {
+  text-align: left;
+}
+
+/* Layer badge pills */
 .tt-layer {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 2px 6px;
   border-radius: 3px;
-  width: fit-content;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .tt-upper  { background: rgba(232, 200, 74,  0.12); color: #e8c84a; }
 .tt-middle { background: rgba(93,  219, 106, 0.12); color: #5ddb6a; }
 .tt-lower  { background: rgba(74,  168, 216, 0.12); color: #4aa8d8; }
+.tt-outside { background: rgba(180, 130, 220, 0.12); color: #b482dc; }
+.tt-shed    { background: rgba(216, 140,  80, 0.12); color: #d88c50; }
 
 /* ── Column divider (vertical line between C1 and C2) ───── */
 

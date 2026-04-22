@@ -63,78 +63,140 @@
 
       <!-- Combined C1 + C2 peak/min temperature per layer -->
         <div class="stat-card temp-table-card">
-          <div class="stat-label">Temperature — Peak &amp; Min by Layer</div>
-          <div class="temp-table">
-            <div class="temp-table-row temp-table-head">
-              <span>Layer</span>
-              <span class="tt-head-c1">Peak</span>
-              <span class="tt-head-c1">Min</span>
-              <span class="tt-head-c2">Peak</span>
-              <span class="tt-head-c2">Min</span>
-            </div>
-            <div class="temp-table-row temp-table-row-wide">
-              <span class="tt-layer tt-upper">Upper</span>
-              <span id="c1-up-peak">—</span>
-              <span id="c1-up-min">—</span>
-              <span id="c2-up-peak">—</span>
-              <span id="c2-up-min">—</span>
-            </div>
-            <div class="temp-table-row temp-table-row-wide">
-              <span class="tt-layer tt-middle">Middle</span>
-              <span id="c1-mid-peak">—</span>
-              <span id="c1-mid-min">—</span>
-              <span id="c2-mid-peak">—</span>
-              <span id="c2-mid-min">—</span>
-            </div>
-            <div class="temp-table-row temp-table-row-wide">
-              <span class="tt-layer tt-lower">Lower</span>
-              <span id="c1-low-peak">—</span>
-              <span id="c1-low-min">—</span>
-              <span id="c2-low-peak">—</span>
-              <span id="c2-low-min">—</span>
-            </div>
-          </div>
+          <div class="stat-label">Temperature — Peak & Min by Layer</div>
+          <table class="tt-table">
+            <thead>
+              <tr class="tt-composter-row">
+                <th></th>
+                <th colspan="2" class="tt-head-c1 tt-composter-label">Composter 1</th>
+                <th class="tt-divider-th"></th>
+                <th colspan="2" class="tt-head-c2 tt-composter-label">Composter 2</th>
+              </tr>
+              <tr class="tt-col-head">
+                <th>Layer</th>
+                <th class="tt-head-c1">Peak</th>
+                <th class="tt-head-c1">Min</th>
+                <th class="tt-divider-th"></th>
+                <th class="tt-head-c2">Peak</th>
+                <th class="tt-head-c2">Min</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tt-layer tt-upper">Upper</span></td>
+                <td id="c1-up-peak">—</td>
+                <td id="c1-up-min">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="c2-up-peak">—</td>
+                <td id="c2-up-min">—</td>
+              </tr>
+              <tr>
+                <td><span class="tt-layer tt-middle">Middle</span></td>
+                <td id="c1-mid-peak">—</td>
+                <td id="c1-mid-min">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="c2-mid-peak">—</td>
+                <td id="c2-mid-min">—</td>
+              </tr>
+              <tr>
+                <td><span class="tt-layer tt-lower">Lower</span></td>
+                <td id="c1-low-peak">—</td>
+                <td id="c1-low-min">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="c2-low-peak">—</td>
+                <td id="c2-low-min">—</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <!-- Combined C1 + C2 peak/min moisture per layer -->
         <div class="stat-card temp-table-card">
-          <div class="stat-label">Moisture — Peak &amp; Min by Layer</div>
-          <div class="temp-table">
-            <div class="temp-table-row temp-table-head">
-              <span>Layer</span>
-              <span class="tt-head-c1">Peak</span>
-              <span class="tt-head-c1">Min</span>
-              <span class="tt-head-c2">Peak</span>
-              <span class="tt-head-c2">Min</span>
-            </div>
-            <div class="temp-table-row temp-table-row-wide">
-              <span class="tt-layer tt-upper">Upper</span>
-              <span id="c1-up-mpeak">—</span>
-              <span id="c1-up-mmin">—</span>
-              <span id="c2-up-mpeak">—</span>
-              <span id="c2-up-mmin">—</span>
-            </div>
-            <div class="temp-table-row temp-table-row-wide">
-              <span class="tt-layer tt-middle">Middle</span>
-              <span id="c1-mid-mpeak">—</span>
-              <span id="c1-mid-mmin">—</span>
-              <span id="c2-mid-mpeak">—</span>
-              <span id="c2-mid-mmin">—</span>
-            </div>
-            <div class="temp-table-row temp-table-row-wide">
-              <span class="tt-layer tt-lower">Lower</span>
-              <span id="c1-low-mpeak">—</span>
-              <span id="c1-low-mmin">—</span>
-              <span id="c2-low-mpeak">—</span>
-              <span id="c2-low-mmin">—</span>
-            </div>
-          </div>
+          <div class="stat-label">Moisture — Peak & Min by Layer</div>
+          <table class="tt-table">
+            <thead>
+              <tr class="tt-composter-row">
+                <th></th>
+                <th colspan="2" class="tt-head-c1 tt-composter-label">Composter 1</th>
+                <th class="tt-divider-th"></th>
+                <th colspan="2" class="tt-head-c2 tt-composter-label">Composter 2</th>
+              </tr>
+              <tr class="tt-col-head">
+                <th>Layer</th>
+                <th class="tt-head-c1">Peak</th>
+                <th class="tt-head-c1">Min</th>
+                <th class="tt-divider-th"></th>
+                <th class="tt-head-c2">Peak</th>
+                <th class="tt-head-c2">Min</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tt-layer tt-upper">Upper</span></td>
+                <td id="c1-up-mpeak">—</td>
+                <td id="c1-up-mmin">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="c2-up-mpeak">—</td>
+                <td id="c2-up-mmin">—</td>
+              </tr>
+              <tr>
+                <td><span class="tt-layer tt-middle">Middle</span></td>
+                <td id="c1-mid-mpeak">—</td>
+                <td id="c1-mid-mmin">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="c2-mid-mpeak">—</td>
+                <td id="c2-mid-mmin">—</td>
+              </tr>
+              <tr>
+                <td><span class="tt-layer tt-lower">Lower</span></td>
+                <td id="c1-low-mpeak">—</td>
+                <td id="c1-low-mmin">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="c2-low-mpeak">—</td>
+                <td id="c2-low-mmin">—</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Peak Temperature</div>
-          <div class="stat-value" id="stat-peak">60.4 C</div>
-          <div class="stat-unit" id="stat-peak-unit">Composter 2 middle maximum</div>
-          <div class="stat-delta" id="stat-peak-detail">Composter 1 middle also reached 59.9 C</div>
+        <!-- Outside + Shed peak/min temperature and moisture -->
+        <div class="stat-card temp-table-card">
+          <div class="stat-label">Outside & Shed — Peak & Min</div>
+          <table class="tt-table">
+            <thead>
+              <tr class="tt-composter-row">
+                <th></th>
+                <th colspan="2" class="tt-head-c1 tt-composter-label">Temperature</th>
+                <th class="tt-divider-th"></th>
+                <th colspan="2" class="tt-head-c2 tt-composter-label">Moisture</th>
+              </tr>
+              <tr class="tt-col-head">
+                <th>Sensor</th>
+                <th class="tt-head-c1">Peak</th>
+                <th class="tt-head-c1">Min</th>
+                <th class="tt-divider-th"></th>
+                <th class="tt-head-c2">Peak</th>
+                <th class="tt-head-c2">Min</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tt-layer tt-outside">Outside</span></td>
+                <td id="out-t-peak">—</td>
+                <td id="out-t-min">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="out-m-peak">—</td>
+                <td id="out-m-min">—</td>
+              </tr>
+              <tr>
+                <td><span class="tt-layer tt-shed">Shed</span></td>
+                <td id="shed-t-peak">—</td>
+                <td id="shed-t-min">—</td>
+                <td class="tt-divider-td"></td>
+                <td id="shed-m-peak">—</td>
+                <td id="shed-m-min">—</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       </div>
@@ -189,10 +251,6 @@
                 <div class="insight-kicker">Moisture stratification</div>
                 <p>Upper layer stayed dry throughout while lower layer averaged high moisture and reached 100% at least once.</p>
               </div>
-              <div class="insight-item">
-                <div class="insight-kicker">Heating</div>
-                <p>Internal heating stayed at 0 W across the full May–July slice — decomposition heat alone drove temperatures.</p>
-              </div>
             </div>
           </div>
         </div>
@@ -241,11 +299,7 @@
               </div>
               <div class="insight-item">
                 <div class="insight-kicker">Moisture stratification</div>
-                <p>C2 carried noticeably more moisture higher up the pile, with a wetter upper layer compared to C1 across the study window.</p>
-              </div>
-              <div class="insight-item">
-                <div class="insight-kicker">Heating</div>
-                <p>Like C1, internal heating remained at 0 W — the stronger microbial activity in C2 was self-sustaining throughout.</p>
+                <p>Composter 2 carried noticeably more moisture higher up the pile, with a wetter upper layer compared to Composter 1 across the study window.</p>
               </div>
             </div>
           </div>
@@ -259,16 +313,16 @@
            ===================================================== -->
       <div class="section-divider">
         <div class="section-divider-line"></div>
-        <div class="col-badge col-badge-mix">C1 &amp; C2 — Combined</div>
+        <div class="col-badge col-badge-mix">Composter 1 & Composter 2 — Combined</div>
         <div class="section-divider-line"></div>
       </div>
 
       <div class="chart-grid" style="margin-top:20px;">
         <div class="chart-card">
-          <h3>Middle Layer Temperature — C1 vs C2</h3>
+          <h3>Middle Layer Temperature — Composter 1 vs Composter 2</h3>
           <div class="legend">
-            <span><span class="legend-dot" style="background:#5ddb6a"></span>C1 middle</span>
-            <span><span class="legend-dot" style="background:#a8e8b0"></span>C2 middle</span>
+            <span><span class="legend-dot" style="background:#5ddb6a"></span>Composter 1 middle</span>
+            <span><span class="legend-dot" style="background:#a8e8b0"></span>Composter 2 middle</span>
           </div>
           <div class="canvas-wrap" style="height:180px;">
             <canvas id="comparisonChart"></canvas>
@@ -276,10 +330,10 @@
         </div>
 
         <div class="chart-card">
-          <h3>Lower Layer Moisture — C1 vs C2</h3>
+          <h3>Lower Layer Moisture — Composter 1 vs Composter 2</h3>
           <div class="legend">
-            <span><span class="legend-dot" style="background:#5ddb6a"></span>C1 lower</span>
-            <span><span class="legend-dot" style="background:#4aa8d8"></span>C2 lower</span>
+            <span><span class="legend-dot" style="background:#5ddb6a"></span>Composter 1 lower</span>
+            <span><span class="legend-dot" style="background:#4aa8d8"></span>Composter 2 lower</span>
           </div>
           <div class="canvas-wrap" style="height:180px;">
             <canvas id="moistureChart"></canvas>
@@ -538,7 +592,7 @@
           <div class="stat-label">Heating Use</div>
           <div class="stat-value" id="findings-stat-heat">0 W</div>
           <div class="stat-unit">heater output in exported rows</div>
-          <div class="stat-delta" id="findings-stat-heat-detail">C1 and C2 heating stayed at zero in this slice</div>
+          <div class="stat-delta" id="findings-stat-heat-detail">Composter 1 and Composter 2 heating stayed at zero in this slice</div>
         </div>
       </div>
 
@@ -766,7 +820,7 @@
           <div class="suggestions-label">Try asking:</div>
           <button class="suggestion-chip" onclick="sendSuggestion(this)">What was the peak temperature and when did it occur?</button>
           <button class="suggestion-chip" onclick="sendSuggestion(this)">Why does moisture accumulate in the lower layers?</button>
-          <button class="suggestion-chip" onclick="sendSuggestion(this)">How do C1 and C2 compare overall?</button>
+          <button class="suggestion-chip" onclick="sendSuggestion(this)">How do Composter 1 and Composter 2 compare overall?</button>
           <button class="suggestion-chip" onclick="sendSuggestion(this)">What is the thermophilic phase?</button>
           <button class="suggestion-chip" onclick="sendSuggestion(this)">Why was heating at 0W during May–July?</button>
         </div>

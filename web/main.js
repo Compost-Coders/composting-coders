@@ -130,12 +130,12 @@ function countAtOrAbove(rows, key, threshold) {
    ============================================================ */
 function maxTemperatureGap(rows) {
   var candidates = [
-    { key: "C1_Up_T", label: "C1 upper" },
-    { key: "C1_Mid_T", label: "C1 middle" },
-    { key: "C1_Low_T", label: "C1 lower" },
-    { key: "C2_Up_T", label: "C2 upper" },
-    { key: "C2_Mid_T", label: "C2 middle" },
-    { key: "C2_Low_T", label: "C2 lower" }
+    { key: "C1_Up_T", label: "Composter 1 upper" },
+    { key: "C1_Mid_T", label: "Composter 1 middle" },
+    { key: "C1_Low_T", label: "Composter 1 lower" },
+    { key: "C2_Up_T", label: "Composter 2 upper" },
+    { key: "C2_Mid_T", label: "Composter 2 middle" },
+    { key: "C2_Low_T", label: "Composter 2 lower" }
   ];
 
   return candidates.reduce(function (best, candidate) {
@@ -236,6 +236,16 @@ function updateSummary(rows) {
   setText("c2-low-mpeak", maxValue(rows, "C2_Low_M").toFixed(1) + "%");
   setText("c2-low-mmin",  minValue(rows, "C2_Low_M").toFixed(1) + "%");
 
+  // Outside and shed peak/min temperature and moisture.
+  setText("out-t-peak",  maxValue(rows, "Out_T").toFixed(1)  + " C");
+  setText("out-t-min",   minValue(rows, "Out_T").toFixed(1)  + " C");
+  setText("out-m-peak",  maxValue(rows, "Out_M").toFixed(1)  + "%");
+  setText("out-m-min",   minValue(rows, "Out_M").toFixed(1)  + "%");
+  setText("shed-t-peak", maxValue(rows, "shed_T").toFixed(1) + " C");
+  setText("shed-t-min",  minValue(rows, "shed_T").toFixed(1) + " C");
+  setText("shed-m-peak", maxValue(rows, "shed_M").toFixed(1) + "%");
+  setText("shed-m-min",  minValue(rows, "shed_M").toFixed(1) + "%");
+
   // Findings tab intro and its headline statistics.
   setText("findings-sub",
     "This tab summarizes only the " + rows.length +
@@ -244,13 +254,13 @@ function updateSummary(rows) {
   setText("findings-stat-rows", String(rows.length));
   setText("findings-stat-range", formatFullDate(rows[0].Day) + " to " + formatFullDate(rows[rows.length - 1].Day));
   setText("findings-stat-peak", peakC2.toFixed(1) + " C");
-  setText("findings-stat-peak-detail", "C1 middle also reached " + peakC1.toFixed(1) + " C");
+  setText("findings-stat-peak-detail", "Composter 1 middle also reached " + peakC1.toFixed(1) + " C");
   setText("findings-stat-gap", maxGap.delta.toFixed(1) + " C");
   setText("findings-stat-gap-detail",
     maxGap.compostTemp.toFixed(1) + " C inside vs " + maxGap.outsideTemp.toFixed(1) +
     " C outside on " + formatFullDate(maxGap.row.Day));
   setText("findings-stat-heat", maxHeat.toFixed(0) + " W");
-  setText("findings-stat-heat-detail", "C1 and C2 heating stayed at 0 W across this slice");
+  setText("findings-stat-heat-detail", "Composter 1 and Composter 2 heating stayed at 0 W across this slice");
 
   // Main findings cards describing the strongest patterns.
   setText("finding-temp",
@@ -261,23 +271,23 @@ function updateSummary(rows) {
   setText("finding-timing",
     "All six internal temperature maxima fell between " + formatFullDate(uniquePeakDates[0]) +
     " and " + formatFullDate(uniquePeakDates[uniquePeakDates.length - 1]) +
-    ", and the middle layers stayed at or above 55 C for " + c1Mid55 + " rows in C1 and " +
-    c2Mid55 + " rows in C2.");
+    ", and the middle layers stayed at or above 55 C for " + c1Mid55 + " rows in Composter 1 and " +
+    c2Mid55 + " rows in Composter 2.");
 
   setText("finding-moisture",
     "Moisture pooled at the bottom of both piles: lower-layer moisture averaged " +
-    avgC1LowM.toFixed(1) + "% in C1 and " + avgValue(rows, "C2_Low_M").toFixed(1) +
-    "% in C2, while both lower layers eventually reached " + Math.max(lowerMoistureC1, lowerMoistureC2).toFixed(0) + "%.");
+    avgC1LowM.toFixed(1) + "% in Composter 1 and " + avgValue(rows, "C2_Low_M").toFixed(1) +
+    "% in Composter 2, while both lower layers eventually reached " + Math.max(lowerMoistureC1, lowerMoistureC2).toFixed(0) + "%.");
 
   setText("finding-comparison",
     "Composter 2 averaged " + avgC2MidT.toFixed(1) + " C in the middle layer versus " +
-    avgC1MidT.toFixed(1) + " C in C1, and its upper layer averaged " + avgC2UpM.toFixed(1) +
-    "% moisture versus " + avgC1UpM.toFixed(1) + "% in C1.");
+    avgC1MidT.toFixed(1) + " C in Composter 1, and its upper layer averaged " + avgC2UpM.toFixed(1) +
+    "% moisture versus " + avgC1UpM.toFixed(1) + "% in Composter 1.");
 
   // Supporting context cards around heating and outside conditions.
   setText("finding-heating",
-    "Both heating columns stayed at " + avgHeatC1.toFixed(1) + " W for C1 and " +
-    avgHeatC2.toFixed(1) + " W for C2 across the exported May to July rows.");
+    "Both heating columns stayed at " + avgHeatC1.toFixed(1) + " W for Composter 1 and " +
+    avgHeatC2.toFixed(1) + " W for Composter 2 across the exported May to July rows.");
 
   setText("finding-outside",
     "Outside temperatures ranged from " + outsideMin.toFixed(1) + " C to " +
@@ -293,15 +303,15 @@ function updateSummary(rows) {
     formatFullDate(uniquePeakDates[uniquePeakDates.length - 1]) + ".");
 
   setText("finding-layering-note",
-    "The strongest vertical split was moisture. C1 upper moisture averaged " +
-    avgC1UpM.toFixed(1) + "% while C1 lower moisture averaged " +
+    "The strongest vertical split was moisture. Composter 1 upper moisture averaged " +
+    avgC1UpM.toFixed(1) + "% while Composter 1 lower moisture averaged " +
     avgC1LowM.toFixed(1) + "%, and both lower layers touched 100% at least once.");
 
   setText("finding-window-note",
     "These notes summarize only the filtered export from " +
     formatFullDate(rows[0].Day) + " to " + formatFullDate(rows[rows.length - 1].Day) +
     ". Within that slice, the middle layers stayed above 40 C for " + c1Mid40 +
-    " rows in C1 and " + c2Mid40 + " rows in C2.");
+    " rows in Composter 1 and " + c2Mid40 + " rows in Composter 2.");
 }
 
 /* ============================================================
@@ -475,7 +485,7 @@ function initCharts() {
         labels,
         [
           {
-            label: "C1 upper moisture",
+            label: "Composter 1 upper moisture",
             data: rows.map(function (row) { return row["C1_Up_M"]; }),
             borderColor: "#e8c84a",
             backgroundColor: "rgba(232, 200, 74, 0.08)",
@@ -485,7 +495,7 @@ function initCharts() {
             borderWidth: 2
           },
           {
-            label: "C1 middle moisture",
+            label: "Composter 1 middle moisture",
             data: rows.map(function (row) { return row["C1_Mid_M"]; }),
             borderColor: "#5ddb6a",
             backgroundColor: "rgba(93, 219, 106, 0.10)",
@@ -495,7 +505,7 @@ function initCharts() {
             borderWidth: 2
           },
           {
-            label: "C1 lower moisture",
+            label: "Composter 1 lower moisture",
             data: rows.map(function (row) { return row["C1_Low_M"]; }),
             borderColor: "#4aa8d8",
             backgroundColor: "rgba(74, 168, 216, 0.08)",
@@ -516,7 +526,7 @@ function initCharts() {
         labels,
         [
           {
-            label: "C2 upper moisture",
+            label: "Composter 2 upper moisture",
             data: rows.map(function (row) { return row["C2_Up_M"]; }),
             borderColor: "#e8c84a",
             backgroundColor: "rgba(232, 200, 74, 0.08)",
@@ -526,7 +536,7 @@ function initCharts() {
             borderWidth: 2
           },
           {
-            label: "C2 middle moisture",
+            label: "Composter 2 middle moisture",
             data: rows.map(function (row) { return row["C2_Mid_M"]; }),
             borderColor: "#5ddb6a",
             backgroundColor: "rgba(93, 219, 106, 0.10)",
@@ -536,7 +546,7 @@ function initCharts() {
             borderWidth: 2
           },
           {
-            label: "C2 lower moisture",
+            label: "Composter 2 lower moisture",
             data: rows.map(function (row) { return row["C2_Low_M"]; }),
             borderColor: "#4aa8d8",
             backgroundColor: "rgba(74, 168, 216, 0.08)",
@@ -557,7 +567,7 @@ function initCharts() {
         labels,
         [
           {
-            label: "C1 middle",
+            label: "Composter 1 middle",
             data: rows.map(function (row) { return row["C1_Mid_T"]; }),
             borderColor: "#5ddb6a",
             backgroundColor: "rgba(93, 219, 106, 0.10)",
@@ -567,7 +577,7 @@ function initCharts() {
             borderWidth: 2
           },
           {
-            label: "C2 middle",
+            label: "Composter 2 middle",
             data: rows.map(function (row) { return row["C2_Mid_T"]; }),
             borderColor: "#a8e8b0",
             backgroundColor: "rgba(216, 232, 110, 0.08)",
@@ -592,7 +602,7 @@ function initCharts() {
           labels: labels,
           datasets: [
             {
-              label: "C1 lower moisture",
+              label: "Composter 1 lower moisture",
               data: rows.map(function (row) { return row["C1_Low_M"]; }),
               borderColor: "#5ddb6a",
               backgroundColor: "rgba(93, 219, 106, 0.08)",
@@ -602,7 +612,7 @@ function initCharts() {
               borderWidth: 2
             },
             {
-              label: "C2 lower moisture",
+              label: "Composter 2 lower moisture",
               data: rows.map(function (row) { return row["C2_Low_M"]; }),
               borderColor: "#4aa8d8",
               backgroundColor: "rgba(74, 168, 216, 0.08)",
@@ -643,7 +653,7 @@ function initCharts() {
         labels,
         [
           {
-            label: "C1 heating",
+            label: "Composter 1 heating",
             data: rows.map(function (row) { return row["C1_Inside_heat_w"]; }),
             borderColor: "#e05555",
             backgroundColor: "rgba(224, 85, 85, 0.08)",
@@ -653,7 +663,7 @@ function initCharts() {
             borderWidth: 2
           },
           {
-            label: "C2 heating",
+            label: "Composter 2 heating",
             data: rows.map(function (row) { return row["C2_Inside_heat_w"]; }),
             borderColor: "#5ddb6a",
             backgroundColor: "rgba(93, 219, 106, 0.10)",
@@ -866,12 +876,12 @@ var chatHistory = [];
 var SYSTEM_PROMPT = `You are an expert assistant for the Compost Lab research project (Expo 2026) at Lapland University of Applied Sciences. You have detailed knowledge of the following:
 
 DATASET SUMMARY (May–July 2025, 87 daily sensor rows):
-- Two composters (C1 and C2) were monitored with sensors at upper, middle, and lower layers
+- Two composters (Composter 1 and Composter 2) were monitored with sensors at upper, middle, and lower layers
 - Sensors measured: temperature (°C) and moisture (%) at each layer, outside air temperature, and heating wattage
-- Peak temperatures: C1 middle = 59.9°C, C2 middle = 60.4°C (both thermophilic phase)
+- Peak temperatures: Composter 1 middle = 59.9°C, Composter 2 middle = 60.4°C (both thermophilic phase)
 - All six internal temperature peaks clustered in mid-May 2025
 - Moisture was highly stratified: lower layers were often near 100% wet, upper layers were very dry
-- C2 ran slightly warmer and wetter overall than C1
+- Composter 2 ran slightly warmer and wetter overall than Composter 1
 - Outside temperature ranged from 2.8°C to 26.7°C during the period
 - Heating wattage stayed at 0W throughout May–July (no artificial heating needed)
 - Largest compost-vs-outside temperature gap was approximately 53°C
